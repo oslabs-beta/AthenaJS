@@ -9,18 +9,12 @@ const ViewComponent = () => {
   const [styles, setStyles] = compProps;
 
   return (
-    <>
-      <div id = 'rendered-component' dangerouslySetInnerHTML={{ __html: compHTML[0]}} onClick = {handleClick} style={styles}/>
-      <div className = 'actions'>
-        <h3>Actions</h3>
-        <hr></hr>
-        {logs.map((log, index) => (
-          <p key = {index}>
-            {log.action} called
-          </p>
-        ))}
-      </div>
-    </>
+    <div 
+      id = 'rendered-component' 
+      dangerouslySetInnerHTML={{ __html: compHTML[0]}} 
+      onClick = {handleClick} 
+      style={styles}
+    />
   )
 };
 
