@@ -1,5 +1,6 @@
 // import Update from '@/components/update'
-import SampleButton from './components/SampleButton'
+import Workshop from './pages/Workshop'
+import { DetailsProvider } from './components/context/DetailsContext'
 import './App.scss'
 
 
@@ -7,7 +8,9 @@ function App() {
   return (
     <div className='App'>
       <h1>Athena</h1>
-      <SampleButton />
+      <DetailsProvider>
+        <Workshop />
+      </DetailsProvider>
       {/* <Update /> */}
     </div>
   )
