@@ -14,6 +14,7 @@ const PropsWindow = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
+      //Set handleclick to the function definition specified by the user
       const newHandleClick = eval(`(${compActionsInput})`);
       setCompActionsVal({ handleClick: newHandleClick });
     } catch (error) {

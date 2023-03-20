@@ -8,16 +8,18 @@ const ViewComponent = () => {
   const { handleClick, logs } = useActions(compActions[0]);
   const [styles, setStyles] = compProps;
 
-  const Component = compHTML;
-
   return (
     <>
-      <div dangerouslySetInnerHTML={{ __html: compHTML[0]}} onClick = {handleClick} style={styles}/>
-      {logs.map((log, index) => (
-        <p key = {index}>
-          {log.action} called
-        </p>
-      ))}
+      <div id = 'rendered-component' dangerouslySetInnerHTML={{ __html: compHTML[0]}} onClick = {handleClick} style={styles}/>
+      <div className = 'actions'>
+        <h3>Actions</h3>
+        <hr></hr>
+        {logs.map((log, index) => (
+          <p key = {index}>
+            {log.action} called
+          </p>
+        ))}
+      </div>
     </>
   )
 };
