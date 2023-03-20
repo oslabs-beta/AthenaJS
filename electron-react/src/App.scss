@@ -5,3 +5,70 @@
   text-align: center;
 }
 
+#workshop-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.props-window{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  border: 1px solid black;
+  padding: 20px 50px;
+  textArea {
+    width: 300px;
+    height: 100px;
+    padding: 5px 5px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+    font-family: "Poppins";
+  }
+
+  button{
+    margin-top: 20px;
+  }
+}
+
+#rendered-component{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  height: 500px;
+  width: 500px;
+}
+
+.actions{
+  position: absolute;
+  bottom: 15px;
+  border: 1px solid black;
+  height: 500px;
+  width: 500px;
+  overflow-y: scroll;
+}
+
+.actions::-webkit-scrollbar{ 
+  width: 10px;
+}
+.actions::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background-color:  rgb(255, 255, 255, 0.25);;
+}
+
+.actions::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
+}
