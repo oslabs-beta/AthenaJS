@@ -6,7 +6,6 @@ import ViewComponent from '@/components/ViewComponent';
 
 
 const Workshop = () => {
-  const { compProps, compActions, compHTML } = useContext(DetailsContext);
   return(
     <div id = 'workshop-page'>
       <PropsWindow/>
