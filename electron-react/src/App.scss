@@ -1,8 +1,33 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+$navbar-color: rgba(173, 182, 196, 1);
+$navbar-focus: rgba(235, 235, 235, 0.7);
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
   text-align: center;
+  position: relative;
+  display: flex;
+  // TODO figure out why are scroll bars activating
+  // currently the app will start activating scroll bars without the calc applied
+  // height: calc(100vh - 14px);
+  height: 100vh;
+  // this width is only here to remove the px so scroll bars don't appear
+  width: calc(100vw - 14px);
+}
+
+// currently absolute to get the element out of our way
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  position: absolute;
+  right: 0px;
 }
 
 #workshop-page{
@@ -10,6 +35,58 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+#rendered-component{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+// nav-container section
+#navigation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.navbar{
+  background-color: $navbar-color;
+  width: 100%;
+  ul {
+    width: 100%;
+    display: flex;
+    margin-left: 1rem;
+    list-style-type: none;
+    li {
+      a {
+        text-decoration: none;
+        padding: 0 1.5em;
+      }
+      a:focus {
+        background-color: $navbar-focus;
+      }
+    }
+  }
+}
+
+#navigation-area {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .props-window{
@@ -17,11 +94,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
   border: 1px solid black;
-  padding: 20px 50px;
+  height: 100%;
+  width: 100%;
+  // padding: 20px 50px;
+  overflow: auto;  
   textArea {
     width: 300px;
     height: 100px;
@@ -39,28 +116,19 @@
   }
 }
 
-#rendered-component{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  height: 500px;
-  width: 500px;
-}
-
 .actions{
-  position: absolute;
+  // position: absolute;
   bottom: 15px;
   border: 1px solid black;
-  height: 500px;
-  width: 500px;
+  height: 100%;
+  width: 100%;
   overflow-y: scroll;
 }
 
 .actions::-webkit-scrollbar{ 
   width: 10px;
 }
+
 .actions::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
