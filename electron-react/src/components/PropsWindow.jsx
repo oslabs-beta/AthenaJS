@@ -43,7 +43,7 @@ const PropsWindow = () => {
           defaultValue = 'Insert function definition e.g. () => console.log("Hello World")'
         />
 
-        <label>HTML</label>
+        <label>JSX</label>
         <textarea
           type = "text"
           onChange = {(e) => setCompHTMLVal(e.target.value)}

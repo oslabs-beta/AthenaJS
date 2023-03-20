@@ -18,9 +18,16 @@
     "e2e": "playwright test"
   },
   "dependencies": {
-    "electron-updater": "^5.3.0"
+    "electron-updater": "^5.3.0",
+    "i": "^0.3.7",
+    "npm": "^9.6.2",
+    "react-jsx-parser": "^1.29.0",
+    "stringify-object": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/plugin-transform-react-jsx": "^7.21.0",
+    "@babel/standalone": "^7.21.3",
     "@playwright/test": "^1.31.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
@@ -33,6 +40,7 @@
     "eslint-plugin-react": "^7.32.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-live": "^3.1.2",
     "sass": "^1.58.3",
     "typescript": "^4.9.5",
     "vite": "^4.1.4",
