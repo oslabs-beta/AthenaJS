@@ -41,6 +41,7 @@ let win: BrowserWindow | null = null
 const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
+require('@electron/remote/main').initialize();
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -82,6 +83,10 @@ async function createWindow() {
 }
 
 app.whenReady().then(createWindow)
+
+app.on('browser-window-created', (_, window) => {
+  require("@electron/remote/main").enable(window.webContents)
+})
 
 app.on('window-all-closed', () => {
   win = null
