@@ -60,7 +60,9 @@ h1 {
   width: 100%;
 }
 
-.navbar{
+.navbar,
+// temporary .props-toggle-nav addition, should have it's own styling later
+.props-toggle-nav {
   background-color: $navbar-color;
   width: 100%;
   ul {
@@ -83,16 +85,18 @@ h1 {
 #navigation-area {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
 }
 
-.props-window{
+// PropsWindow.jsx
+.props-form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid black;
   height: 100%;
@@ -116,6 +120,30 @@ h1 {
   }
 }
 
+.props-window {
+  width: 100%;
+  display: flex;
+}
+
+.props-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+#function-definitions{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  input{
+    border: 1px solid black;
+    
+  }
+}
+
+// actions panel in navigation area
 .actions{
   // position: absolute;
   bottom: 15px;
