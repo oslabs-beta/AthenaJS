@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, WebPreferences } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
@@ -54,7 +54,7 @@ async function createWindow() {
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
-    },
+    } as CustomWebPreferences,
   })
 
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
@@ -104,6 +104,10 @@ app.on('activate', () => {
   }
 })
 
+interface CustomWebPreferences extends WebPreferences {
+  contentSecurityPolicy?: string;
+}
+
 // New window example arg: new windows url
 ipcMain.handle('open-win', (_, arg) => {
   const childWindow = new BrowserWindow({
@@ -111,7 +115,9 @@ ipcMain.handle('open-win', (_, arg) => {
       preload,
       nodeIntegration: true,
       contextIsolation: false,
-    },
+      webSecurity: false,
+      contentSecurityPolicy: "script-src 'self' 'unsafe-inline' blob:;",
+    } as CustomWebPreferences,
   })
 
   if (process.env.VITE_DEV_SERVER_URL) {

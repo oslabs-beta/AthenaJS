@@ -9,7 +9,7 @@ const ViewComponent = () => {
   const { compProps, compActions, compHTML } = useContext(DetailsContext);
   const action = useActions(compActions[0]);
   const [styles, setStyles] = compProps;
-  console.log(compActions[0]);
+  // console.log(compActions[0]);
   const string = `() => {
     const [ logs, setLogs ] = React.useState([])
     const actions = ${stringifyObject(compActions[0])}
@@ -21,12 +21,13 @@ const ViewComponent = () => {
     )
       }`;
   return (
-    <LiveProvider code= {string}>
-      <LiveEditor />
-      <LiveError />
-      <LivePreview />
-    </LiveProvider>
-)
+    <div id='navigation-area'>
+      <LiveProvider code= {string}>
+        <LivePreview />
+        <LiveError />
+      </LiveProvider>
+    </div>
+) 
 };
 
 export default ViewComponent;

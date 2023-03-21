@@ -5,6 +5,13 @@ import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-jsx';
 import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/ext-language_tools';
+import 'ace-builds/src-noconflict/worker-javascript';
+import 'ace-builds/src-noconflict/worker-json';
+import stringifyObject from 'stringify-object';
+
+window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
+window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
 
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
@@ -20,10 +27,10 @@ const PropsWindow = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      console.log(compActionNames)
+      console.log(compActionNames);
       //Set handleclick to the function definition specified by the user
       const newHandleClick = eval(`(${compActionDefinitions})`);
-      const myAction = {}
+      const myAction = {};
       myAction[compActionNames] = newHandleClick;
       setCompActionsVal(myAction);
     } catch (error) {
@@ -31,57 +38,78 @@ const PropsWindow = () => {
     }
   };
 
+  // ace editor style options object
+  const styleOptions = {
+    width: '100%',
+    height: '500px',
+  };
 
   return (
     <>
-      <form className = 'props-window' onSubmit = {handleSubmit}>
+      <form className = 'props-form' onSubmit = {handleSubmit}>
         <div id = 'props-header'>
           <h3>Edit Component</h3>
+          <button>Update Component</button>
         </div>
+        <div className='props-window'>
+          <div className='props-container'>
+            <label>Props</label>
+            <AceEditor
+              mode="json"
+              theme="monokai"
+              fontSize="1.5rem"
+              wrapEnabled={true}
+              // onChange={(value) => setCompPropsVal(value)}
+              // value={compPropsVal}
+              editorProps={{ $blockScrolling: true }}
+              width={styleOptions.width}
+              height={styleOptions.height}
+            />
+          </div>
 
-        <label>Props</label>
-        <AceEditor
-          mode="json"
-          theme="monokai"
-          onChange={(value) => setCompPropsVal(JSON.parse(value))}
-          value={JSON.stringify(compPropsVal)}
-          editorProps={{ $blockScrolling: true }}
-          width="30%"
-          height="100px"
-        />
+          <div id = 'function-definitions' className='props-container'>
+  
+            <h3>Function Name</h3>
+            <input 
+              type = "text"
+              onChange = {(e) => setCompActionNames(e.target.value)}
+              value = {compActionNames}
+            />
+            <h3>Function Definition</h3>
+            <AceEditor
+              mode="javascript"
+              theme="monokai"
+              fontSize="1.5rem"
+              wrapEnabled={true}
+              onChange={(value) => setCompActionDefinitions(value)}
+              value={compActionDefinitions}
+              editorProps={{ $blockScrolling: true }}
+              width={styleOptions.width}
+              height={styleOptions.height}
+              placeholder= 'insert function definition e.g. () => console.log(&quot;Hello World&quot;)'
+              setOptions={{
+                useWorker: true,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+              }}
+            />
+          </div>
 
-        <div id = 'function-definitions'>
-          <label>Actions</label>
-          <input 
-            type = "text"
-            onChange = {(e) => setCompActionNames(e.target.value)}
-            value = {compActionNames}
-          />
-      
-          <AceEditor
-            mode="javascript"
-            theme="monokai"
-            onChange={(value) => setCompActionDefinitions(value)}
-            value={compActionDefinitions}
-            editorProps={{ $blockScrolling: true }}
-            width="30%"
-            height="100px"
-            placeholder= 'insert function definition\n e.g. () => console.log(&quot;Hello World&quot;)'
-          />
+          <div className='props-container'>
+            <label>JSX</label>
+            <AceEditor
+              mode="jsx"
+              theme="monokai"
+              fontSize="1.5rem"
+              wrapEnabled={true}
+              onChange={(value) => setCompHTMLVal(value)}
+              value={compHTMLVal}
+              editorProps={{ $blockScrolling: true }}
+              width={styleOptions.width}
+              height={styleOptions.height}
+            />
+          </div>
         </div>
-        <label>JSX</label>
-        <AceEditor
-          mode="jsx"
-          theme="monokai"
-          onChange={(value) => setCompHTMLVal(value)}
-          value={compHTMLVal}
-          editorProps={{ $blockScrolling: true }}
-          width="30%"
-          height="100px"
-        />
-      
-
-        <button>Update Component</button>
       </form>
     </>
   );
