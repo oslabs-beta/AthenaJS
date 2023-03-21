@@ -1,5 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { DetailsContext } from './context/DetailsContext';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-javascript';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/mode-jsx';
+import 'ace-builds/src-noconflict/theme-monokai';
 
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
@@ -30,24 +35,37 @@ const PropsWindow = () => {
         </div>
 
         <label>Props</label>
-        <textarea
-          type = "text"
-          onChange={(e) => setCompPropsVal(JSON.parse(e.target.value))}
+        <AceEditor
+          mode="json"
+          theme="monokai"
+          onChange={(value) => setCompPropsVal(JSON.parse(value))}
           value={JSON.stringify(compPropsVal)}
+          editorProps={{ $blockScrolling: true }}
+          width="30%"
+          height="100px"
         />
 
         <label>Actions</label>
-        <textarea
-          type = "text"
-          onChange = {(e) => setCompActionsInput(e.target.value)}
-          defaultValue = 'Insert function definition e.g. () => console.log("Hello World")'
+        <AceEditor
+          mode="javascript"
+          theme="monokai"
+          onChange={(value) => setCompActionsInput(value)}
+          value={compActionsInput}
+          editorProps={{ $blockScrolling: true }}
+          width="30%"
+          height="100px"
+          placeholder= 'insert function definition\n e.g. () => console.log(&quot;Hello World&quot;)'
         />
 
         <label>JSX</label>
-        <textarea
-          type = "text"
-          onChange = {(e) => setCompHTMLVal(e.target.value)}
-          value = {compHTMLVal}
+        <AceEditor
+          mode="jsx"
+          theme="monokai"
+          onChange={(value) => setCompHTMLVal(value)}
+          value={compHTMLVal}
+          editorProps={{ $blockScrolling: true }}
+          width="30%"
+          height="100px"
         />
       
 
