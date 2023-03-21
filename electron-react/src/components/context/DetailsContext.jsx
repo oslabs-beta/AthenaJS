@@ -7,9 +7,7 @@ export const DetailsProvider = ({ children }) => {
   const [compActions, setCompActions] = useState({
     handleClick: () => console.log('button clicked')
   });
-  const [compHTML, setCompHTML] = useState(`
-    <button> Click Me</button>
-  `);
+  const [compHTML, setCompHTML] = useState(`<button onClick = {actions.handleClick}>Click Me</button>`);
   return(
     <DetailsContext.Provider 
       value = {{
