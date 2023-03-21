@@ -8,19 +8,24 @@ const PropsWindow = () => {
   const [compPropsVal, setCompPropsVal] = compProps;
   const [compActionsVal, setCompActionsVal] = compActions;
   const [compHTMLVal, setCompHTMLVal] = compHTML;
-  const [compActionsInput, setCompActionsInput] = useState('');
+  const [compActionNames, setCompActionNames] = useState('handleClick');
+  const [compActionDefinitions, setCompActionDefinitions] = useState('');
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
+      console.log(compActionNames)
       //Set handleclick to the function definition specified by the user
-      const newHandleClick = eval(`(${compActionsInput})`);
-      setCompActionsVal({ handleClick: newHandleClick });
+      const newHandleClick = eval(`(${compActionDefinitions})`);
+      const myAction = {}
+      myAction[compActionNames] = newHandleClick;
+      setCompActionsVal(myAction);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   return (
     <>
@@ -35,14 +40,19 @@ const PropsWindow = () => {
           onChange={(e) => setCompPropsVal(JSON.parse(e.target.value))}
           value={JSON.stringify(compPropsVal)}
         />
-
-        <label>Actions</label>
-        <textarea
-          type = "text"
-          onChange = {(e) => setCompActionsInput(e.target.value)}
-          defaultValue = 'Insert function definition e.g. () => console.log("Hello World")'
-        />
-
+        <div id = 'function-definitions'>
+          <label>Actions</label>
+          <input 
+            type = "text"
+            onChange = {(e) => setCompActionNames(e.target.value)}
+            value = {compActionNames}
+          />
+          <textarea
+            type = "text"
+            onChange = {(e) => setCompActionDefinitions(e.target.value)}
+            value = {compActionDefinitions}
+          />
+        </div>
         <label>JSX</label>
         <textarea
           type = "text"
