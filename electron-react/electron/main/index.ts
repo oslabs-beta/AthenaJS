@@ -1,7 +1,8 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
+import { readdirSync } from 'fs'
 
 // The built directory structure
 //
@@ -121,3 +122,13 @@ ipcMain.handle('open-win', (_, arg) => {
   }
 })
 
+ipcMain.on('OpenFolder', (e) => {
+  const dialogOptions = {
+    properties: ['openDirectory']
+  }
+  e.returnValue = dialog.showOpenDialogSync(dialogOptions);
+})
+
+ipcMain.on('ReadDir', (e, projectFilePath) => {
+  e.returnValue = readdirSync(projectFilePath)
+})
