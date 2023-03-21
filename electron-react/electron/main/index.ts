@@ -1,7 +1,8 @@
-import { app, BrowserWindow, shell, ipcMain, WebPreferences } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, WebPreferences, dialog } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
+import { readdirSync } from 'fs'
 
 // The built directory structure
 //
@@ -40,6 +41,7 @@ let win: BrowserWindow | null = null
 const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
+require('@electron/remote/main').initialize();
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -82,6 +84,10 @@ async function createWindow() {
 
 app.whenReady().then(createWindow)
 
+app.on('browser-window-created', (_, window) => {
+  require("@electron/remote/main").enable(window.webContents)
+})
+
 app.on('window-all-closed', () => {
   win = null
   if (process.platform !== 'darwin') app.quit()
@@ -123,3 +129,13 @@ ipcMain.handle('open-win', (_, arg) => {
   }
 })
 
+ipcMain.on('OpenFolder', (e) => {
+  const dialogOptions = {
+    properties: ['openDirectory']
+  }
+  e.returnValue = dialog.showOpenDialogSync(dialogOptions);
+})
+
+ipcMain.on('ReadDir', (e, projectFilePath) => {
+  e.returnValue = readdirSync(projectFilePath)
+})
