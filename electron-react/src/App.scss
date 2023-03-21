@@ -83,6 +83,7 @@ h1 {
 #navigation-area {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;

@@ -22,6 +22,8 @@ const ViewComponent = () => {
       }`;
   return (
     <div id='navigation-area'>
+      Actions: {stringifyObject(compActions[0])} <br/>
+      Props: {compProps[0]}
       <LiveProvider code= {string}>
         <LivePreview />
         <LiveError />
