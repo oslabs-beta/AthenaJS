@@ -6,14 +6,14 @@ import stringifyObject from 'stringify-object';
 
 
 const ViewComponent = () => {
-  const { compProps, compActions, compHTML } = useContext(DetailsContext);
+  const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
   const action = useActions(compActions[0]);
   const [styles, setStyles] = compProps;
-  console.log(compActions[0]);
+  // console.log(compActions[0]);
   const string = `() => {
-    const [ logs, setLogs ] = React.useState([])
+    ${compState[0]}
     const actions = ${stringifyObject(compActions[0])}
-    const props = ${stringifyObject(compProps[0])}
+    const props = ${compProps[0]}
     return(  
     <>
       ${compHTML[0]}
@@ -21,12 +21,16 @@ const ViewComponent = () => {
     )
       }`;
   return (
-    <LiveProvider code= {string}>
-      <LiveEditor />
-      <LiveError />
-      <LivePreview />
-    </LiveProvider>
-)
+    <div id='navigation-area'>
+      Actions: {stringifyObject(compActions[0])} <br/>
+      Props: {compProps[0]} <br/>
+      State: {compState[0]}
+      <LiveProvider code= {string}>
+        <LivePreview />
+        <LiveError />
+      </LiveProvider>
+    </div>
+);
 };
 
 export default ViewComponent;

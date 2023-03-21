@@ -8,14 +8,14 @@ const NavigationContainer = () => {
   const { compActions } = useContext(DetailsContext);
   const { logs } = useActions(compActions[0]);
 
-  console.log(`logs are in NavigationContainer: ${logs}`);
+  // console.log(`logs are in NavigationContainer: ${logs}`);
 
   return (
     <div id ="navigation-container">
       <NavBar />
       <div id = 'navigation-area'>
         <PropsWindow/>
-        <div className = 'actions'>
+        {/* <div className = 'actions'>
           <h3>Actions</h3>
           <hr></hr>
           {logs.map((log, index) => (
@@ -23,7 +23,7 @@ const NavigationContainer = () => {
               {log.action} called
             </p>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )
