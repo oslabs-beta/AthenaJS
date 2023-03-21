@@ -13,12 +13,16 @@ export const DetailsProvider = ({ children }) => {
   const [compHTML, setCompHTML] = useState(
     `<button onClick = {actions.handleClick}>Click Me</button>`
   );
+  const [compState, setCompState] = useState(
+    `const [count, setCount] = React.useState(1)`
+  )
   return(
     <DetailsContext.Provider 
       value = {{
         compProps: [compProps, setCompProps], 
         compActions: [compActions, setCompActions], 
-        compHTML: [compHTML, setCompHTML]
+        compHTML: [compHTML, setCompHTML],
+        compState: [compState, setCompState]
       }}
     >
       {children}
