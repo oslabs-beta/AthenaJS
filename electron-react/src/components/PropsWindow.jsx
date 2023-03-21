@@ -1,5 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { DetailsContext } from './context/DetailsContext';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-javascript';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/mode-jsx';
+import 'ace-builds/src-noconflict/theme-monokai';
 
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
@@ -8,19 +13,24 @@ const PropsWindow = () => {
   const [compPropsVal, setCompPropsVal] = compProps;
   const [compActionsVal, setCompActionsVal] = compActions;
   const [compHTMLVal, setCompHTMLVal] = compHTML;
-  const [compActionsInput, setCompActionsInput] = useState('');
+  const [compActionNames, setCompActionNames] = useState('handleClick');
+  const [compActionDefinitions, setCompActionDefinitions] = useState('');
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
+      console.log(compActionNames)
       //Set handleclick to the function definition specified by the user
-      const newHandleClick = eval(`(${compActionsInput})`);
-      setCompActionsVal({ handleClick: newHandleClick });
+      const newHandleClick = eval(`(${compActionDefinitions})`);
+      const myAction = {}
+      myAction[compActionNames] = newHandleClick;
+      setCompActionsVal(myAction);
     } catch (error) {
       console.error(error);
     }
   };
+
 
   return (
     <>
@@ -30,24 +40,44 @@ const PropsWindow = () => {
         </div>
 
         <label>Props</label>
-        <textarea
-          type = "text"
-          onChange={(e) => setCompPropsVal(JSON.parse(e.target.value))}
+        <AceEditor
+          mode="json"
+          theme="monokai"
+          onChange={(value) => setCompPropsVal(JSON.parse(value))}
           value={JSON.stringify(compPropsVal)}
+          editorProps={{ $blockScrolling: true }}
+          width="30%"
+          height="100px"
         />
 
-        <label>Actions</label>
-        <textarea
-          type = "text"
-          onChange = {(e) => setCompActionsInput(e.target.value)}
-          defaultValue = 'Insert function definition e.g. () => console.log("Hello World")'
-        />
-
-        <label>HTML</label>
-        <textarea
-          type = "text"
-          onChange = {(e) => setCompHTMLVal(e.target.value)}
-          value = {compHTMLVal}
+        <div id = 'function-definitions'>
+          <label>Actions</label>
+          <input 
+            type = "text"
+            onChange = {(e) => setCompActionNames(e.target.value)}
+            value = {compActionNames}
+          />
+      
+          <AceEditor
+            mode="javascript"
+            theme="monokai"
+            onChange={(value) => setCompActionDefinitions(value)}
+            value={compActionDefinitions}
+            editorProps={{ $blockScrolling: true }}
+            width="30%"
+            height="100px"
+            placeholder= 'insert function definition\n e.g. () => console.log(&quot;Hello World&quot;)'
+          />
+        </div>
+        <label>JSX</label>
+        <AceEditor
+          mode="jsx"
+          theme="monokai"
+          onChange={(value) => setCompHTMLVal(value)}
+          value={compHTMLVal}
+          editorProps={{ $blockScrolling: true }}
+          width="30%"
+          height="100px"
         />
       
 
