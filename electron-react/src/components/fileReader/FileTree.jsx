@@ -7,7 +7,6 @@ const pathModule = window.require("path");
 const { app } = window.require("@electron/remote");
 
 const FileTree = () => {
-  const [path, setPath] = useState(app.getAppPath());
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   // const handleFileEvent = (e) => {
@@ -15,25 +14,27 @@ const FileTree = () => {
   //   console.log(e.target.files);
   // }
 
+  const generateSubTrees = (fileObj, directoryPath) => {
+    // base case: when file is not a directory, return the whole files array;
+    for (let i = 0; i < fileObj.length; i++) {
+      const file = fileObj[i];
+      if (file.directory === true) {
+        const subDirectoryPath = pathModule.join(directoryPath, file.name);
+        file.files = 
+        generateSubTrees(fileTreeObject(subDirectoryPath), subDirectoryPath);
+      }
+    }
+    return fileObj;
+  };
+
   const handleOpenFolder = () => {
     const directory = ipcRenderer.sendSync("OpenFolder");
     console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
     directoryPath = directoryPath.replace(/\\/g, "/");
     const fileObj = fileTreeObject(directoryPath);
-    // console.log(fileObj);
-
-    for (let i = 0; i < fileObj.length; i++){
-      const file = fileObj[i];
-      // console.log(file.name);
-      // console.log(file.directory);
-      if (file.directory === true){
-        // console.log(`${directoryPath}` + '/' + `${file.name}`)
-        // console.log([...fileTreeObject(`${directoryPath}` + '/' + `${file}`)])
-        file.files = [...fileTreeObject(`${directoryPath}` + '/' + `${file.name}`)]
-      }
-    }
-    console.log(fileObj);
+    const fullTree = generateSubTrees(fileObj, directoryPath);
+    console.log(fullTree);
   };
 
   const fileTreeObject = (directoryPath) => {
@@ -47,7 +48,7 @@ const FileTree = () => {
         return {
           name: file,
           directory: stats.isDirectory(),
-          files: []
+          files: [],
         };
       })
       .sort((a, b) => {
@@ -57,15 +58,7 @@ const FileTree = () => {
         return a.directory ? -1 : 1;
       });
     return filesObj;
-    // now we have an array of objects, true for folder, false for file
-    // we want to iterate over all of the files in our files array, and if it is a directory, we recursively call our fileTreeObject function to generate a new "files array"
   };
-
-  // const filePaths = ipcRenderer.sendSync('ReadDir', directoryPath);
-  // console.log('filePaths!!!: ', filePaths);
-
-  // const onBack = () => setPath(pathModule.dirname(path));
-  // const onOpen = (folder) => setPath(pathModule.join(path, folder));
 
   return (
     <div>
