@@ -60,7 +60,9 @@ h1 {
   width: 100%;
 }
 
-.navbar{
+.navbar,
+// temporary .props-toggle-nav addition, should have it's own styling later
+.props-toggle-nav {
   background-color: $navbar-color;
   width: 100%;
   ul {
