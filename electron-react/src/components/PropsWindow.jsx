@@ -30,6 +30,7 @@ const PropsWindow = () => {
       console.log(compActionNames);
       //Set handleclick to the function definition specified by the user
       const newHandleClick = eval(`(${compActionDefinitions})`);
+      // console.log(newHandleClick)
       const myAction = {};
       myAction[compActionNames] = newHandleClick;
       setCompActionsVal(myAction);
@@ -59,8 +60,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              // onChange={(value) => setCompPropsVal(value)}
-              // value={compPropsVal}
+              onChange={(value) => setCompPropsVal(value)}
+              value={compPropsVal}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}

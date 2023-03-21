@@ -13,7 +13,7 @@ const ViewComponent = () => {
   const string = `() => {
     const [ logs, setLogs ] = React.useState([])
     const actions = ${stringifyObject(compActions[0])}
-    const props = ${stringifyObject(compProps[0])}
+    const props = ${compProps[0]}
     return(  
     <>
       ${compHTML[0]}
@@ -27,7 +27,7 @@ const ViewComponent = () => {
         <LiveError />
       </LiveProvider>
     </div>
-) 
+);
 };
 
 export default ViewComponent;
