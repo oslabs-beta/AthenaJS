@@ -16,10 +16,15 @@ window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-b
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
 const PropsWindow = () => {
+  //Use detailsContext
   const { compProps, compActions, compHTML } = useContext(DetailsContext);
+  //Definition for props object
   const [compPropsVal, setCompPropsVal] = compProps;
+  //Definition for action object
   const [compActionsVal, setCompActionsVal] = compActions;
+  //Definition for JSX
   const [compHTMLVal, setCompHTMLVal] = compHTML;
+  //Definition for actions (function names + function definitions)
   const [compActionNames, setCompActionNames] = useState('handleClick');
   const [compActionDefinitions, setCompActionDefinitions] = useState('');
 
@@ -27,13 +32,20 @@ const PropsWindow = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      console.log(compActionNames);
+      const actionDefsArr = compActionDefinitions.split(/\n\n+/);
+      const actionNamesArr = compActionNames.replace(/\s/g, '').split(',');
+      console.log(actionDefsArr)
       //Set handleclick to the function definition specified by the user
-      const newHandleClick = eval(`(${compActionDefinitions})`);
       // console.log(newHandleClick)
-      const myAction = {};
-      myAction[compActionNames] = newHandleClick;
-      setCompActionsVal(myAction);
+      const myActions = {};
+      //Map function definitions onto function names
+      for (let i = 0; i < actionNamesArr.length; i++){
+        const actionName = actionNamesArr[i];
+        const actionDef = actionDefsArr[i].replace(/;/g, '');
+        const newAction = eval(`(${actionDef})`);
+        myActions[actionName] = newAction;
+      }
+      setCompActionsVal(myActions);
     } catch (error) {
       console.error(error);
     }
