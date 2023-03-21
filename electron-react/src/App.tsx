@@ -3,6 +3,8 @@ import Workshop from './pages/Workshop'
 import { DetailsProvider } from './components/context/DetailsContext'
 import './App.scss'
 
+import FileTree from './components/fileReader/FileTree'
+
 
 function App() {
   return (
@@ -10,6 +12,7 @@ function App() {
       <h1>Athena</h1>
       <DetailsProvider>
         <Workshop />
+        <FileTree />
       </DetailsProvider>
       {/* <Update /> */}
     </div>
