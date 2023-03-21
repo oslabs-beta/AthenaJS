@@ -11,7 +11,7 @@ const ViewComponent = () => {
   const [styles, setStyles] = compProps;
   // console.log(compActions[0]);
   const string = `() => {
-    const [ logs, setLogs ] = React.useState([])
+    const [ count, setCount ] = React.useState(2)
     const actions = ${stringifyObject(compActions[0])}
     const props = ${compProps[0]}
     return(  
