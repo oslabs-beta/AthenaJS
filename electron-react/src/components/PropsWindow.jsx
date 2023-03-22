@@ -26,9 +26,11 @@ const PropsWindow = () => {
   const [compHTMLVal, setCompHTMLVal] = compHTML;
   //Definition for State
   const [compStateVal, setCompStateVal] = compState;
-  //Definition for actions (function names + function definitions)
-  const [compActionDefinitions, setCompActionDefinitions] = useState(compActionsVal);
-
+  //States for text editors 
+  const [ tempCompActions, setTempCompActions ] = useState(compActionsVal);
+  const [ tempCompHTML, setTempCompHTML ] = useState(compHTMLVal);
+  const [ tempCompProps, setTempCompProps ] = useState(compPropsVal);
+  const [ tempCompState, setTempCompState ] = useState(compStateVal);
   // toggle states for windows (props & state)
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
   const [stateWindowVisible, setStateWindowVisible] = useState(false);
@@ -37,7 +39,10 @@ const PropsWindow = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      setCompActionsVal(compActionDefinitions);
+      setCompActionsVal(tempCompActions);
+      setCompHTMLVal(tempCompHTML);
+      setCompPropsVal(tempCompProps);
+      setCompStateVal(tempCompState);
     } catch (error) {
       console.error(error);
     }
@@ -80,14 +85,14 @@ const PropsWindow = () => {
             </nav>
             {propsWindowVisible && 
               <div className='props-container' id='prop-edit-container'>
-                <label>Props</label>
+                <label>Variables</label>
                 <AceEditor
                   mode="javascript"
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setCompPropsVal(value)}
-                  value={compPropsVal}
+                  onChange={(value) => setTempCompProps(value)}
+                  value={tempCompProps}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
@@ -102,8 +107,8 @@ const PropsWindow = () => {
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setCompStateVal(value)}
-                  value={compStateVal}
+                  onChange={(value) => setTempCompState(value)}
+                  value={tempCompState}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
@@ -119,8 +124,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setCompActionDefinitions(value)}
-              value={compActionDefinitions}
+              onChange={(value) => setTempCompActions(value)}
+              value={tempCompActions}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
@@ -139,8 +144,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setCompHTMLVal(value)}
-              value={compHTMLVal}
+              onChange={(value) => setTempCompHTML(value)}
+              value={tempCompHTML}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
