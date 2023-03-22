@@ -4,13 +4,12 @@ import DirectoryComponent from "./DirectoryComponent";
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
-
-const { app } = window.require("@electron/remote");
 /**
  * interface file {name:string, directory: boolean, files: file[] }
  * @returns
  */
 const FileExplorer = () => {
+  // store htmlArray in state
   const [uploadedFiles, setUploadedFiles] = useState([]);
   // toggle sidebar
   const [explorerVisible, setExplorerVisible] = useState(true);
@@ -21,12 +20,18 @@ const FileExplorer = () => {
     setExplorerVisible(!explorerVisible);
   };
 
+  // this function generates all of the subtrees after the first level is generated from fileTreeObject func
   const generateSubTrees = (fileObj, directoryPath) => {
-    // base case: when file is not a directory, return the whole files array;
+    // iterate over fileObj param
     for (let i = 0; i < fileObj.length; i++) {
       const file = fileObj[i];
+      // if it is a directory
       if (file.directory === true) {
+        //create a subdirectory path of the given directory
         const subDirectoryPath = pathModule.join(directoryPath, file.name);
+        // assign the files property to the eval result of
+        // calling generateSubTrees, passing in eval result of
+        // fileTreeObject(subDirectoryPath), and subDirectoryPath
         file.files = generateSubTrees(
           fileTreeObject(subDirectoryPath),
           subDirectoryPath
@@ -37,23 +42,31 @@ const FileExplorer = () => {
   };
 
   const handleOpenFolder = () => {
+    // open folder
     const directory = ipcRenderer.sendSync("OpenFolder");
     console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
     directoryPath = directoryPath.replace(/\\/g, "/");
+    // generate first level of file tree
     const fileObj = fileTreeObject(directoryPath);
+    // generate full tree
     const fullTree = generateSubTrees(fileObj, directoryPath);
+    // generate array of html elements for render.
     const htmlArray = generateFileHTML(fullTree);
     setUploadedFiles(htmlArray);
   };
 
   const fileTreeObject = (directoryPath) => {
     // console.log("DIRECTORY PATH: ", directoryPath);
-    const filesObj = fs
-      .readdirSync(directoryPath)
-
+    const filesObj = fs.readdirSync(directoryPath);
+    // filter filesObj for node modules or git files
+    const filteredFileObj = filesObj
+      .filter((file) => {
+        return file !== "node_modules" && file !== ".git";
+      })
+      // map over each file name, instead returning object that has name, directory, and files properties
       .map((file) => {
-        // console.log(file);
+        // fs.statSync is how we get the data on whether a folder is a directory or not.
         const stats = fs.statSync(pathModule.join(directoryPath, file));
         // console.log(stats);
         return {
@@ -62,34 +75,38 @@ const FileExplorer = () => {
           files: [],
         };
       })
+      // sort folders first and files second
       .sort((a, b) => {
         if (a.directory === b.directory) {
           return a.name.localeCompare(b.name);
         }
         return a.directory ? -1 : 1;
       });
-    return filesObj;
+    return filteredFileObj;
   };
 
   const generateFileHTML = (fileTree) => {
+    // taking in a full file tree
     const htmlArray = [];
     for (const file of fileTree) {
       const { name } = file;
       const { files } = file;
       if (file.directory) {
+        // if file is a directory
+          // create a directory component passing down name and files and push to htmlarray 
         htmlArray.push(
           <DirectoryComponent name={name} files={files}></DirectoryComponent>
         );
       } else {
+        // else create a button to render that will render on click.
         htmlArray.push(
-          <button onClick={() => handleFolderToggle()} className="file-button">
+          <button className="file-button">
             {name}
           </button>
         );
       }
     }
     return htmlArray;
-    // console.log(htmlArray);
   };
   // File.jsx potentially
 
@@ -116,6 +133,7 @@ const FileExplorer = () => {
             </button>
           </div>
           <div className="root-directory">
+              {/* this is where we render htmlArray*/}
             <div className="root-dir-header">{uploadedFiles}</div>
           </div>
         </div>
