@@ -25,8 +25,9 @@ const FileExplorer = () => {
   const handleOpenFolder = () => {
     // open folder
     const directory = ipcRenderer.sendSync("OpenFolder");
-    console.log("DIRECTORY HERE!!!: ", directory);
+    // console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
+    // accounting for windows backslash to normalize the path
     directoryPath = directoryPath.replace(/\\/g, "/");
     // generate first level of file tree
     const fileArr = fileTreeObject(directoryPath);
@@ -145,14 +146,13 @@ const FileExplorer = () => {
             className="file-button"
             onClick = {() => {fileParser(path)}}
           >
-            {name}
+            <span className="file-button-text">{name}</span>
           </button>
         );
       }
     }
     return htmlArray;
   };
-  // File.jsx potentially
 
   return (
     <>

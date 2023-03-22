@@ -10,17 +10,21 @@ const DirectoryComponent = ({ name, files, fileParser, path }) => {
   };
   // console.log(fileParser);
 
+  // TODO: readability refactor for recursive call
   return (
-    // render initial directory component
-    <div className="folder-button">
+    <div className="folder">
       <button className="folder-button" onClick={handleFolderToggle}>
-        {name}
+        <svg className={isOpen ? 'folder-button-icon chevron-down' : 'folder-button-icon'} 
+          alt="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+          <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+        </svg>
+        <span className="file-button-text">{name}</span>
       </button>
 
       {/* when isOpen is true, render all of the subfiles of the directory component */}
       {isOpen && (
         <div className="sub-files">
-        {/* map over each subfile */}
+          {/* map over each subfile */}
           {files.map((file) => {
             {/* generate subPath */}
             const subPath = `${path}/${file.name}`; // create a variable to store the path
@@ -39,7 +43,7 @@ const DirectoryComponent = ({ name, files, fileParser, path }) => {
                     className="file-button"
                     onClick={() => fileParser(subPath)}
                   >
-                    {file.name}
+                    <span className="file-button-text">{file.name}</span>
                   </button>
                 )}
               </div>
