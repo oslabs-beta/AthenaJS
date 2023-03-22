@@ -27,7 +27,7 @@ const PropsWindow = () => {
   //Definition for State
   const [compStateVal, setCompStateVal] = compState;
   //Definition for actions (function names + function definitions)
-  const [compActionDefinitions, setCompActionDefinitions] = useState('');
+  const [compActionDefinitions, setCompActionDefinitions] = useState(compActionsVal);
 
   // toggle states for windows (props & state)
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
