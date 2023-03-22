@@ -6,7 +6,6 @@ import './App.scss'
 import FileExplorer from './components/FileExplorer'
 import { MockFetchProvider } from './components/context/MockFetchContext'
 
-// import FileTree from './components/fileReader/FileTree'
 
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
           </MockFetchProvider>
         </PerformanceProvider>
       </DetailsProvider>
-      {/* <Update /> */}
     </div>
   )
 }
