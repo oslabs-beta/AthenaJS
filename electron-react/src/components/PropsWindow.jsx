@@ -9,6 +9,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/worker-javascript';
 import 'ace-builds/src-noconflict/worker-json';
 import stringifyObject from 'stringify-object';
+import { MockFetchContext } from './context/MockFetchContext';
 
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
 window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
@@ -16,24 +17,24 @@ window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-b
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
 const PropsWindow = () => {
-  //Use detailsContext
+  //Global state
   const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
-  //Definition for props object
   const [compPropsVal, setCompPropsVal] = compProps;
-  //Definition for action object
   const [compActionsVal, setCompActionsVal] = compActions;
-  //Definition for JSX
   const [compHTMLVal, setCompHTMLVal] = compHTML;
-  //Definition for State
   const [compStateVal, setCompStateVal] = compState;
+  const { mockServer } = useContext(MockFetchContext);
+  const [ mockServerVal, setMockServerVal ] = mockServer;
   //States for text editors 
   const [ tempCompActions, setTempCompActions ] = useState(compActionsVal);
   const [ tempCompHTML, setTempCompHTML ] = useState(compHTMLVal);
   const [ tempCompProps, setTempCompProps ] = useState(compPropsVal);
   const [ tempCompState, setTempCompState ] = useState(compStateVal);
+  const [ tempMockServer, setTempMockServer ] = useState(`fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });`)
   // toggle states for windows (props & state)
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
   const [stateWindowVisible, setStateWindowVisible] = useState(false);
+  const [mockServerWindowVisible, setMockServerWindowVisible] = useState(false);
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
@@ -43,6 +44,7 @@ const PropsWindow = () => {
       setCompHTMLVal(tempCompHTML);
       setCompPropsVal(tempCompProps);
       setCompStateVal(tempCompState);
+      setMockServerVal(tempMockServer);
     } catch (error) {
       console.error(error);
     }
@@ -54,11 +56,18 @@ const PropsWindow = () => {
     props : (e) => {
       setPropsWindowVisible(true);
       setStateWindowVisible(false);
+      setMockServerWindowVisible(false);
     },
     state : (e) => {
       setStateWindowVisible(true);
       setPropsWindowVisible(false);
+      setMockServerWindowVisible(false);
     },
+    mockServer: (e) => {
+      setStateWindowVisible(false);
+      setPropsWindowVisible(false);
+      setMockServerWindowVisible(true);
+    }
   };
 
   // ace editor style options object
@@ -81,6 +90,7 @@ const PropsWindow = () => {
               <ul>
                 <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
                 <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
+                <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
               </ul>
             </nav>
             {propsWindowVisible && 
@@ -109,6 +119,22 @@ const PropsWindow = () => {
                   wrapEnabled={true}
                   onChange={(value) => setTempCompState(value)}
                   value={tempCompState}
+                  editorProps={{ $blockScrolling: true }}
+                  width={styleOptions.width}
+                  height={styleOptions.height}
+                />
+              </div>
+            }
+            {mockServerWindowVisible && 
+              <div className='props-container' id='prop-edit-container'>
+                <label>Mock Server</label>
+                <AceEditor
+                  mode="javascript"
+                  theme="monokai"
+                  fontSize="1.5rem"
+                  wrapEnabled={true}
+                  onChange={(value) => setTempMockServer(value)}
+                  value={tempMockServer}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
