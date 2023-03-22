@@ -33,8 +33,8 @@ const ViewComponent = () => {
 
   const string = `() => {
     ${compState[0]}
-    const actions = ${stringifyObject(compActions[0])}
-    const props = ${compProps[0]}
+    ${compActions[0]}
+    ${compProps[0]}
     return(  
     <>
       ${compHTML[0]}
@@ -46,9 +46,10 @@ const ViewComponent = () => {
 
   return (
     <div id='navigation-area'>
-      Actions: {stringifyObject(compActions[0])} <br/>
+      {/* Actions: {stringifyObject(compActions[0])} <br/> */}
       Props: {compProps[0]} <br/>
-      State: {compState[0]}
+      State: {compState[0]} <br/>
+      Render Time: {profilerData ? profilerData.actualDuration + ' ms' : 'N/A'}
       <LiveProvider code= {string}>
         <Profiler id = 'preview-component' onRender={handleProfilerData}>
           <LivePreview />
