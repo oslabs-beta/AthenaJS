@@ -5,6 +5,8 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import fetchMock from 'fetch-mock';
 import stringifyObject from 'stringify-object';
 import { MockFetchContext } from './context/MockFetchContext';
+import { Resizable } from 're-resizable';
+
 
 
 const ViewComponent = () => {
@@ -57,20 +59,40 @@ const ViewComponent = () => {
   if (mockServer[0]) scope = {fetchMock};
 
   return (
-    <div id='navigation-area'>
-      {/* Actions: {stringifyObject(compActions[0])} <br/> */}
-      Props: {compProps[0]} <br/>
-      State: {compState[0]} <br/>
-      Render Time: {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}
-      <LiveProvider code= {string} scope = {scope}>
-        <Profiler id = 'preview-component' onRender={handleProfilerData}>
-          <LivePreview />
-        </Profiler>
-        <LiveError />
-      </LiveProvider>
-      <button onClick = {updateGraph}>Add Render Data</button>
-    </div>
-);
+    <Resizable
+      className="navigation-area-resizable"
+      defaultSize={{
+        width: '100%',
+        height: 'auto',
+      }}
+      minHeight={400} 
+      maxHeight={1000} 
+      enable={{
+        top: false,
+        right: false,
+        bottom: true,
+        left: false,
+        topRight: false,
+        bottomRight: false,
+        bottomLeft: false,
+        topLeft: false,
+      }}
+    >
+      <div id="navigation-area">
+        {/* Actions: {stringifyObject(compActions[0])} <br/> */}
+          Props: {compProps[0]} <br/>
+          State: {compState[0]} <br/>
+          Render Time: {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}
+        <LiveProvider code={string}>
+          <Profiler id="preview-component" onRender={handleProfilerData}>
+            <LivePreview />
+          </Profiler>
+          <LiveError />
+        </LiveProvider>
+        <button onClick={updateGraph}>Add Render Data</button>
+      </div>
+    </Resizable>
+  );
 };
 
 export default ViewComponent;
