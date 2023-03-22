@@ -2,13 +2,16 @@ import React, { Profiler, useContext, useState, useEffect } from 'react';
 import { DetailsContext } from './context/DetailsContext';
 import { PerformanceContext } from './context/PerformanceContext';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import fetchMock from 'fetch-mock';
 import stringifyObject from 'stringify-object';
+import { MockFetchContext } from './context/MockFetchContext';
 import { Resizable } from 're-resizable';
 
 
 
 const ViewComponent = () => {
   const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
+  const { mockServer } = useContext(MockFetchContext);
   const { performanceData } = useContext(PerformanceContext);
   const [ performanceDataArr, setPerformanceDataArr] = performanceData;
   const [ profilerData, setProfilerData ] = useState(null);
@@ -30,13 +33,21 @@ const ViewComponent = () => {
     setPerformanceDataArr([...performanceDataArr, profilerData]);
   };
 
-
-  console.log(profilerData);
+  // fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });
+  // React.useEffect(() => {
+  // async function getData(){
+  // const res = await fetch('/api/users')
+  // const data = await res.json()
+  // if (res.ok) console.log(data.data)
+  // }
+  // getData()
+  // }, [])
 
   const string = `() => {
     ${compState[0]}
     ${compActions[0]}
     ${compProps[0]}
+    ${mockServer[0]}
     return(  
     <>
       ${compHTML[0]}
@@ -44,7 +55,8 @@ const ViewComponent = () => {
     )
       }`;
 
- 
+  let scope = {};
+  if (mockServer[0]) scope = {fetchMock};
 
   return (
     <Resizable
