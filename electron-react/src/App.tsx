@@ -3,6 +3,9 @@ import Workshop from './pages/Workshop'
 import { DetailsProvider } from './components/context/DetailsContext'
 import { PerformanceProvider } from './components/context/PerformanceContext'
 import './App.scss'
+import FileExplorer from './components/FileExplorer'
+
+import FileTree from './components/fileReader/FileTree'
 
 
 function App() {
@@ -13,6 +16,8 @@ function App() {
         <PerformanceProvider>
           <Workshop />
         </PerformanceProvider>
+        <FileExplorer />
+        <FileTree />
       </DetailsProvider>
       {/* <Update /> */}
     </div>
