@@ -49,7 +49,7 @@ const ViewComponent = () => {
       {/* Actions: {stringifyObject(compActions[0])} <br/> */}
       Props: {compProps[0]} <br/>
       State: {compState[0]} <br/>
-      Render Time: {profilerData ? profilerData.actualDuration + ' ms' : 'N/A'}
+      Render Time: {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}
       <LiveProvider code= {string}>
         <Profiler id = 'preview-component' onRender={handleProfilerData}>
           <LivePreview />
