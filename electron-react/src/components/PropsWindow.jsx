@@ -27,7 +27,6 @@ const PropsWindow = () => {
   //Definition for State
   const [compStateVal, setCompStateVal] = compState;
   //Definition for actions (function names + function definitions)
-  const [compActionNames, setCompActionNames] = useState('handleClick');
   const [compActionDefinitions, setCompActionDefinitions] = useState('');
 
   // toggle states for windows (props & state)
@@ -38,20 +37,7 @@ const PropsWindow = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      const actionDefsArr = compActionDefinitions.split(/\n\n+/);
-      const actionNamesArr = compActionNames.replace(/\s/g, '').split(',');
-      console.log(actionDefsArr);
-      //Set handleclick to the function definition specified by the user
-      // console.log(newHandleClick)
-      const myActions = {};
-      //Map function definitions onto function names
-      for (let i = 0; i < actionNamesArr.length; i++){
-        const actionName = actionNamesArr[i];
-        const actionDef = actionDefsArr[i].replace(/;/g, '');
-        const newAction = eval(`(${actionDef})`);
-        myActions[actionName] = newAction;
-      }
-      setCompActionsVal(myActions);
+      setCompActionsVal(compActionDefinitions);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +82,7 @@ const PropsWindow = () => {
               <div className='props-container' id='prop-edit-container'>
                 <label>Props</label>
                 <AceEditor
-                  mode="json"
+                  mode="javascript"
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
@@ -127,14 +113,7 @@ const PropsWindow = () => {
           </div>
           {/* static containers */}
           <div className='props-container' id='function-definitions'>
-  
-            <h3>Function Name</h3>
-            <input 
-              type = "text"
-              onChange = {(e) => setCompActionNames(e.target.value)}
-              value = {compActionNames}
-            />
-            <h3>Function Definition</h3>
+            <label>Function Definitions</label>
             <AceEditor
               mode="javascript"
               theme="monokai"
