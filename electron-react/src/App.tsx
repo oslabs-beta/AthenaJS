@@ -1,6 +1,7 @@
 // import Update from '@/components/update'
 import Workshop from './pages/Workshop'
 import { DetailsProvider } from './components/context/DetailsContext'
+import { PerformanceProvider } from './components/context/PerformanceContext'
 import './App.scss'
 
 
@@ -9,7 +10,9 @@ function App() {
     <div className='App'>
       <h1>Athena</h1>
       <DetailsProvider>
-        <Workshop />
+        <PerformanceProvider>
+          <Workshop />
+        </PerformanceProvider>
       </DetailsProvider>
       {/* <Update /> */}
     </div>

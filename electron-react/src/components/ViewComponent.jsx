@@ -1,15 +1,36 @@
-import React, { useContext, useState } from 'react';
+import React, { Profiler, useContext, useState, useEffect } from 'react';
 import { DetailsContext } from './context/DetailsContext';
-import useActions from '@/hooks/useActions';
+import { PerformanceContext } from './context/PerformanceContext';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import stringifyObject from 'stringify-object';
 
 
 const ViewComponent = () => {
   const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
-  const action = useActions(compActions[0]);
-  const [styles, setStyles] = compProps;
-  // console.log(compActions[0]);
+  const { performanceData } = useContext(PerformanceContext);
+  const [ performanceDataArr, setPerformanceDataArr] = performanceData;
+  const [ profilerData, setProfilerData ] = useState(null);
+
+  const handleProfilerData = (id, phase, actualDuration, baseDuration, startTime, commitTime) => {
+    if (phase === 'mount'){
+      setProfilerData({
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime,
+      });
+    }
+  };
+
+  const updateGraph = () => {
+    setPerformanceDataArr([...performanceDataArr, profilerData]);
+  };
+
+
+  console.log(profilerData);
+
   const string = `() => {
     ${compState[0]}
     const actions = ${stringifyObject(compActions[0])}
@@ -20,15 +41,21 @@ const ViewComponent = () => {
     </>
     )
       }`;
+
+ 
+
   return (
     <div id='navigation-area'>
       Actions: {stringifyObject(compActions[0])} <br/>
       Props: {compProps[0]} <br/>
       State: {compState[0]}
       <LiveProvider code= {string}>
-        <LivePreview />
+        <Profiler id = 'preview-component' onRender={handleProfilerData}>
+          <LivePreview />
+        </Profiler>
         <LiveError />
       </LiveProvider>
+      <button onClick = {updateGraph}>Add Render Data</button>
     </div>
 );
 };
