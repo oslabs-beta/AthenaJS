@@ -25,6 +25,7 @@
     "fetch-mock": "^9.11.0",
     "i": "^0.3.7",
     "npm": "^9.6.2",
+    "re-resizable": "^6.9.9",
     "react-ace": "^10.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-jsx-parser": "^1.29.0",
