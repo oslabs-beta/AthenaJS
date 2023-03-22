@@ -95,6 +95,7 @@ h1 {
   color: white;
   display: flex;
   transition: $transition-area;
+  width: 100%;
   height: 100vh;
   background-color: rgb(10,25,41);
 }
@@ -188,10 +189,10 @@ h1 {
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1rem;
-  max-width: 15ch; // character text limit
-  white-space: nowrap; // prevent text from wrapping to a new line
-  overflow: hidden; // hide the overflow text
-  text-overflow: ellipsis; // add "..." at the end of the truncated text
+  // max-width: 15ch; // character text limit
+  // white-space: nowrap; // prevent text from wrapping to a new line
+  // overflow: hidden; // hide the overflow text
+  // text-overflow: ellipsis; // add "..." at the end of the truncated text
 }
 
 // pages
