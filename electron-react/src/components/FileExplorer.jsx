@@ -13,32 +13,12 @@ const FileExplorer = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   // toggle sidebar
   const [explorerVisible, setExplorerVisible] = useState(true);
+  //
 
   // sets CSS to transition sidebar to close
   const sidebarClass = explorerVisible ? "sidebar" : "sidebar closed";
   const handleToggle = (e) => {
     setExplorerVisible(!explorerVisible);
-  };
-
-  // this function generates all of the subtrees after the first level is generated from fileTreeObject func
-  const generateSubTrees = (fileObj, directoryPath) => {
-    // iterate over fileObj param
-    for (let i = 0; i < fileObj.length; i++) {
-      const file = fileObj[i];
-      // if it is a directory
-      if (file.directory === true) {
-        //create a subdirectory path of the given directory
-        const subDirectoryPath = pathModule.join(directoryPath, file.name);
-        // assign the files property to the eval result of
-        // calling generateSubTrees, passing in eval result of
-        // fileTreeObject(subDirectoryPath), and subDirectoryPath
-        file.files = generateSubTrees(
-          fileTreeObject(subDirectoryPath),
-          subDirectoryPath
-        );
-      }
-    }
-    return fileObj;
   };
 
   const handleOpenFolder = () => {
@@ -48,29 +28,33 @@ const FileExplorer = () => {
     let directoryPath = directory[0];
     directoryPath = directoryPath.replace(/\\/g, "/");
     // generate first level of file tree
-    const fileObj = fileTreeObject(directoryPath);
+    const fileArr = fileTreeObject(directoryPath);
     // generate full tree
-    const fullTree = generateSubTrees(fileObj, directoryPath);
+    const fullTreeArr = generateSubTrees(fileArr);
     // generate array of html elements for render.
-    const htmlArray = generateFileHTML(fullTree);
+    const htmlArray = generateFileHTML(fullTreeArr);
     setUploadedFiles(htmlArray);
   };
 
   const fileTreeObject = (directoryPath) => {
     // console.log("DIRECTORY PATH: ", directoryPath);
-    const filesObj = fs.readdirSync(directoryPath);
+    const filesArray = fs.readdirSync(directoryPath);
     // filter filesObj for node modules or git files
-    const filteredFileObj = filesObj
+    const filteredFileArr = filesArray
       .filter((file) => {
         return file !== "node_modules" && file !== ".git";
       })
       // map over each file name, instead returning object that has name, directory, and files properties
+      // ['src', 'index']
       .map((file) => {
         // fs.statSync is how we get the data on whether a folder is a directory or not.
-        const stats = fs.statSync(pathModule.join(directoryPath, file));
+        const subPath = pathModule.join(directoryPath, file);
+        const stats = fs.statSync(subPath);
+        
         // console.log(stats);
         return {
           name: file,
+          path: subPath,
           directory: stats.isDirectory(),
           files: [],
         };
@@ -82,25 +66,84 @@ const FileExplorer = () => {
         }
         return a.directory ? -1 : 1;
       });
-    return filteredFileObj;
+    return filteredFileArr;
   };
 
-  const generateFileHTML = (fileTree) => {
+  // this function generates all of the subtrees after the first level is generated from fileTreeObject func
+  const generateSubTrees = (fileArr) => {
+    // iterate over fileObj param
+    for (let i = 0; i < fileArr.length; i++) {
+      const file = fileArr[i];
+      // if it is a directory
+      if (file.directory === true) {
+        //create a subdirectory path of the given directory
+        // const subDirectoryPath = pathModule.join(directoryPath, file.name);
+        // assign the files property to the eval result of
+        // calling generateSubTrees, passing in eval result of
+        // fileTreeObject(subDirectoryPath), and subDirectoryPath
+        file.files = generateSubTrees(fileTreeObject(file.path), file.path);
+      }
+    }
+    return fileArr;
+  };
+
+  const fileParser = (path) => {
+    // console.log(path);
+    //We only really need plaintext here since AthenaJS handles the logic for us, do we even need to parse? 
+
+    // asynchronously read file here passing in the absolute path. 
+    fs.readFile(path,'utf-8', (err, data) => {
+      //declare variable extension which gets the extension of our file i.e. .jsx
+      const extension = pathModule.extname(path).toLowerCase();
+
+      //switch statement for different file types? Do we just Need JSX? 
+      //I am going to keep the switch statement here for now, and remove it if we decide to only use JSX
+      switch(extension) {
+      case '.jsx':
+        console.log('JSX File content:', data);
+        //how do we pass along this data into the JSX textarea? 
+        break;
+      case '.json':
+        console.log('JSON File content:', data);
+        //how do we pass along this data into the JSX textarea? 
+        break;
+      case '.js':
+        console.log('JS File content:', data);
+        //how do we pass along this data into the JSX textarea? 
+        break;
+      default: 
+        console.log('File data:', data);
+      }
+      //handle errors
+      if(err) {
+        console.log('ERROR: error reading file in DirectoryComponent.jsx:', err);
+        return;
+      }
+    });
+  };
+
+  const generateFileHTML = (fullTreeArr) => {
     // taking in a full file tree
     const htmlArray = [];
-    for (const file of fileTree) {
-      const { name } = file;
-      const { files } = file;
+    for (const file of fullTreeArr) {
+      const { name, files, path } = file;
       if (file.directory) {
         // if file is a directory
-          // create a directory component passing down name and files and push to htmlarray 
+        // create a directory component passing down name and files and push to htmlarray 
         htmlArray.push(
-          <DirectoryComponent name={name} files={files}></DirectoryComponent>
+          <DirectoryComponent
+            path = {path}
+            fileParser = {fileParser}
+            name={name} 
+            files={files}></DirectoryComponent>
         );
       } else {
         // else create a button to render that will render on click.
         htmlArray.push(
-          <button className="file-button">
+          <button 
+            className="file-button"
+            onClick = {() => {fileParser(path)}}
+          >
             {name}
           </button>
         );
@@ -133,7 +176,7 @@ const FileExplorer = () => {
             </button>
           </div>
           <div className="root-directory">
-              {/* this is where we render htmlArray*/}
+            {/* this is where we render htmlArray*/}
             <div className="root-dir-header">{uploadedFiles}</div>
           </div>
         </div>

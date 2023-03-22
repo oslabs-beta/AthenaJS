@@ -5,7 +5,6 @@ import { PerformanceProvider } from './components/context/PerformanceContext'
 import './App.scss'
 import FileExplorer from './components/FileExplorer'
 
-// import FileTree from './components/fileReader/FileTree'
 
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
           <Workshop />
         </PerformanceProvider>
       </DetailsProvider>
-      {/* <Update /> */}
     </div>
   )
 }
