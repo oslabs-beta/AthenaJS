@@ -15,6 +15,7 @@ const ViewComponent = () => {
   const { performanceData } = useContext(PerformanceContext);
   const [ performanceDataArr, setPerformanceDataArr] = performanceData;
   const [ profilerData, setProfilerData ] = useState(null);
+  const [ renderName, setRenderName ] = useState('');
 
   const handleProfilerData = (id, phase, actualDuration, baseDuration, startTime, commitTime) => {
     if (phase === 'mount'){
@@ -30,7 +31,7 @@ const ViewComponent = () => {
   };
 
   const updateGraph = () => {
-    setPerformanceDataArr([...performanceDataArr, profilerData]);
+    setPerformanceDataArr([...performanceDataArr, {renderName: renderName, ...profilerData}]);
   };
 
   // fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });
@@ -89,6 +90,11 @@ const ViewComponent = () => {
           </Profiler>
           <LiveError />
         </LiveProvider>
+        <input
+          onChange = {(e) => setRenderName(e.target.value)}
+          value = {renderName}
+          placeholder = 'Render Name'
+        />
         <button onClick={updateGraph}>Add Render Data</button>
       </div>
     </Resizable>
