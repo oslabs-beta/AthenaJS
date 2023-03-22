@@ -96,13 +96,13 @@ h1 {
   color: white;
   display: flex;
   width: 250px;
-  transition: $transition-area;
+  // transition: $transition-area;
   height: 100vh;
   background-color: rgb(10,25,41);
 }
 
 .sidebar.closed {
-  transition: $transition-area;
+  // transition: $transition-area;
   width: 5rem;
 }
 

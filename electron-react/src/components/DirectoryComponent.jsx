@@ -23,13 +23,13 @@ const DirectoryComponent = ({ name, files, fileParser, path }) => {
         {/* map over each subfile */}
           {files.map((file) => {
             {/* generate subPath */}
-            const path = `${path}/${file.name}`; // create a variable to store the path
+            const subPath = `${path}/${file.name}`; // create a variable to store the path
             {/* recursively render directory component with updated path, filename, and subfiles */}
             return (
               <div key={file.name}>
                 {file.directory ? (
                   <DirectoryComponent
-                    path={path}
+                    path={subPath}
                     fileParser={fileParser}
                     name={file.name}
                     files={file.files}
@@ -37,7 +37,7 @@ const DirectoryComponent = ({ name, files, fileParser, path }) => {
                 ) : (
                   <button
                     className="file-button"
-                    onClick={() => fileParser(path)}
+                    onClick={() => fileParser(subPath)}
                   >
                     {file.name}
                   </button>
