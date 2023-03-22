@@ -2,6 +2,7 @@
 import Workshop from './pages/Workshop'
 import { DetailsProvider } from './components/context/DetailsContext'
 import './App.scss'
+import FileExplorer from './components/FileExplorer'
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <div className='App'>
       <h1>Athena</h1>
       <DetailsProvider>
+        <FileExplorer />
         <Workshop />
       </DetailsProvider>
       {/* <Update /> */}
