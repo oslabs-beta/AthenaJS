@@ -10,6 +10,7 @@ import 'ace-builds/src-noconflict/worker-javascript';
 import 'ace-builds/src-noconflict/worker-json';
 import stringifyObject from 'stringify-object';
 import { MockFetchContext } from './context/MockFetchContext';
+import { PerformanceContext } from './context/PerformanceContext';
 
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
 window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
@@ -35,6 +36,9 @@ const PropsWindow = () => {
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
   const [stateWindowVisible, setStateWindowVisible] = useState(false);
   const [mockServerWindowVisible, setMockServerWindowVisible] = useState(false);
+  //Key count to force remount on component update
+  const { keyCount } = useContext(PerformanceContext);
+  const [ keyCountVal , setKeyCountVal] = keyCount;
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
@@ -45,6 +49,7 @@ const PropsWindow = () => {
       setCompPropsVal(tempCompProps);
       setCompStateVal(tempCompState);
       setMockServerVal(tempMockServer);
+      setKeyCountVal(keyCountVal + 1);
     } catch (error) {
       console.error(error);
     }
