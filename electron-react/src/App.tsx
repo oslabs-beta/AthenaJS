@@ -15,7 +15,6 @@ function App() {
       <DetailsProvider>
         <FileExplorer />
         <Workshop />
-        {/* <FileTree /> */}
       </DetailsProvider>
       {/* <Update /> */}
     </div>

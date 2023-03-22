@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 const DirectoryComponent = ({ name, files }) => {
+  // each directory component has access to it's name and files on property object
+  // hook to tell whether button is opened or not
   const [isOpen, setOpen] = useState(false);
 
   const handleFolderToggle = () => {
@@ -19,7 +21,7 @@ const DirectoryComponent = ({ name, files }) => {
               {file.directory ? (
                 <DirectoryComponent name={file.name} files={file.files} />
               ) : (
-                <div className="file-button">{file.name}</div>
+                <button className="file-button">{file.name}</button>
               )}
             </div>
           ))}
