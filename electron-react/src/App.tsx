@@ -14,11 +14,10 @@ function App() {
     <div className='App'>
       <h1>Athena</h1>
       <DetailsProvider>
+        <FileExplorer />
         <PerformanceProvider>
           <Workshop />
         </PerformanceProvider>
-        <FileExplorer />
-        <Workshop />
       </DetailsProvider>
       {/* <Update /> */}
     </div>
