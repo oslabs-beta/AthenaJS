@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const DirectoryComponent = ({ name, files }) => {
+const DirectoryComponent = ({ name, files, fileParser, path }) => {
   // each directory component has access to it's name and files on property object
   // hook to tell whether button is opened or not
   const [isOpen, setOpen] = useState(false);
@@ -8,6 +8,7 @@ const DirectoryComponent = ({ name, files }) => {
   const handleFolderToggle = () => {
     setOpen(!isOpen);
   };
+  // console.log(fileParser);
 
   // TODO: readability refactor for recursive call
   return (
@@ -19,19 +20,35 @@ const DirectoryComponent = ({ name, files }) => {
         </svg>
         <span className="file-button-text">{name}</span>
       </button>
+
+      {/* when isOpen is true, render all of the subfiles of the directory component */}
       {isOpen && (
         <div className="sub-files">
-          {files.map((file) => (
-            // <div >
-            // {
-            file.directory ? 
-              (<DirectoryComponent key={file.name} name={file.name} files={file.files} />) : 
-              (<button key={file.name} className="file-button">
-                <span className="file-button-text">{file.name}</span>
-              </button>)
-            // }
-            // </div>
-          ))}
+          {/* map over each subfile */}
+          {files.map((file) => {
+            {/* generate subPath */}
+            const subPath = `${path}/${file.name}`; // create a variable to store the path
+            {/* recursively render directory component with updated path, filename, and subfiles */}
+            return (
+              <div key={file.name}>
+                {file.directory ? (
+                  <DirectoryComponent
+                    path={subPath}
+                    fileParser={fileParser}
+                    name={file.name}
+                    files={file.files}
+                  />
+                ) : (
+                  <button
+                    className="file-button"
+                    onClick={() => fileParser(subPath)}
+                  >
+                    <span className="file-button-text">{file.name}</span>
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
