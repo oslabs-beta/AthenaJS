@@ -4,6 +4,7 @@ import { DetailsProvider } from './components/context/DetailsContext'
 import { PerformanceProvider } from './components/context/PerformanceContext'
 import './App.scss'
 import FileExplorer from './components/FileExplorer'
+import { MockFetchProvider } from './components/context/MockFetchContext'
 
 // import FileTree from './components/fileReader/FileTree'
 
@@ -16,7 +17,9 @@ function App() {
       <DetailsProvider>
         <FileExplorer />
         <PerformanceProvider>
-          <Workshop />
+          <MockFetchProvider>
+            <Workshop />
+          </MockFetchProvider>
         </PerformanceProvider>
       </DetailsProvider>
       {/* <Update /> */}
