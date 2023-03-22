@@ -32,10 +32,7 @@ const FileExplorer = () => {
         // assign the files property to the eval result of
         // calling generateSubTrees, passing in eval result of
         // fileTreeObject(subDirectoryPath), and subDirectoryPath
-        file.files = generateSubTrees(
-          fileTreeObject(subDirectoryPath),
-          subDirectoryPath
-        );
+        file.files = generateSubTrees(fileTreeObject(subDirectoryPath),subDirectoryPath);
       }
     }
     return fileObj;
@@ -44,8 +41,9 @@ const FileExplorer = () => {
   const handleOpenFolder = () => {
     // open folder
     const directory = ipcRenderer.sendSync("OpenFolder");
-    console.log("DIRECTORY HERE!!!: ", directory);
+    // console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
+    // accounting for windows backslash to normalize the path
     directoryPath = directoryPath.replace(/\\/g, "/");
     // generate first level of file tree
     const fileObj = fileTreeObject(directoryPath);
@@ -85,6 +83,7 @@ const FileExplorer = () => {
     return filteredFileObj;
   };
 
+  //
   const generateFileHTML = (fileTree) => {
     // taking in a full file tree
     const htmlArray = [];
@@ -101,14 +100,13 @@ const FileExplorer = () => {
         // else create a button to render that will render on click.
         htmlArray.push(
           <button className="file-button">
-            {name}
+            <span className="file-button-text">{name}</span>
           </button>
         );
       }
     }
     return htmlArray;
   };
-  // File.jsx potentially
 
   return (
     <div className={sidebarClass}>
@@ -133,8 +131,8 @@ const FileExplorer = () => {
             </button>
           </div>
           <div className="root-directory">
-              {/* this is where we render htmlArray*/}
-            <div className="root-dir-header">{uploadedFiles}</div>
+            {/* this is where we render htmlArray*/}
+            <div className="root-dir-files">{uploadedFiles}</div>
           </div>
         </div>
       )}
