@@ -3,7 +3,7 @@ import React, { useState } from 'react';
  * interface file {name:string, directory: boolean, files: file[] }
  * @returns 
  */
-const FileExplorer = () => {
+const FileExplorer = ({handleOpenFolder, uploadedFiles}) => {
 
   // toggle sidebar
   const [explorerVisible, setExplorerVisible] = useState(true);
@@ -14,6 +14,10 @@ const FileExplorer = () => {
     setExplorerVisible(!explorerVisible);
   };
 
+  const handleUploadedFiles = () => {
+
+  }
+
   // File.jsx potentially
   
 
@@ -22,6 +26,12 @@ const FileExplorer = () => {
       <div className='side-nav'>
         <div className="side-nav-buttons-top">
           <button className='explorer-button' onClick={handleToggle}>O</button>
+          <button className="open-folder-button" onClick={() => {
+            handleOpenFolder();
+          }}>
+        Open Folder
+      </button>
+      {uploadedFiles}
         </div>
       </div>
       {explorerVisible &&
