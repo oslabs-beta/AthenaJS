@@ -46,9 +46,9 @@ const ViewComponent = () => {
 
   const string = `() => {
     ${compState[0]}
+    ${mockServer[0]}
     ${compActions[0]}
     ${compProps[0]}
-    ${mockServer[0]}
     return(  
     <>
       ${compHTML[0]}
@@ -84,7 +84,7 @@ const ViewComponent = () => {
           Props: {compProps[0]} <br/>
           State: {compState[0]} <br/>
           Render Time: {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}
-        <LiveProvider code={string}>
+        <LiveProvider code={string} scope = {scope}>
           <Profiler id="preview-component" onRender={handleProfilerData}>
             <LivePreview />
           </Profiler>
