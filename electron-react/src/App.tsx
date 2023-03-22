@@ -5,10 +5,11 @@ import { PerformanceProvider } from './components/context/PerformanceContext'
 import './App.scss'
 import FileExplorer from './components/FileExplorer'
 
-import FileTree from './components/fileReader/FileTree'
+// import FileTree from './components/fileReader/FileTree'
 
 
 function App() {
+  
   return (
     <div className='App'>
       <h1>Athena</h1>
@@ -17,7 +18,7 @@ function App() {
           <Workshop />
         </PerformanceProvider>
         <FileExplorer />
-        <FileTree />
+        <Workshop />
       </DetailsProvider>
       {/* <Update /> */}
     </div>
