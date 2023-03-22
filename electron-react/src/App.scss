@@ -1,6 +1,9 @@
 $navbar-color: rgba(173, 182, 196, 1);
 $navbar-focus: rgba(235, 235, 235, 0.7);
 
+$transition-area: width 0.3s ease-in-out;
+
+
 *,
 *::before,
 *::after {
@@ -30,6 +33,38 @@ h1 {
   right: 0px;
 }
 
+// sidebar
+.sidebar {
+  color: white;
+  display: flex;
+  width: 250px;
+  transition: $transition-area;
+  height: 100vh;
+  background-color: rgb(10,25,41);
+}
+
+.sidebar.closed {
+  transition: $transition-area;
+  width: 5rem;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  //temp styling
+  // background-color: blue;
+  width: 5rem;
+  padding-top: 1rem;
+}
+
+#file-system-container {
+  transition: $transition-area;
+  width: 100%;
+}
+
+// pages
 #workshop-page{
   display: flex;
   flex-direction: column;
