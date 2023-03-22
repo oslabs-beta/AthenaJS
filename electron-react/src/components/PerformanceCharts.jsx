@@ -28,7 +28,7 @@ const PerformanceCharts = () => {
     return performanceData[0].map((data) => data.actualDuration);
   };
   const getIds = () => {
-    return performanceData[0].map((data) => data.id);
+    return performanceData[0].map((data) => data.renderName);
   };
 
   if (profilerData.length > 0){
