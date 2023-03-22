@@ -215,5 +215,19 @@ h1 {
 }
 
 .open-folder-button {
-  margin-top: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.directory-panel {
+  display:flex;
+  justify-content:column;
+}
+
+.folder-button{
+  width:100%;
+}
+
+.file-button{
+  width:100%;
 }
