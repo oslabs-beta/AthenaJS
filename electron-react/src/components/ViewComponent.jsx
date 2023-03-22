@@ -12,7 +12,7 @@ import { Resizable } from 're-resizable';
 const ViewComponent = () => {
   const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
   const { mockServer } = useContext(MockFetchContext);
-  const { performanceData } = useContext(PerformanceContext);
+  const { keyCount, performanceData } = useContext(PerformanceContext);
   const [ performanceDataArr, setPerformanceDataArr] = performanceData;
   const [ profilerData, setProfilerData ] = useState(null);
   const [ renderName, setRenderName ] = useState('');
@@ -30,6 +30,7 @@ const ViewComponent = () => {
     }
   };
 
+
   const updateGraph = () => {
     setPerformanceDataArr([...performanceDataArr, {renderName: renderName, ...profilerData}]);
   };
@@ -45,14 +46,14 @@ const ViewComponent = () => {
   // }, [])
 
   const string = `() => {
-    ${compState[0]}
     ${mockServer[0]}
+    ${compState[0]}
     ${compActions[0]}
     ${compProps[0]}
     return(  
-    <>
+      <>
       ${compHTML[0]}
-    </>
+      </>
     )
       }`;
 
@@ -85,8 +86,8 @@ const ViewComponent = () => {
           State: {compState[0]} <br/>
           Render Time: {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}
         <LiveProvider code={string} scope = {scope}>
-          <Profiler id="preview-component" onRender={handleProfilerData}>
-            <LivePreview />
+          <Profiler key={keyCount[0]} id = 'preview-component' onRender={handleProfilerData}>
+            <LivePreview/>
           </Profiler>
           <LiveError />
         </LiveProvider>
