@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "ace-builds": "^1.16.0",
+    "@electron/remote": "^2.0.9",
     "electron-updater": "^5.3.0",
     "i": "^0.3.7",
     "npm": "^9.6.2",

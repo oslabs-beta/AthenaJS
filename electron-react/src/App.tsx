@@ -4,6 +4,8 @@ import { DetailsProvider } from './components/context/DetailsContext'
 import './App.scss'
 import FileExplorer from './components/FileExplorer'
 
+import FileTree from './components/fileReader/FileTree'
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <DetailsProvider>
         <FileExplorer />
         <Workshop />
+        <FileTree />
       </DetailsProvider>
       {/* <Update /> */}
     </div>
