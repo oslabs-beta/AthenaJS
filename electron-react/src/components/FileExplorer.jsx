@@ -1,6 +1,7 @@
 import { ipcRenderer } from "electron";
 import React, { useState, useContext } from "react";
 import DirectoryComponent from "./DirectoryComponent";
+import { Resizable } from "re-resizable";
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
@@ -109,34 +110,66 @@ const FileExplorer = () => {
   };
 
   return (
-    <div className={sidebarClass}>
-      <div className="side-nav">
-        <div className="side-nav-buttons-top">
-          <button className="explorer-button" onClick={handleToggle}>
-            O
-          </button>
-        </div>
-      </div>
-      {explorerVisible && (
-        <div id="file-system-container">
-          <div className="file-system-header">
-            <h2>File Explorer</h2>
-            <button
-              className="open-folder-button"
-              onClick={() => {
-                handleOpenFolder();
-              }}
-            >
-              Open Folder
-            </button>
+    <>
+      {explorerVisible ? (
+        <Resizable
+          className={sidebarClass}
+          defaultSize={{
+            width: 'auto',
+            height: 'auto',
+          }}
+          minWidth={250} 
+          maxWidth={800} 
+          enable={{
+            top: false,
+            right: true,
+            bottom: false,
+            left: false,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false,
+          }}
+        >
+          <div className={sidebarClass}>
+            <div className="side-nav">
+              <div className="side-nav-buttons-top">
+                <button className="explorer-button" onClick={handleToggle}>
+                  O
+                </button>
+              </div>
+            </div>
+            <div id="file-system-container">
+              <div className="file-system-header">
+                <h2>File Explorer</h2>
+                <button
+                  className="open-folder-button"
+                  onClick={() => {
+                    handleOpenFolder();
+                  }}
+                >
+                  Open Folder
+                </button>
+              </div>
+              <div className="root-directory">
+                {/* this is where we render htmlArray */}
+                <div className="root-dir-header">{uploadedFiles}</div>
+              </div>
+            </div>
           </div>
-          <div className="root-directory">
-            {/* this is where we render htmlArray*/}
-            <div className="root-dir-files">{uploadedFiles}</div>
+        </Resizable>
+      ) : (
+        <div className={sidebarClass}>
+          <div className="side-nav">
+            <div className="side-nav-buttons-top">
+              <button className="explorer-button" onClick={handleToggle}>
+                O
+              </button>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
