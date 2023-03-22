@@ -28,11 +28,9 @@ const PerformanceCharts = () => {
     return performanceData[0].map((data) => data.actualDuration);
   };
   const getIds = () => {
-    return performanceData[0].map((data) => data.id);
+    return performanceData[0].map((data) => data.renderName);
   };
 
-  console.log('Data is', getActualDurationData());
-  console.log('Ids are', getIds());
   if (profilerData.length > 0){
     return(
       <Bar
@@ -87,7 +85,15 @@ const PerformanceCharts = () => {
           }
         }}
       />
-    )}
+    );
+  }
+  else{
+    return(
+      <>
+        <h2>Save Render Data to Generate Bar Graph</h2>
+      </>
+    )
+  }
 };
 
 export default PerformanceCharts;
