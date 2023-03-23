@@ -3,6 +3,7 @@ import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
 import { readdirSync } from 'fs'
+const fs = require('fs');
 
 // The built directory structure
 //
@@ -139,3 +140,29 @@ ipcMain.on('OpenFolder', (e) => {
 ipcMain.on('ReadDir', (e, projectFilePath) => {
   e.returnValue = readdirSync(projectFilePath)
 })
+
+ipcMain.on('save-file-dialog', (event, fileContent) => {
+  dialog.showSaveDialog({
+    filters: [
+      { name: 'JSX', extensions: ['jsx'] }
+    ]
+  }).then(result => {
+    if (!result.canceled) {
+      const filePath = result.filePath;
+
+      fs.writeFile(filePath, fileContent, (err) => {
+        if (err) {
+          console.log(`Error saving file: ${err.message}`);
+          event.reply('saved-file', null);
+        } else {
+          event.reply('saved-file', filePath);
+        }
+      });
+    } else {
+      event.reply('saved-file', null);
+    }
+  }).catch(err => {
+    console.log(`Error showing save dialog: ${err.message}`);
+    event.reply('saved-file', null);
+  });
+});
