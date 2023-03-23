@@ -18,8 +18,8 @@ window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-b
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
 const PropsWindow = () => {
-  //Global state
-  const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
+  //Global state: temp versions are for the text editor states
+  const { compProps, compActions, compHTML, compState, tempCompProps, tempCompActions, tempCompHTML, tempCompState } = useContext(DetailsContext);
   const [compPropsVal, setCompPropsVal] = compProps;
   const [compActionsVal, setCompActionsVal] = compActions;
   const [compHTMLVal, setCompHTMLVal] = compHTML;
@@ -27,10 +27,10 @@ const PropsWindow = () => {
   const { mockServer } = useContext(MockFetchContext);
   const [ mockServerVal, setMockServerVal ] = mockServer;
   //States for text editors 
-  const [ tempCompActions, setTempCompActions ] = useState(compActionsVal);
-  const [ tempCompHTML, setTempCompHTML ] = useState(compHTMLVal);
-  const [ tempCompProps, setTempCompProps ] = useState(compPropsVal);
-  const [ tempCompState, setTempCompState ] = useState(compStateVal);
+  const [ tempCompActionsVal, setTempCompActionsVal ] = tempCompActions;
+  const [ tempCompHTMLVal, setTempCompHTMLVal ] = tempCompHTML;
+  const [ tempCompPropsVal, setTempCompPropsVal ] = tempCompProps;
+  const [ tempCompStateVal, setTempCompStateVal ] = tempCompState;
   const [ tempMockServer, setTempMockServer ] = useState(`fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });`)
   // toggle states for windows (props & state)
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
@@ -47,10 +47,10 @@ const PropsWindow = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      setCompActionsVal(tempCompActions);
-      setCompHTMLVal(tempCompHTML);
-      setCompPropsVal(tempCompProps);
-      setCompStateVal(tempCompState);
+      setCompActionsVal(tempCompActionsVal);
+      setCompHTMLVal(tempCompHTMLVal);
+      setCompPropsVal(tempCompPropsVal);
+      setCompStateVal(tempCompStateVal);
       setMockServerVal(tempMockServer);
       setKeyCountVal(keyCountVal + 1);
     } catch (error) {
@@ -131,8 +131,8 @@ const PropsWindow = () => {
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setTempCompProps(value)}
-                  value={tempCompProps}
+                  onChange={(value) => setTempCompPropsVal(value)}
+                  value={tempCompPropsVal}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
@@ -147,8 +147,8 @@ const PropsWindow = () => {
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setTempCompState(value)}
-                  value={tempCompState}
+                  onChange={(value) => setTempCompStateVal(value)}
+                  value={tempCompStateVal}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
@@ -180,8 +180,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setTempCompActions(value)}
-              value={tempCompActions}
+              onChange={(value) => setTempCompActionsVal(value)}
+              value={tempCompActionsVal}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
@@ -200,8 +200,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setTempCompHTML(value)}
-              value={tempCompHTML}
+              onChange={(value) => setTempCompHTMLVal(value)}
+              value={tempCompHTMLVal}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
