@@ -29,7 +29,8 @@
     "react-ace": "^10.1.0",
     "react-chartjs-2": "^5.2.0",
     "react-jsx-parser": "^1.29.0",
-    "stringify-object": "^5.0.0"
+    "stringify-object": "^5.0.0",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
