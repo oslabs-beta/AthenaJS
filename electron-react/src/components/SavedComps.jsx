@@ -3,9 +3,7 @@ import { useUserCompContext } from '@/hooks/useUserCompContext';
 import { DetailsContext } from './context/DetailsContext';
 import { MockFetchContext } from './context/MockFetchContext';
 import { PerformanceContext } from './context/PerformanceContext';
-const { ipcRenderer, dialog } = require('electron');
-const fs = window.require("fs");
-const path = window.require("path");
+const { ipcRenderer } = require('electron');
 
 const SavedComps = () => {
   const {components, dispatch} = useUserCompContext();
@@ -23,7 +21,6 @@ const SavedComps = () => {
 
   //Render the selected component
   const renderComponent = (component) => {
-    console.log(component);
     setCompPropsVal(component.props);
     setCompActionsVal(component.actions);
     setCompHTMLVal(component.html);
@@ -50,14 +47,10 @@ const SavedComps = () => {
     }
 
     export default ${component.name}
-    `
+    `;
     ipcRenderer.send('save-file-dialog', fileContent);
   }
     
-  ipcRenderer.on('saved-file', (event, path) => {
-    console.log(`File saved to ${path}`);
-  });
-  
   //Delete the selected component
   const handleDelete = (component) => {
     dispatch({type: 'DELETE_COMPS', payload: component.name});
