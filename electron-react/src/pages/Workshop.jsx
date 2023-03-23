@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { DetailsContext } from '@/components/context/DetailsContext';
-import SampleButton from '@/components/SampleButton';
 import NavigationContainer from '@/components/NavigationContainer';
 import ViewComponent from '@/components/ViewComponent';
 
