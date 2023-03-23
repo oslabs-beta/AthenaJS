@@ -42,6 +42,7 @@ const PropsWindow = () => {
   //state and dispatch for saved user components
   const {components, dispatch} = useUserCompContext();
   const [ saveName, setSaveName ] = useState('my_component');
+  const [ checkSaveModal, setCheckSaveModal ] = useState(false);
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
@@ -58,9 +59,38 @@ const PropsWindow = () => {
     }
   };
 
+  //Check if component has already been saved
+  const checkCompExist = () => {
+    for (let i = 0; i < components.length; i++){
+      if (components[i].name === saveName) return setCheckSaveModal(true);
+    }
+    return handleSave();
+  };
+
+  //If user says they want to overwrite component
+  const handleOverWriteYes = () => {
+    try{
+      dispatch({type: 'EDIT_COMPS', payload: {
+        name: saveName, 
+        html: compHTMLVal,
+        actions: compActionsVal,
+        props: compPropsVal,
+        state: compStateVal,
+        mockServer: mockServerVal,
+      }});
+      setCheckSaveModal(false);
+    } catch(error){
+      console.log(error);
+    }
+  };
+
+  //If user says they don't want to overwrite component
+  const handleOverWriteNo = () => {
+    setCheckSaveModal(false);
+  };
+
   //Save current component
-  const handleSave = (e) => {
-    e.preventDefault();
+  const handleSave = () => {
     try{
       dispatch({type: 'ADD_COMPS', payload: {
         name: saveName, 
@@ -73,7 +103,7 @@ const PropsWindow = () => {
     } catch(error){
       console.log(error);
     }
-  }
+  };
 
   // handle toggling the props and state containers
   // currently set used in props-toggle-nav links
@@ -106,12 +136,19 @@ const PropsWindow = () => {
       <form className = 'props-form'>
         <div id = 'props-header'>
           <h3>Edit Component</h3>
+          {checkSaveModal &&
+          <div id = 'overwrite-modal'>
+            <h4>A component with this name already exists, overwrite component?</h4>
+            <button onClick = {handleOverWriteYes}>Yes</button>
+            <button onClick = {handleOverWriteNo}>No</button>
+          </div>
+          }
           <input 
             placeholder='Component Name' 
             onChange = {(e) => setSaveName(e.target.value)} />
-          <button onClick = {handleSave}>Save Component</button>
+          <button onClick = {checkCompExist}>Save Component</button>
           <br/>
-          <button onClick = {handleSubmit}>Update Component</button>
+          <button onClick = {handleSubmit}>Update View</button>
         </div>
         <div className='props-window'>
           {/* toggleable containers */}
