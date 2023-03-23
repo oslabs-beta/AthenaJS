@@ -2,23 +2,14 @@ import { ipcRenderer } from "electron";
 import React, { useState, useContext } from "react";
 import DirectoryComponent from "./DirectoryComponent";
 import { Resizable } from "re-resizable";
-import { DetailsContext } from "./context/DetailsContext";
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
-
 /**
  * interface file {name:string, directory: boolean, files: file[] }
  * @returns
-*/
+ */
 const FileExplorer = () => {
-  // Contexts from details context
-  const { tempCompProps, tempCompActions, tempCompHTML, tempCompState } = useContext(DetailsContext);
-  const [tempCompPropsVal, setTempCompPropsVal] = tempCompProps;
-  const [tempCompActionsVal, setTempCompActionsVal] = tempCompActions;
-  const [tempCompHTMLVal, setTempCompHTMLVal] = tempCompHTML;
-  const [tempCompStateVal, setTempCompStateVal] = tempCompState;
-  
   // store htmlArray in state
   const [uploadedFiles, setUploadedFiles] = useState([]);
   // toggle sidebar
@@ -103,38 +94,30 @@ const FileExplorer = () => {
     //We only really need plaintext here since AthenaJS handles the logic for us, do we even need to parse? 
 
     // asynchronously read file here passing in the absolute path. 
-    // data is a string
     fs.readFile(path,'utf-8', (err, data) => {
       //declare variable extension which gets the extension of our file i.e. .jsx
       const extension = pathModule.extname(path).toLowerCase();
 
       //switch statement for different file types? Do we just Need JSX? 
       //I am going to keep the switch statement here for now, and remove it if we decide to only use JSX
-      try {
-        switch(extension) {
-        case '.jsx':
-          // just the jsx return should be passed
-          // regex matches return(<statement>) and also <statement>
-          const returnRegex = /return\s*\((\s*<[\s\S]*?)\)/;
-          // data.match => [return(<statement>), <statement>]
-          const returnStatement = data.match(returnRegex)[1];
-          console.log('JSX File content:', returnStatement);
-          setTempCompHTMLVal(returnStatement);
-          break;
-        case '.json':
-          console.log('JSON File content:', data);
-          //how do we pass along this data into the JSX textarea? 
-          break;
-        case '.js':
-          console.log('JS File content:', data);
-          //how do we pass along this data into the JSX textarea? 
-          break;
-        default: 
-          console.log('File data:', data);
-        }
+      switch(extension) {
+      case '.jsx':
+        console.log('JSX File content:', data);
+        //how do we pass along this data into the JSX textarea? 
+        break;
+      case '.json':
+        console.log('JSON File content:', data);
+        //how do we pass along this data into the JSX textarea? 
+        break;
+      case '.js':
+        console.log('JS File content:', data);
+        //how do we pass along this data into the JSX textarea? 
+        break;
+      default: 
+        console.log('File data:', data);
       }
       //handle errors
-      catch(err) {
+      if(err) {
         console.log('ERROR: error reading file in DirectoryComponent.jsx:', err);
         return;
       }
