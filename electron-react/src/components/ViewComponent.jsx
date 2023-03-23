@@ -1,4 +1,4 @@
-import React, { Profiler, useContext, useState, useEffect } from 'react';
+import React, { Profiler, useContext, useState, useEffect, useRef, useMemo } from 'react';
 import { DetailsContext } from './context/DetailsContext';
 import { PerformanceContext } from './context/PerformanceContext';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
@@ -16,6 +16,7 @@ const ViewComponent = () => {
   const [ performanceDataArr, setPerformanceDataArr] = performanceData;
   const [ profilerData, setProfilerData ] = useState(null);
   const [ renderName, setRenderName ] = useState('');
+  
 
   const handleProfilerData = (id, phase, actualDuration, baseDuration, startTime, commitTime) => {
     if (phase === 'mount'){
@@ -57,8 +58,8 @@ const ViewComponent = () => {
     )
       }`;
 
-  let scope = {};
-  if (mockServer[0]) scope = {fetchMock};
+  let scope = {useState, useEffect, useRef, useMemo};
+  if (mockServer[0]) scope = {useState, useEffect, useRef, useMemo, fetchMock};
 
   return (
     <Resizable

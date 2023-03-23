@@ -14,7 +14,7 @@ export const DetailsProvider = ({ children }) => {
     `<button onClick = {handleClick}>Click Me</button>`
   );
   const [compState, setCompState] = useState(
-    "const [count, setCount] = React.useState(1)"
+    "const [count, setCount] = useState(1)"
   );
   return (
     <DetailsContext.Provider
