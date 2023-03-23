@@ -1,5 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { DetailsContext } from './context/DetailsContext';
+import { useUserCompContext } from '@/hooks/useUserCompContext';
+import { MockFetchContext } from './context/MockFetchContext';
+import { PerformanceContext } from './context/PerformanceContext';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-json';
@@ -8,9 +11,6 @@ import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/worker-javascript';
 import 'ace-builds/src-noconflict/worker-json';
-import stringifyObject from 'stringify-object';
-import { MockFetchContext } from './context/MockFetchContext';
-import { PerformanceContext } from './context/PerformanceContext';
 
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
 window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
@@ -39,6 +39,9 @@ const PropsWindow = () => {
   //Key count to force remount on component update
   const { keyCount } = useContext(PerformanceContext);
   const [ keyCountVal , setKeyCountVal] = keyCount;
+  //state and dispatch for saved user components
+  const {components, dispatch} = useUserCompContext();
+  const [ saveName, setSaveName ] = useState('my_component');
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
@@ -51,9 +54,26 @@ const PropsWindow = () => {
       setMockServerVal(tempMockServer);
       setKeyCountVal(keyCountVal + 1);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
+
+  //Save current component
+  const handleSave = (e) => {
+    e.preventDefault();
+    try{
+      dispatch({type: 'ADD_COMPS', payload: {
+        name: saveName, 
+        html: compHTMLVal,
+        actions: compActionsVal,
+        props: compPropsVal,
+        state: compStateVal,
+        mockServer: mockServerVal,
+      }});
+    } catch(error){
+      console.log(error);
+    }
+  }
 
   // handle toggling the props and state containers
   // currently set used in props-toggle-nav links
@@ -83,10 +103,15 @@ const PropsWindow = () => {
 
   return (
     <>
-      <form className = 'props-form' onSubmit = {handleSubmit}>
+      <form className = 'props-form'>
         <div id = 'props-header'>
           <h3>Edit Component</h3>
-          <button>Update Component</button>
+          <input 
+            placeholder='Component Name' 
+            onChange = {(e) => setSaveName(e.target.value)} />
+          <button onClick = {handleSave}>Save Component</button>
+          <br/>
+          <button onClick = {handleSubmit}>Update Component</button>
         </div>
         <div className='props-window'>
           {/* toggleable containers */}

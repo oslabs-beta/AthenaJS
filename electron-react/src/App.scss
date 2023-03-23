@@ -308,6 +308,27 @@ h1 {
   }
 }
 
+.saved-comp-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:center;
+  border: 1px solid red;
+  height: 100%;
+  width: 100%;
+}
+.saved-comp-container{
+  display:flex;
+  justify-content: flex-start;
+  align-items:center;
+}
+
+.graph-page{
+  border: 1px solid red;
+  width: 100%;
+  height: 80%;
+}
+
 // actions panel in navigation area
 .actions{
   // position: absolute;
