@@ -145,7 +145,7 @@ const PropsWindow = () => {
         <input 
           value = {saveName}
           onChange = {(e) => setSaveName(e.target.value)} />
-        <button onClick = {handleSave}>Save Component</button>
+        <button onClick = {checkCompExist}>Save Component</button>
         <br/>
       </div>
       <form className = 'props-form'>
