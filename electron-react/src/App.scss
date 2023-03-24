@@ -284,22 +284,23 @@ h1 {
   button{
     margin-top: 20px;
   }
-  #props-header{
-    position: relative;
-    #overwrite-modal{
-      box-shadow: 7px 3px 3px rgba(0, 0, 0, .3);
-      border-radius: 5px;
-      background:#747bff;
-      border: 1px solid #5f67f0;
-      padding: 5px 5px;
-      position: absolute;
-      height: 150px;
-      top: 0.4rem;
-      left: 3rem;
-      button{
-        margin-left: 5px;
-        margin-right: 5px;
-      }
+}
+
+#props-header{
+  position: relative;
+  #overwrite-modal{
+    box-shadow: 7px 3px 3px rgba(0, 0, 0, .3);
+    border-radius: 5px;
+    background:#747bff;
+    border: 1px solid #5f67f0;
+    padding: 5px 5px;
+    position: absolute;
+    height: 150px;
+    top: 0.4rem;
+    left: 3rem;
+    button{
+      margin-left: 5px;
+      margin-right: 5px;
     }
   }
 }
@@ -329,7 +330,6 @@ h1 {
   align-items: center;
   input{
     border: 1px solid black;
-    
   }
 }
 
