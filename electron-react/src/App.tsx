@@ -41,7 +41,6 @@ function App() {
   if (showUIVal){
     return(
       <div className = 'App'>
-        <img id = 'athena-logo' src = {AthenaLogo}/>
           <CompUIProvider>
             <UIPage/>
           </CompUIProvider> 
@@ -51,7 +50,6 @@ function App() {
   
   else{ return (
     <div className='App'>
-      <img id = 'athena-logo' src = {AthenaLogo}/>
             <DetailsProvider>
               <FileExplorer />
               <PerformanceProvider>

@@ -24,6 +24,7 @@ const DirectoryComponent = ({ name, files, fileParser, path }) => {
       {/* when isOpen is true, render all of the subfiles of the directory component */}
       {isOpen && (
         <div className="sub-files">
+          <div className = 'vl'/>
           {/* map over each subfile */}
           {files.map((file) => {
             {/* generate subPath */}
