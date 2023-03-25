@@ -3,6 +3,7 @@ import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
 import { readdirSync } from 'fs'
+import path from 'path'
 const fs = require('fs');
 
 // The built directory structure
@@ -49,7 +50,6 @@ async function createWindow() {
     title: 'Main window',
     width: 1600,
     height: 1000,
-    icon: join(process.env.PUBLIC, 'favicon.ico'),
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -166,3 +166,4 @@ ipcMain.on('save-file-dialog', (event, fileContent) => {
     event.reply('saved-file', null);
   });
 });
+
