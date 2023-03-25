@@ -3,14 +3,15 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import { NodeResizer } from '@reactflow/node-resizer';
 import fetchMock from 'fetch-mock';
 import styled from 'styled-components';
+import '@reactflow/node-resizer/dist/style.css';
 
-const ReactFlowComp = ({ data }) => {
+const ReactFlowComp = ({ data, selected }) => {
   const { component } = data;
   const scope = {useState, useEffect, useRef, useMemo, styled, fetchMock};
 
   return (
     <>
-      <NodeResizer/>
+      <NodeResizer color="#ff0071" isVisible={selected} minWidth={100} minHeight={30} />
       <LiveProvider code = {
         `() => {
             ${component.mockServer}
@@ -29,6 +30,6 @@ const ReactFlowComp = ({ data }) => {
       </LiveProvider>
     </>
   );
-}
+};
 
 export default ReactFlowComp;
