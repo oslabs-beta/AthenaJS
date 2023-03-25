@@ -29,6 +29,9 @@
   width: 90px;
 }
 
+input{
+  text-align: center
+}
 
 button {
   border-radius: 8px;
@@ -380,6 +383,12 @@ h1 {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+}
+
+#screenshot-btn{
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .actions::-webkit-scrollbar{ 
