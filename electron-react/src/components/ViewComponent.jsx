@@ -4,6 +4,7 @@ import { PerformanceContext } from './context/PerformanceContext';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import fetchMock from 'fetch-mock';
 import stringifyObject from 'stringify-object';
+import styled from 'styled-components';
 import { MockFetchContext } from './context/MockFetchContext';
 import { Resizable } from 're-resizable';
 
@@ -58,8 +59,8 @@ const ViewComponent = () => {
     )
       }`;
 
-  let scope = {useState, useEffect, useRef, useMemo};
-  if (mockServer[0]) scope = {useState, useEffect, useRef, useMemo, fetchMock};
+  let scope = {useState, useEffect, useRef, useMemo, styled};
+  if (mockServer[0]) scope = {useState, useEffect, useRef, useMemo,styled, fetchMock};
 
   return (
     <Resizable

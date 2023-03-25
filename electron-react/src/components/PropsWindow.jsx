@@ -18,8 +18,8 @@ window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-b
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
 const PropsWindow = () => {
-  //Global state
-  const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
+  //Global state: temp versions are for the text editor states
+  const { compProps, compActions, compHTML, compState, tempCompProps, tempCompActions, tempCompHTML, tempCompState } = useContext(DetailsContext);
   const [compPropsVal, setCompPropsVal] = compProps;
   const [compActionsVal, setCompActionsVal] = compActions;
   const [compHTMLVal, setCompHTMLVal] = compHTML;
@@ -27,10 +27,10 @@ const PropsWindow = () => {
   const { mockServer } = useContext(MockFetchContext);
   const [ mockServerVal, setMockServerVal ] = mockServer;
   //States for text editors 
-  const [ tempCompActions, setTempCompActions ] = useState(compActionsVal);
-  const [ tempCompHTML, setTempCompHTML ] = useState(compHTMLVal);
-  const [ tempCompProps, setTempCompProps ] = useState(compPropsVal);
-  const [ tempCompState, setTempCompState ] = useState(compStateVal);
+  const [ tempCompActionsVal, setTempCompActionsVal ] = tempCompActions;
+  const [ tempCompHTMLVal, setTempCompHTMLVal ] = tempCompHTML;
+  const [ tempCompPropsVal, setTempCompPropsVal ] = tempCompProps;
+  const [ tempCompStateVal, setTempCompStateVal ] = tempCompState;
   const [ tempMockServer, setTempMockServer ] = useState(`fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });`)
   // toggle states for windows (props & state)
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
@@ -42,15 +42,16 @@ const PropsWindow = () => {
   //state and dispatch for saved user components
   const {components, dispatch} = useUserCompContext();
   const [ saveName, setSaveName ] = useState('my_component');
+  const [ checkSaveModal, setCheckSaveModal ] = useState(false);
 
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      setCompActionsVal(tempCompActions);
-      setCompHTMLVal(tempCompHTML);
-      setCompPropsVal(tempCompProps);
-      setCompStateVal(tempCompState);
+      setCompActionsVal(tempCompActionsVal);
+      setCompHTMLVal(tempCompHTMLVal);
+      setCompPropsVal(tempCompPropsVal);
+      setCompStateVal(tempCompStateVal);
       setMockServerVal(tempMockServer);
       setKeyCountVal(keyCountVal + 1);
     } catch (error) {
@@ -58,9 +59,38 @@ const PropsWindow = () => {
     }
   };
 
+  //Check if component has already been saved
+  const checkCompExist = () => {
+    for (let i = 0; i < components.length; i++){
+      if (components[i].name === saveName) return setCheckSaveModal(true);
+    }
+    return handleSave();
+  };
+
+  //If user says they want to overwrite component
+  const handleOverWriteYes = () => {
+    try{
+      dispatch({type: 'EDIT_COMPS', payload: {
+        name: saveName, 
+        html: compHTMLVal,
+        actions: compActionsVal,
+        props: compPropsVal,
+        state: compStateVal,
+        mockServer: mockServerVal,
+      }});
+      setCheckSaveModal(false);
+    } catch(error){
+      console.log(error);
+    }
+  };
+
+  //If user says they don't want to overwrite component
+  const handleOverWriteNo = () => {
+    setCheckSaveModal(false);
+  };
+
   //Save current component
-  const handleSave = (e) => {
-    e.preventDefault();
+  const handleSave = () => {
     try{
       dispatch({type: 'ADD_COMPS', payload: {
         name: saveName, 
@@ -73,7 +103,7 @@ const PropsWindow = () => {
     } catch(error){
       console.log(error);
     }
-  }
+  };
 
   // handle toggling the props and state containers
   // currently set used in props-toggle-nav links
@@ -106,12 +136,19 @@ const PropsWindow = () => {
       <form className = 'props-form'>
         <div id = 'props-header'>
           <h3>Edit Component</h3>
+          {checkSaveModal &&
+          <div id = 'overwrite-modal'>
+            <h4>A component with this name already exists, overwrite component?</h4>
+            <button onClick = {handleOverWriteYes}>Yes</button>
+            <button onClick = {handleOverWriteNo}>No</button>
+          </div>
+          }
           <input 
             placeholder='Component Name' 
             onChange = {(e) => setSaveName(e.target.value)} />
-          <button onClick = {handleSave}>Save Component</button>
+          <button onClick = {checkCompExist}>Save Component</button>
           <br/>
-          <button onClick = {handleSubmit}>Update Component</button>
+          <button onClick = {handleSubmit}>Update View</button>
         </div>
         <div className='props-window'>
           {/* toggleable containers */}
@@ -131,8 +168,8 @@ const PropsWindow = () => {
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setTempCompProps(value)}
-                  value={tempCompProps}
+                  onChange={(value) => setTempCompPropsVal(value)}
+                  value={tempCompPropsVal}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
@@ -147,8 +184,8 @@ const PropsWindow = () => {
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setTempCompState(value)}
-                  value={tempCompState}
+                  onChange={(value) => setTempCompStateVal(value)}
+                  value={tempCompStateVal}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
@@ -180,8 +217,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setTempCompActions(value)}
-              value={tempCompActions}
+              onChange={(value) => setTempCompActionsVal(value)}
+              value={tempCompActionsVal}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
@@ -200,8 +237,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setTempCompHTML(value)}
-              value={tempCompHTML}
+              onChange={(value) => setTempCompHTMLVal(value)}
+              value={tempCompHTMLVal}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
