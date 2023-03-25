@@ -22,23 +22,6 @@ const SavedComps = () => {
 
   const { keyCount } = useContext(PerformanceContext);
   const [ keyCountVal , setKeyCountVal] = keyCount;
-
-  useEffect(() => {
-    const filePath = path.join(os.homedir(), 'AthenaData123.json');
-
-    // Read the file's contents
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        console.error(`Error reading file: ${err.message}`);
-      } else {
-        // Parse the JSON data
-        const jsonData = JSON.parse(data);
-        console.log(jsonData);
-        // Set user components
-        dispatch({type: 'SET_COMPS', payload: jsonData});
-      }
-    });
-  }, []);
  
   //Save component JSON
   const saveJson = () => {
@@ -55,6 +38,7 @@ const SavedComps = () => {
       }
     });
   };
+  
   //Render the selected component
   const renderComponent = (component) => {
     setCompPropsVal(component.props);
