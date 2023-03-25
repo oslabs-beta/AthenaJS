@@ -13,11 +13,22 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import NavContainerUI from '@/components/NavContainerUI';
 import ReactFlowComp from './ReactFlowComp';
+import html2canvas from 'html2canvas';
+import path from 'path';
+import fs from 'fs';
+const os = require('os');
 
 const nodeTypes = {customComp: ReactFlowComp};
 
 const ViewUI = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [ nodes, setNodes, onNodesChange ] = useNodesState([]);
+  const [ bgColor, setBgColor ] = useState('white');
+
+  const divRef = useRef(null);
+
+  const flowStyle = {
+    background: bgColor
+  };
 
   const addNode = (component) => {
     return setNodes([...nodes, { id: component.name, type: 'customComp', position: { x: 200, y: 200 }, data: {component}}]);
@@ -25,6 +36,20 @@ const ViewUI = () => {
 
   const removeNode = (component) => {
     return setNodes(nodes.filter((node) => node.id !== component.name));
+  };
+  
+  const captureScreenshot = () => {
+    html2canvas(divRef.current).then(canvas => {
+      const image = canvas.toDataURL('image/png');
+      const timestamp = Date.now();
+      const randomNumber = Math.floor(Math.random() * 100000);
+      const fileName = `AthenaScreenshot_${timestamp}_${randomNumber}.png`;
+      const filePath = path.join(os.homedir(), 'Downloads', fileName);
+      fs.writeFile(filePath, image.replace(/^data:image\/png;base64,/, ''), 'base64', err => {
+        if (err) throw err;
+        console.log(`Screenshot saved as ${fileName}`);
+      });
+    });
   };
   
 
@@ -53,11 +78,14 @@ const ViewUI = () => {
           nodes={nodes}
           onNodesChange={onNodesChange}
           nodeTypes = {nodeTypes}
+          style = {flowStyle}
+          ref = {divRef}
         >
           <Controls />
         </ReactFlow>
       </Resizable>
-      <NavContainerUI removeNode = {removeNode} addNode = {addNode}/>
+      <button className="material-icons" id = 'screenshot-btn' onClick = {captureScreenshot}> photo_camera </button>
+      <NavContainerUI bg = {[ bgColor, setBgColor ]} removeNode = {removeNode} addNode = {addNode}/>
     </>
   );
 };

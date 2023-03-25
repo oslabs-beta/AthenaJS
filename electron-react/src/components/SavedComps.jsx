@@ -6,7 +6,6 @@ import { PerformanceContext } from './context/PerformanceContext';
 const { ipcRenderer } = require('electron');
 import path from 'path';
 import fs from 'fs';
-const { app } = require('electron');
 const os = require('os');
 // const { app } = window.require('electron').remote;
 
