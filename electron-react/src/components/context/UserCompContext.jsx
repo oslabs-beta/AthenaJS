@@ -23,7 +23,7 @@ export const UserCompReducer = (state, action) => {
 
   case 'EDIT_COMPS':
     return {
-      components: state.comps.map((comp) => comp.name === action.payload.name ? action.payload : comp)
+      components: state.components.map((comp) => comp.name === action.payload.name ? action.payload : comp)
     };
 
   default:
