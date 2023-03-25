@@ -63,44 +63,50 @@ const ViewComponent = () => {
   if (mockServer[0]) scope = {useState, useEffect, useRef, useMemo,styled, fetchMock};
 
   return (
-    <Resizable
-      className="navigation-area-resizable"
-      defaultSize={{
-        width: '100%',
-        height: 'auto',
-      }}
-      minHeight={400} 
-      maxHeight={1000} 
-      enable={{
-        top: false,
-        right: false,
-        bottom: true,
-        left: false,
-        topRight: false,
-        bottomRight: false,
-        bottomLeft: false,
-        topLeft: false,
-      }}
-    >
-      <div id="navigation-area">
-        {/* Actions: {stringifyObject(compActions[0])} <br/> */}
-          Props: {compProps[0]} <br/>
-          State: {compState[0]} <br/>
-          Render Time: {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}
-        <LiveProvider code={string} scope = {scope}>
-          <Profiler key={keyCount[0]} id = 'preview-component' onRender={handleProfilerData}>
-            <LivePreview/>
-          </Profiler>
-          <LiveError />
-        </LiveProvider>
+    <>
+      <div id = 'component-data'>
+        {/* <strong>Mock Server:</strong> {mockServer[0]} <br/>
+        <strong>Props:</strong> {compProps[0]} <br/>
+        <strong>State:</strong> {compState[0]} <br/> */}
+        <strong>Render Time:</strong> {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}<br/>
         <input
+          id = 'render-name'
           onChange = {(e) => setRenderName(e.target.value)}
           value = {renderName}
           placeholder = 'Render Name'
-        />
-        <button onClick={updateGraph}>Add Render Data</button>
+        /><br/>
+        <button id = 'add-render' onClick={updateGraph}>Add Data</button>
       </div>
-    </Resizable>
+      <Resizable
+        className="navigation-area-resizable"
+        defaultSize={{
+          width: '100%',
+          height: 'auto',
+        }}
+        minHeight={400} 
+        maxHeight={1000} 
+        enable={{
+          top: false,
+          right: false,
+          bottom: true,
+          left: false,
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
+      >
+        <div id="navigation-area">
+          {/* Actions: {stringifyObject(compActions[0])} <br/> */}
+          <LiveProvider code={string} scope = {scope}>
+            <Profiler key={keyCount[0]} id = 'preview-component' onRender={handleProfilerData}>
+              <LivePreview/>
+            </Profiler>
+            <LiveError />
+          </LiveProvider>
+        </div>
+      </Resizable>
+    </>
   );
 };
 
