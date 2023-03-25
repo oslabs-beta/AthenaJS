@@ -20,6 +20,18 @@
   text-size-adjust: none; /* for other mobile browsers */
 }
 
+#athena-logo{
+  box-sizing: border-box;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 90px;
+}
+
+input{
+  text-align: center
+}
 
 button {
   border-radius: 8px;
@@ -205,6 +217,15 @@ h1 {
   width: 100%;
 }
 
+#ui-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
 #rendered-component{
   display: flex;
   flex-direction: column;
@@ -362,6 +383,12 @@ h1 {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+}
+
+#screenshot-btn{
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .actions::-webkit-scrollbar{ 

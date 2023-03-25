@@ -1,9 +1,13 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useUserCompContext } from '@/hooks/useUserCompContext';
 import { DetailsContext } from './context/DetailsContext';
 import { MockFetchContext } from './context/MockFetchContext';
 import { PerformanceContext } from './context/PerformanceContext';
 const { ipcRenderer } = require('electron');
+import path from 'path';
+import fs from 'fs';
+const os = require('os');
+// const { app } = window.require('electron').remote;
 
 const SavedComps = () => {
   const {components, dispatch} = useUserCompContext();
@@ -19,6 +23,38 @@ const SavedComps = () => {
   const { keyCount } = useContext(PerformanceContext);
   const [ keyCountVal , setKeyCountVal] = keyCount;
 
+  useEffect(() => {
+    const filePath = path.join(os.homedir(), 'AthenaData123.json');
+
+    // Read the file's contents
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error(`Error reading file: ${err.message}`);
+      } else {
+        // Parse the JSON data
+        const jsonData = JSON.parse(data);
+        console.log(jsonData);
+        // Set user components
+        dispatch({type: 'SET_COMPS', payload: jsonData});
+      }
+    });
+  }, []);
+ 
+  //Save component JSON
+  const saveJson = () => {
+    const data = components;
+  
+    const filePath = path.join(os.homedir(), 'AthenaData123.json');
+    const json = JSON.stringify(data, null, 2);
+    
+    fs.writeFile(filePath, json, 'utf8', (err) => {
+      if (err) {
+        console.error(`Error writing file: ${err.message}`);
+      } else {
+        console.log(`File saved to ${filePath}`);
+      }
+    });
+  };
   //Render the selected component
   const renderComponent = (component) => {
     setCompPropsVal(component.props);
@@ -59,6 +95,7 @@ const SavedComps = () => {
   return(
     <div className = 'saved-comp-page'>
       <h2>Saved Components</h2>
+      <button onClick = {saveJson}>Save Component Library</button>
       {components.length > 0 && components.map( (component) => (
         <div key = {component.name} className = 'saved-comp-container'>
           <button onClick = {() => renderComponent(component)}>{component.name}</button>
