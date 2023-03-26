@@ -26,7 +26,7 @@ const FileExplorer = () => {
   //
 
   // sets CSS to transition sidebar to close
-  const sidebarClass = explorerVisible ? "sidebar" : "sidebar closed";
+  const sidebarClass = explorerVisible ? "sidebar" : "sidebar-closed";
   const handleToggle = (e) => {
     setExplorerVisible(!explorerVisible);
   };
@@ -196,24 +196,27 @@ const FileExplorer = () => {
           <div className={sidebarClass}>
             <div className="side-nav">
               <div className="side-nav-buttons-top">
-                <button className="explorer-button" onClick={handleToggle}>
-                  O
-                </button>
+                <span className="material-icons" onClick={handleToggle}>
+                    arrow_back_ios
+                </span>
               </div>
             </div>
             <div id="file-system-container">
               <div className="file-system-header">
                 <h2>File Explorer</h2>
-                <button
-                  className="open-folder-button"
+                <span
+                  className="material-icons"
+                  id = "open-folder-button"
                   onClick={() => {
                     handleOpenFolder();
                   }}
                 >
-                  Open Folder
-                </button>
+                  folder_open
+                </span>
               </div>
               <div className="root-directory">
+                <hr/>
+                <br/>
                 {/* this is where we render htmlArray */}
                 <div className="root-dir-header">{uploadedFiles}</div>
               </div>
@@ -224,9 +227,9 @@ const FileExplorer = () => {
         <div className={sidebarClass}>
           <div className="side-nav">
             <div className="side-nav-buttons-top">
-              <button className="explorer-button" onClick={handleToggle}>
-                O
-              </button>
+              <span className="material-icons" onClick={handleToggle}>
+              arrow_forward_ios
+              </span>
             </div>
           </div>
         </div>

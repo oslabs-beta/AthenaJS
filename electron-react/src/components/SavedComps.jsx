@@ -1,11 +1,13 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useUserCompContext } from '@/hooks/useUserCompContext';
 import { DetailsContext } from './context/DetailsContext';
 import { MockFetchContext } from './context/MockFetchContext';
 import { PerformanceContext } from './context/PerformanceContext';
-const { ipcRenderer, dialog } = require('electron');
-const fs = window.require("fs");
-const path = window.require("path");
+const { ipcRenderer } = require('electron');
+import path from 'path';
+import fs from 'fs';
+const os = require('os');
+// const { app } = window.require('electron').remote;
 
 const SavedComps = () => {
   const {components, dispatch} = useUserCompContext();
@@ -20,10 +22,25 @@ const SavedComps = () => {
 
   const { keyCount } = useContext(PerformanceContext);
   const [ keyCountVal , setKeyCountVal] = keyCount;
-
+ 
+  //Save component JSON
+  const saveJson = () => {
+    const data = components;
+  
+    const filePath = path.join(os.homedir(), 'AthenaData123.json');
+    const json = JSON.stringify(data, null, 2);
+    
+    fs.writeFile(filePath, json, 'utf8', (err) => {
+      if (err) {
+        console.error(`Error writing file: ${err.message}`);
+      } else {
+        console.log(`File saved to ${filePath}`);
+      }
+    });
+  };
+  
   //Render the selected component
   const renderComponent = (component) => {
-    console.log(component);
     setCompPropsVal(component.props);
     setCompActionsVal(component.actions);
     setCompHTMLVal(component.html);
@@ -50,14 +67,10 @@ const SavedComps = () => {
     }
 
     export default ${component.name}
-    `
+    `;
     ipcRenderer.send('save-file-dialog', fileContent);
   }
     
-  ipcRenderer.on('saved-file', (event, path) => {
-    console.log(`File saved to ${path}`);
-  });
-  
   //Delete the selected component
   const handleDelete = (component) => {
     dispatch({type: 'DELETE_COMPS', payload: component.name});
@@ -66,6 +79,7 @@ const SavedComps = () => {
   return(
     <div className = 'saved-comp-page'>
       <h2>Saved Components</h2>
+      <button onClick = {saveJson}>Save Component Library</button>
       {components.length > 0 && components.map( (component) => (
         <div key = {component.name} className = 'saved-comp-container'>
           <button onClick = {() => renderComponent(component)}>{component.name}</button>

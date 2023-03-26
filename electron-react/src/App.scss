@@ -1,3 +1,10 @@
+//Variables
+$background-color-light: rgba(222, 218, 231);
+$background-color-solid: rgba(155, 144, 182);
+$background-color-primary: rgba(164, 153, 190, 0.6);
+$background-color-dark: rgba(133, 118, 167, 0.5);
+$font-color-primary: rgb(60, 55, 68);
+
 // former index.scss
 
 :root {
@@ -20,6 +27,22 @@
   text-size-adjust: none; /* for other mobile browsers */
 }
 
+.material-icons:hover{
+  cursor: pointer;
+}
+
+#athena-logo{
+  box-sizing: border-box;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 90px;
+}
+
+input{
+  text-align: center
+}
 
 button {
   border-radius: 8px;
@@ -92,15 +115,16 @@ h1 {
 
 // sidebar
 .sidebar {
-  color: white;
+  color: $font-color-primary;
   display: flex;
   // transition: $transition-area;
   width: 100%;
   height: 100vh;
-  background-color: rgb(10,25,41);
+  background: $background-color-solid;
 }
 
-.sidebar.closed {
+.sidebar-closed{
+  background: $background-color-solid;
   // transition: $transition-area;
   width: 5rem;
 }
@@ -124,28 +148,43 @@ h1 {
   transition: $transition-area;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   min-width: 15rem;
   width: 100%;
 }
 
-.open-folder-button {
+#open-folder-button {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.material-icons#open-folder-button {
+  font-size: 5rem; /* change the value to increase or decrease the size */
 }
 
 .root-directory {
   overflow: auto;
   height: 100%;
+  hr{
+    border-top: 1px solid rgba(0, 0, 0, .3);
+    width: 100%;
+  }
+  .vl{
+    border-left: 6px solid green;
+    height: 500px;
+  }
 }
 
 .root-directory-files {
   height: 100%;
 }
 
+
 .folder {
   display: flex;
   flex-direction: column;
   width: 100%;
+
 }
 
 .sub-files{
@@ -153,6 +192,14 @@ h1 {
   flex-direction: column;
   flex-wrap: nowrap;
   padding-left: 1rem;
+  position:relative;
+  .vl{
+    border-left: 1px solid gray;
+    height: 100%;
+    position: absolute;
+    left: 5;
+    margin-left: -.5rem;
+  }
 }
 
 .folder-button,
@@ -168,7 +215,7 @@ h1 {
 
 .folder-button:hover,
 .file-button:hover {
-  background-color: #2d2d2d;
+  background-color: $background-color-dark;
 }
 
 .folder-button:focus,
@@ -185,7 +232,7 @@ h1 {
 }
 
 .file-button-text {
-  color: #d4d4d4;
+  color: $font-color-primary;
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1rem;
@@ -197,6 +244,15 @@ h1 {
 
 // pages
 #workshop-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+#ui-page{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -226,7 +282,33 @@ h1 {
   width: 100%;
 }
 
-.navbar,
+.navbar {
+  background-color: #663EFF;
+  height: 100px;
+  ul {
+    display: flex;
+    justify-content: flex-start;
+    // align-items: left;
+    flex-direction: row;
+    list-style-type: none;
+    li {
+      padding: 10px;
+      a {
+        padding: 10px;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 10px;
+        border-color: black;
+        color: black;
+        text-decoration: none;
+      }
+      a:focus, a:hover {
+        // background-color: #5f67f0;
+        box-shadow: inset 0 0 0 2em #FFC233;
+      }
+    }
+  }
+}
 // temporary .props-toggle-nav addition, should have it's own styling later
 .props-toggle-nav {
   background-color: $navbar-color;
@@ -248,6 +330,29 @@ h1 {
   }
 }
 
+#component-data {
+  color: $font-color-primary;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 1.2rem 1.2rem 1.5rem 1.2rem;
+  background: $background-color-primary;
+  border: 0.1rem solid $background-color-dark;
+  border-radius: 0.5rem;
+  z-index: 20;
+  #render-name{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.2rem;
+    width: 90%;
+  }
+  #add-render{
+    height: 3rem;
+    width: 65%;
+    font-size: 1rem;
+  }
+}
+
 #navigation-area {
   position: relative;
   display: flex;
@@ -256,6 +361,7 @@ h1 {
   align-items: center;
   height: 100%;
   width: 100%;
+  border: 1px solid red;
 }
 
 // PropsWindow.jsx
@@ -284,22 +390,23 @@ h1 {
   button{
     margin-top: 20px;
   }
-  #props-header{
-    position: relative;
-    #overwrite-modal{
-      box-shadow: 7px 3px 3px rgba(0, 0, 0, .3);
-      border-radius: 5px;
-      background:#747bff;
-      border: 1px solid #5f67f0;
-      padding: 5px 5px;
-      position: absolute;
-      height: 150px;
-      top: 0.4rem;
-      left: 3rem;
-      button{
-        margin-left: 5px;
-        margin-right: 5px;
-      }
+}
+
+#props-header{
+  position: relative;
+  #overwrite-modal{
+    box-shadow: 7px 3px 3px rgba(0, 0, 0, .3);
+    border-radius: 5px;
+    background:#747bff;
+    border: 1px solid #5f67f0;
+    padding: 5px 5px;
+    position: absolute;
+    height: 150px;
+    top: 0.4rem;
+    left: 3rem;
+    button{
+      margin-left: 5px;
+      margin-right: 5px;
     }
   }
 }
@@ -329,7 +436,6 @@ h1 {
   align-items: center;
   input{
     border: 1px solid black;
-    
   }
 }
 
@@ -362,6 +468,12 @@ h1 {
   height: 100%;
   width: 100%;
   overflow-y: scroll;
+}
+
+#screenshot-btn{
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .actions::-webkit-scrollbar{ 
