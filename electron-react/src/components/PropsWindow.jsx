@@ -133,23 +133,23 @@ const PropsWindow = () => {
 
   return (
     <>
-      <form className = 'props-form'>
-        <div id = 'props-header'>
-          <h3>Edit Component</h3>
-          {checkSaveModal &&
+      <div id = 'props-header'>
+        <h3>Edit Component</h3>
+        {checkSaveModal &&
           <div id = 'overwrite-modal'>
             <h4>A component with this name already exists, overwrite component?</h4>
             <button onClick = {handleOverWriteYes}>Yes</button>
             <button onClick = {handleOverWriteNo}>No</button>
           </div>
-          }
-          <input 
-            placeholder='Component Name' 
-            onChange = {(e) => setSaveName(e.target.value)} />
-          <button onClick = {checkCompExist}>Save Component</button>
-          <br/>
-          <button onClick = {handleSubmit}>Update View</button>
-        </div>
+        }
+        <input 
+          value = {saveName}
+          onChange = {(e) => setSaveName(e.target.value)} />
+        <button onClick = {checkCompExist}>Save Component</button>
+        <br/>
+      </div>
+      <form className = 'props-form'>
+        <button onClick = {handleSubmit}>Update View</button>
         <div className='props-window'>
           {/* toggleable containers */}
           <div className='props-container' id='toggle-edit-container'>
