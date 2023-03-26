@@ -2,46 +2,56 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Getting Started
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## Introduction to AthenaJS:
 
-## Getting Started
+AthenaJS is an Electron-based application that streamlines the development process of React components. Its key feature is the ability to **develop individual components in isolation**, allowing for rapid prototyping, testing, and iteration. By providing a dedicated environment for component creation, AthenaJS enhances efficiency and promotes best practices in React development.
 
-Get started by **creating a new site**.
+### Key Features of AthenaJS Include:
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+- Intuitive interface for editing components, mocking props, and managing state. This includes a built-in linter for JavaScript, JSON, and JSX.
 
-### What you'll need
+- Support for defining custom actions to manage component behavior and interactions.
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+- Live component rendering and previewing, making it easy to visualize and test components on the fly.
 
-## Generate a new site
+- Render time calculations, allowing developers to analyze component performance and optimize if needed.
 
-Generate a new Docusaurus site using the **classic template**.
+- Export functionality to integrate updated components seamlessly into your React application.
 
-The classic template will automatically be added to your project after you run the command:
+- Ability to edit React server components in isolation, allowing developers to optimize performance and reduce the need for client-side rendering, further enhancing the React development experience.
+
+
+## Prerequisities
+
+To get started with AthenaJS, it's important to ensure that your system meets the following requirements:
+
+
+- **Compatible operating system**: AthenaJS is available for Windows, macOS, and Linux.
+- **Basic knowledge of React**: Familiarity with React, its core concepts, and component development is highly recommended to use AthenaJS effectively.
+
+
+Once you have met these prerequisites, you can install AthenaJS and begin developing React components with enhanced performance insights and efficient workflows.
+
+## Installing Athena JS
+
+Users will be able to download Athena JS either through our [homepage](http://localhost:3000/) or our [Github](https://github.com/oslabs-beta/Athena).
+
+**Github Instructions:**
+
+First, navigate to the Github repository URL and fork the repository.
+
+Next, clone the repository to your local machine.
 
 ```bash
-npm init docusaurus@latest my-website classic
+git clone https://github.com/YOUR_USERNAME_HERE/Athena.git
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+Navigate into the newly created Athena Folder, install all necessary dependencies, and spin up the app
 
 ```bash
-cd my-website
-npm run start
+cd Athena
+npm install
+npm run dev
 ```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.

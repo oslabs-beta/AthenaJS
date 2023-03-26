@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
-# Importing Your File
+# Rendering Your Component
 
 Add **Markdown or React** files to `src/pages` to create a **standalone page**:
 
