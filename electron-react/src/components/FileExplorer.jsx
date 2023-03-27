@@ -6,6 +6,9 @@ import { DetailsContext } from "./context/DetailsContext";
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
+const acorn = window.require("acorn");
+import { parse } from 'acorn-loose';
+const walk = window.require("acorn-walk");
 
 /**
  * interface file {name:string, directory: boolean, files: file[] }
@@ -98,6 +101,41 @@ const FileExplorer = () => {
     return fileArr;
   };
 
+  function acornParser(dataString) {   
+    
+    // helper log fn
+    const nodeLogger = (node, array, dataString) => {
+      console.log(`There's a ${node.type}`);
+      console.log('This node\'s ancestors are:', array.map(n => n.type));
+      console.log(dataString);
+    };
+    // object: method definitions shorthand for walk.ancestor
+    const visitorFunctions = {
+      // state : traversal state || ancestors
+      FunctionDeclaration (node, state, ancestors) {
+        const parsedStr = `${dataString.slice(node.start, node.end)}`;
+        functionArray.push(parsedStr);
+      },
+      VariableDeclaration (node, state, ancestors) {
+        if(node.declarations[0].init.type === 'ArrowFunctionExpression') {
+          console.log('PARSED STRING: ', `${dataString.slice(node.start, node.end)}`);
+          const parsedStr = `${dataString.slice(node.start, node.end)}`;
+          functionArray.push(parsedStr);
+        }
+      },
+
+    };
+
+    const functionArray = [];
+    const dataTree = parse(dataString, {ecmaVersion: 'latest'}); 
+    walk.ancestor(dataTree, visitorFunctions); 
+
+    functionArray.pop();
+    const newArr = functionArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    console.log('this is my newArr: ', newArr);
+    setTempCompActionsVal(newArr);
+  }
+
   const fileParser = (path) => {
     // console.log(path);
     //We only really need plaintext here since AthenaJS handles the logic for us, do we even need to parse? 
@@ -120,6 +158,9 @@ const FileExplorer = () => {
           const returnStatement = data.match(returnRegex)[1];
           console.log('JSX File content:', returnStatement);
           setTempCompHTMLVal(returnStatement);
+          
+          acornParser(data);
+
           break;
         case '.json':
           console.log('JSON File content:', data);

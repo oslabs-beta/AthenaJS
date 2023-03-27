@@ -283,11 +283,13 @@ h1 {
 }
 
 .navbar {
+  display: flex;
+  align-items: center;
   background-color: #663EFF;
   height: 100px;
+  width: 100%;
   ul {
     display: flex;
-    justify-content: flex-start;
     // align-items: left;
     flex-direction: row;
     list-style-type: none;
