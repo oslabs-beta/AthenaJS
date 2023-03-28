@@ -3,32 +3,14 @@ import React, { useState, useContext } from "react";
 import DirectoryComponent from "./DirectoryComponent";
 import { Resizable } from "re-resizable";
 import { DetailsContext } from "./context/DetailsContext";
-import { motion } from 'framer-motion';
-import { FaFolderOpen } from 'react-icons/fa';
+
+const babelParser = window.require('@babel/parser');
+import traverse from "@babel/traverse";
+//...
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
-const containerVariants = {
-  hidden: {
-    x: "-5rem",
-  },
-  visible: {
-    x: 0,
-    transition: {
-      type: "spring",
-      stiffness: 600,
-      damping: 100,
-    },
-  },
-  exit: {
-    x: "-77%",
-    transition: {
-      type: "spring",
-      stiffness: 700,
-      damping: 100,
-    },
-  },
-};
+
 /**
  * interface file {name:string, directory: boolean, files: file[] }
  * @returns
@@ -44,7 +26,7 @@ const FileExplorer = () => {
   // store htmlArray in state
   const [uploadedFiles, setUploadedFiles] = useState([]);
   // toggle sidebar
-  const [explorerVisible, setExplorerVisible] = useState(false);
+  const [explorerVisible, setExplorerVisible] = useState(true);
   //
 
   // sets CSS to transition sidebar to close
@@ -120,6 +102,47 @@ const FileExplorer = () => {
     return fileArr;
   };
 
+  function parseAndTraverseAST (dataString) {
+    const functionArray = [];
+    const returnArray = [];
+
+    const ast = babelParser.parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
+
+    traverse(ast, {
+      enter(path) {
+        if (path.isFunctionDeclaration()) {
+          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+          console.log('PARSED STRING: ', `${parsedStr}`);
+          functionArray.push(parsedStr);
+        }
+        if (path.isVariableDeclaration()) {
+          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+          console.log('PARSED STRING: ', `${parsedStr}`);
+          functionArray.push(parsedStr);
+        }
+        if (path.isReturnStatement()) {
+          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+          console.log('PARSED STRING: ', `${parsedStr}`);
+          returnArray.push(parsedStr);
+        }
+        if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
+          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+          console.log('PARSED JSX RETURN: ', `${parsedStr}`);
+          returnArray.push(parsedStr);
+        }
+      }
+    });
+
+    let functionString = '';
+    if (functionArray.length > 0) functionString = functionArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    console.log('this is my functionString: ', functionString);
+    setTempCompActionsVal(functionString);
+    
+    const returnString = returnArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    console.log('this is my returnString: ', returnString);
+    setTempCompHTMLVal(returnString);
+  }
+
   const fileParser = (path) => {
     // console.log(path);
     //We only really need plaintext here since AthenaJS handles the logic for us, do we even need to parse? 
@@ -141,7 +164,7 @@ const FileExplorer = () => {
           // data.match => [return(<statement>), <statement>]
           const returnStatement = data.match(returnRegex)[1];
           console.log('JSX File content:', returnStatement);
-          setTempCompHTMLVal(returnStatement);
+          parseAndTraverseAST(data);
           break;
         case '.json':
           console.log('JSON File content:', data);
@@ -196,71 +219,57 @@ const FileExplorer = () => {
   return (
     <>
       {explorerVisible ? (
-        <motion.div
-          key = 'expanded'
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+        <Resizable
+          className={sidebarClass}
+          defaultSize={{
+            width: 'auto',
+            height: 'auto',
+          }}
+          minWidth={250} 
+          maxWidth={800} 
+          enable={{
+            top: false,
+            right: true,
+            bottom: false,
+            left: false,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false,
+          }}
         >
-          <Resizable
-            className={sidebarClass}
-            defaultSize={{
-              width: 'auto',
-              height: 'auto',
-            }}
-            minWidth={250} 
-            maxWidth={800} 
-            enable={{
-              top: false,
-              right: true,
-              bottom: false,
-              left: false,
-              topRight: false,
-              bottomRight: false,
-              bottomLeft: false,
-              topLeft: false,
-            }}
-          >
-            <motion.div 
-              className='sidebar'
-            >
-              <div className="side-nav">
-                <div className="side-nav-buttons-top">
-                  <span className="material-icons" onClick={handleToggle}>
-                      arrow_back_ios
-                  </span>
-                </div>
+          <div className={sidebarClass}>
+            <div className="side-nav">
+              <div className="side-nav-buttons-top">
+                <span className="material-icons" onClick={handleToggle}>
+                    arrow_back_ios
+                </span>
               </div>
-              <div 
-                id="file-system-container">
-                <div className="file-system-header">
-                  <h2>File Explorer</h2>
-                  <span
-                    id = "open-folder-button"
-                    onClick={() => {
-                      handleOpenFolder();
-                    }}
-                  >
-                    <FaFolderOpen/>
-                  </span>
-                </div>
-                <div className="root-directory">
-                  <hr/>
-                  <br/>
-                  {/* this is where we render htmlArray */}
-                  <div className="root-dir-header">{uploadedFiles}</div>
-                </div>
+            </div>
+            <div id="file-system-container">
+              <div className="file-system-header">
+                <h2>File Explorer</h2>
+                <span
+                  className="material-icons"
+                  id = "open-folder-button"
+                  onClick={() => {
+                    handleOpenFolder();
+                  }}
+                >
+                  folder_open
+                </span>
               </div>
-            </motion.div>
-          </Resizable>
-        </motion.div>
+              <div className="root-directory">
+                <hr/>
+                <br/>
+                {/* this is where we render htmlArray */}
+                <div className="root-dir-header">{uploadedFiles}</div>
+              </div>
+            </div>
+          </div>
+        </Resizable>
       ) : (
-        <motion.div       
-          style={{ opacity: .9 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          key = 'closed' 
-          className='sidebar-closed'>
+        <div className={sidebarClass}>
           <div className="side-nav">
             <div className="side-nav-buttons-top">
               <span className="material-icons" onClick={handleToggle}>
@@ -268,7 +277,7 @@ const FileExplorer = () => {
               </span>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
     </>
   );
