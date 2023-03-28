@@ -18,6 +18,8 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@babel/parser": "^7.21.3",
+    "@babel/traverse": "^7.21.3",
     "@electron/remote": "^2.0.9",
     "@reactflow/node-resizer": "^2.1.0",
     "ace-builds": "^1.16.0",
