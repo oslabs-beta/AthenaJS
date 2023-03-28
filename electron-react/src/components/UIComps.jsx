@@ -1,12 +1,11 @@
 import React, {useState, useContext} from 'react';
 import { useUserCompContext } from '@/hooks/useUserCompContext';
-const { ipcRenderer } = require('electron');
 
+//This is the UI we use to add/remove components from the react flow UI & change the background color for the react flow UI
 const UIComps = ({bg, addNode, removeNode}) => {
   const {components, dispatch} = useUserCompContext();
   const [ bgColor, setBgColor ] = bg;
   const [ bgColorIn, setBgColorIn ] = useState(bgColor);
-
    
   return(
     <div className = 'saved-comp-page'>

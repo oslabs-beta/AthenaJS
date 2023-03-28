@@ -12,6 +12,9 @@ const pathVariants = {
   }
 };
 
+//This component is the Athena icon that gets drawn at the top of the screen on load for component mode
+//It uses framer motion, where d is the path that the pen stroke follows (M moves the pen without drawing anything, L draws from the point that
+//the pen is at currently to the point specified after the L)
 const AthenaSvg = () => {
 
   return(
@@ -33,7 +36,7 @@ const AthenaSvg = () => {
           transition={{
             duration: 2.5,
             ease: "easeInOut",
-            delay: 0.5 // add a delay to start the second stroke animation after the first stroke has completed
+            delay: 0.5
           }}
         />
         <motion.path
