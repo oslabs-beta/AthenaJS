@@ -45,6 +45,14 @@ body{
   z-index: 100;
 }
 
+#athena-logo-svg{
+  position:absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  z-index: 100
+  // right: 10px;
+}
+
 #athena-logo{
   box-sizing: border-box;
   position: absolute;
@@ -356,7 +364,7 @@ $transition-area: width 0.3s ease-in-out;
 #component-data {
   color: $font-color-primary;
   position: absolute;
-  top: 0.5rem;
+  top: 8rem;
   right: 0.5rem;
   padding: 1.2rem 1.2rem 1.5rem 1.2rem;
   background: $background-color-light-2;
@@ -663,8 +671,8 @@ $transition-area: width 0.3s ease-in-out;
 
 #screenshot-btn{
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 6rem;
+  right: 3rem;
   background: transparent;
 }
 
