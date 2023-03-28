@@ -10,17 +10,17 @@ AthenaJS is an Electron-based application that streamlines the development proce
 
 ### Key Features of AthenaJS Include:
 
-- Intuitive interface for editing components, mocking props, and managing state. This includes a built-in linter for JavaScript, JSON, and JSX.
+- **Intuitive interface** for editing components, mocking props, and managing state. This includes a built-in linter for JavaScript, JSON, and JSX.
 
-- Support for defining custom actions to manage component behavior and interactions.
+- Support for **defining custom actions** to manage component behavior and interactions.
 
-- Live component rendering and previewing, making it easy to visualize and test components on the fly.
+- **Live component rendering and previewing**, making it easy to visualize and test components on the fly.
 
-- Render time calculations, allowing developers to analyze component performance and optimize if needed.
+- **Render time calculations**, allowing developers to analyze component performance and optimize if needed.
 
-- Export functionality to integrate updated components seamlessly into your React application.
+- **Export** functionality to integrate updated components seamlessly into your React application.
 
-- Ability to edit React server components in isolation, allowing developers to optimize performance and reduce the need for client-side rendering, further enhancing the React development experience.
+- Ability to **edit React server components in isolation**, allowing developers to optimize performance and reduce the need for client-side rendering, further enhancing the React development experience.
 
 
 ## Prerequisities
