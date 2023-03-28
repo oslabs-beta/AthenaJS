@@ -24,14 +24,17 @@ const ViewUI = () => {
     background: bgColor
   };
 
+  //Add a node to the react flow UI
   const addNode = (component) => {
     return setNodes([...nodes, { id: component.name, type: 'customComp', position: { x: 200, y: 200 }, data: {component}}]);
   };
 
+  //Remove a specific node from the react flow UI (tied to that specific components remove button in UIComps.jsx)
   const removeNode = (component) => {
     return setNodes(nodes.filter((node) => node.id !== component.name));
   };
   
+  //Take a screenshot of the react flow UI div.  
   const captureScreenshot = () => {
     html2canvas(divRef.current).then(canvas => {
       const image = canvas.toDataURL('image/png');

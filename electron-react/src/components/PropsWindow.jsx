@@ -13,9 +13,11 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/worker-javascript';
 import 'ace-builds/src-noconflict/worker-json';
 
+//Need these to make workers function for ace editor (allows linting and other code editor functionality)
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
 window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
 
+//Framer motion variants
 const fadeInVariants = {
   hidden: { opacity: 0.9 },
   visible: { opacity: 1 },
@@ -32,8 +34,6 @@ const transitionPage = {
   duration: 1
 };
 
-
-//NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
 const PropsWindow = () => {
   //Global state: temp versions are for the text editor states
@@ -50,11 +50,11 @@ const PropsWindow = () => {
   const [ tempCompPropsVal, setTempCompPropsVal ] = tempCompProps;
   const [ tempCompStateVal, setTempCompStateVal ] = tempCompState;
   const [ tempMockServer, setTempMockServer ] = useState(`fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });`)
-  // toggle states for windows (props & state)
+  // toggle states for windows (props, state, mockFetch)
   const [propsWindowVisible, setPropsWindowVisible] = useState(true);
   const [stateWindowVisible, setStateWindowVisible] = useState(false);
   const [mockServerWindowVisible, setMockServerWindowVisible] = useState(false);
-  //Key count to force remount on component update
+  //Key count to force remount on component update -> this is used for the React Profiler API in ViewComponent.jsx
   const { keyCount } = useContext(PerformanceContext);
   const [ keyCountVal , setKeyCountVal] = keyCount;
   //state and dispatch for saved user components
@@ -65,6 +65,8 @@ const PropsWindow = () => {
   //Handle the submit of the create props form
   const handleSubmit = (e) => {
     e.preventDefault();
+    //On form submission (Update View button), we set the states for the component renderer
+    //We also adjust keyCount so that we measure a new render time with react profiler API
     try {
       setCompActionsVal(tempCompActionsVal);
       setCompHTMLVal(tempCompHTMLVal);
@@ -77,7 +79,7 @@ const PropsWindow = () => {
     }
   };
 
-  //Check if component has already been saved
+  //Check if component has already been saved when we press save component
   const checkCompExist = () => {
     for (let i = 0; i < components.length; i++){
       if (components[i].name === saveName) return setCheckSaveModal(true);
@@ -85,9 +87,10 @@ const PropsWindow = () => {
     return handleSave();
   };
 
-  //If user says they want to overwrite component
+  //If user says they want to overwrite component -> do this
   const handleOverWriteYes = () => {
     try{
+      //Overwrite the object for the existing component in the UserComponents global state
       dispatch({type: 'EDIT_COMPS', payload: {
         name: saveName, 
         html: compHTMLVal,
@@ -96,6 +99,7 @@ const PropsWindow = () => {
         state: compStateVal,
         mockServer: mockServerVal,
       }});
+      //Close the modal
       setCheckSaveModal(false);
     } catch(error){
       console.log(error);
@@ -104,10 +108,11 @@ const PropsWindow = () => {
 
   //If user says they don't want to overwrite component
   const handleOverWriteNo = () => {
+    //close modal
     setCheckSaveModal(false);
   };
 
-  //Save current component
+  //Save current component by adding to the UserComponent array (via reducer)
   const handleSave = () => {
     try{
       dispatch({type: 'ADD_COMPS', payload: {
@@ -124,7 +129,6 @@ const PropsWindow = () => {
   };
 
   // handle toggling the props and state containers
-  // currently set used in props-toggle-nav links
   const handleToggleWindow = {
     props : (e) => {
       setPropsWindowVisible(true);
