@@ -1,12 +1,9 @@
 import React, {useState, useContext} from 'react';
 import { useUserCompContext } from '@/hooks/useUserCompContext';
-import { CompUIContext } from './context/CompUIContext';
 const { ipcRenderer } = require('electron');
 
 const UIComps = ({bg, addNode, removeNode}) => {
   const {components, dispatch} = useUserCompContext();
-  const { compsUI } = useContext(CompUIContext);
-  const [ compsUIVal, setCompsUIVal ] = compsUI;
   const [ bgColor, setBgColor ] = bg;
   const [ bgColorIn, setBgColorIn ] = useState(bgColor);
 
