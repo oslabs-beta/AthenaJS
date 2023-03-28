@@ -84,7 +84,7 @@ const ViewComponent = () => {
           height: 'auto',
         }}
         minHeight={400} 
-        maxHeight={1000} 
+        maxHeight={2000} 
         enable={{
           top: false,
           right: false,

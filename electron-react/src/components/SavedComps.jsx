@@ -7,7 +7,14 @@ const { ipcRenderer } = require('electron');
 import path from 'path';
 import fs from 'fs';
 const os = require('os');
-// const { app } = window.require('electron').remote;
+import {motion} from 'framer-motion';
+
+const transition = {
+  type: "spring",
+  damping: 30,
+  stiffness: 300,
+  duration: 1
+};
 
 const SavedComps = () => {
   const {components, dispatch} = useUserCompContext();
@@ -77,17 +84,25 @@ const SavedComps = () => {
   };
 
   return(
-    <div className = 'saved-comp-page'>
-      <h2>Saved Components</h2>
-      <button onClick = {saveJson}>Save Component Library</button>
-      {components.length > 0 && components.map( (component) => (
-        <div key = {component.name} className = 'saved-comp-container'>
-          <button onClick = {() => renderComponent(component)}>{component.name}</button>
-          <button onClick = {() => handleExportClick(component)}>Export</button>
-          <button onClick = {() => handleDelete(component)}>X</button>
-        </div>
-      ))}
-    </div>
+    <motion.div 
+      initial={{ x: -100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={transition}
+      className = 'saved-comp-page'
+    >
+      <h1>Component Library</h1><br/>
+      <button id = 'save-library' onClick = {saveJson}>Save Library</button>
+      <div className = 'saved-comps'>
+        {components.length > 0 && components.map( (component) => (
+          <div key = {component.name} className = 'saved-comp-container'>
+            <span className = 'comp-container-name'>{component.name}</span>
+            <button className = 'render-comp-button' onClick = {() => renderComponent(component)}>Render</button>
+            <button className = 'export-comp-button' onClick = {() => handleExportClick(component)}>Export</button>
+            <button className = 'delete-comp-button' onClick = {() => handleDelete(component)}>Delete</button>
+          </div>
+        ))}
+      </div>
+    </motion.div>
   );
 };
 
