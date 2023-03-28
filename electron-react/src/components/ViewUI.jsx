@@ -22,7 +22,7 @@ const nodeTypes = {customComp: ReactFlowComp};
 
 const ViewUI = () => {
   const [ nodes, setNodes, onNodesChange ] = useNodesState([]);
-  const [ bgColor, setBgColor ] = useState('white');
+  const [ bgColor, setBgColor ] = useState('#D0DBFE');
 
   const divRef = useRef(null);
 
