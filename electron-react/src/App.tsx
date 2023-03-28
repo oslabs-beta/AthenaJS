@@ -4,7 +4,6 @@ import Workshop from './pages/Workshop';
 import UIPage from './pages/UIPage';
 import { DetailsProvider } from './components/context/DetailsContext';
 import { PerformanceProvider } from './components/context/PerformanceContext';
-import { CompUIProvider } from './components/context/CompUIContext';
 import { useUserCompContext } from './hooks/useUserCompContext';
 import './App.scss';
 import FileExplorer from './components/FileExplorer';
@@ -75,9 +74,7 @@ function App() {
       exit="exit"
         className = 'App'
       >
-          <CompUIProvider>
-            <UIPage/>
-          </CompUIProvider> 
+        <UIPage/>
       </motion.div>
     )
   }

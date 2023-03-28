@@ -1,13 +1,7 @@
 import React, { useState, useContext, useEffect, useMemo, useRef, useCallback } from 'react';
-import styled from 'styled-components';
-import fetchMock from 'fetch-mock';
 import { Resizable } from 're-resizable';
-import { CompUIContext } from './context/CompUIContext';
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import ReactFlow, {
-  MiniMap,
   Controls,
-  Background,
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
