@@ -3,6 +3,7 @@ import { DetailsContext } from './context/DetailsContext';
 import { useUserCompContext } from '@/hooks/useUserCompContext';
 import { MockFetchContext } from './context/MockFetchContext';
 import { PerformanceContext } from './context/PerformanceContext';
+import {motion} from 'framer-motion';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/mode-json';
@@ -14,6 +15,23 @@ import 'ace-builds/src-noconflict/worker-json';
 
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
 window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
+
+const fadeInVariants = {
+  hidden: { opacity: 0.9 },
+  visible: { opacity: 1 },
+};
+
+const transition = {
+  duration: 2,
+};
+
+const transitionPage = {
+  type: "spring",
+  damping: 30,
+  stiffness: 300,
+  duration: 1
+};
+
 
 //NOTE: User inputs a function definition in the actions tab e.g. () => console.log('hello')
 //form for adjusting component
@@ -132,12 +150,18 @@ const PropsWindow = () => {
   };
 
   return (
-    <>
+    <motion.div 
+      initial={{ x: -100, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={transitionPage} 
+      id = 'props-window-page'
+    >
+      <h1>Edit Component</h1>
       <div id = 'props-header'>
-        <h3>Edit Component</h3>
         {checkSaveModal &&
           <div id = 'overwrite-modal'>
             <h4>A component with this name already exists, overwrite component?</h4>
+            <br/>
             <button onClick = {handleOverWriteYes}>Yes</button>
             <button onClick = {handleOverWriteNo}>No</button>
           </div>
@@ -153,16 +177,22 @@ const PropsWindow = () => {
         <div className='props-window'>
           {/* toggleable containers */}
           <div className='props-container' id='toggle-edit-container'>
-            <nav className='props-toggle-nav'>
-              <ul>
-                <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
-                <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
-                <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
-              </ul>
-            </nav>
             {propsWindowVisible && 
-              <div className='props-container' id='prop-edit-container'>
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariants}
+                transition={transition}
+                className='props-container' 
+                id='prop-edit-container'>
                 <label>Variables</label>
+                <nav className='props-toggle-nav'>
+                  <ul>
+                    <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
+                  </ul>
+                </nav>
                 <AceEditor
                   mode="javascript"
                   theme="monokai"
@@ -174,11 +204,25 @@ const PropsWindow = () => {
                   width={styleOptions.width}
                   height={styleOptions.height}
                 />
-              </div>
+              </motion.div>
             }
             {stateWindowVisible &&
-              <div className='props-container' id='state-edit-container'>
-                <label>state</label>
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariants}
+                transition={transition}
+                className='props-container' 
+                id='state-edit-container'
+              >
+                <label>State</label>
+                <nav className='props-toggle-nav'>
+                  <ul>
+                    <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
+                  </ul>
+                </nav>
                 <AceEditor
                   mode="javascript"
                   theme="monokai"
@@ -190,11 +234,25 @@ const PropsWindow = () => {
                   width={styleOptions.width}
                   height={styleOptions.height}
                 />
-              </div>
+              </motion.div>
             }
             {mockServerWindowVisible && 
-              <div className='props-container' id='prop-edit-container'>
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariants}
+                transition={transition}
+                className='props-container' 
+                id='prop-edit-container'
+              >
                 <label>Mock Server</label>
+                <nav className='props-toggle-nav'>
+                  <ul>
+                    <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
+                  </ul>
+                </nav>
                 <AceEditor
                   mode="javascript"
                   theme="monokai"
@@ -206,7 +264,7 @@ const PropsWindow = () => {
                   width={styleOptions.width}
                   height={styleOptions.height}
                 />
-              </div>
+              </motion.div>
             }
           </div>
           {/* static containers */}
@@ -246,7 +304,7 @@ const PropsWindow = () => {
           </div>
         </div>
       </form>
-    </>
+    </motion.div>
   );
 
 };
