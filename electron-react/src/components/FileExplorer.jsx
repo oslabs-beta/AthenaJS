@@ -12,7 +12,6 @@ const pathModule = window.require('path');
 const babelParser = window.require('@babel/parser');
 import traverse from '@babel/traverse';
 
-
 const containerVariants = {
   hidden: {
     x: '-5rem',
@@ -38,13 +37,13 @@ const containerVariants = {
 /**
  * interface file {name:string, directory: boolean, files: file[] }
  * @returns
-*/
+ */
 const FileExplorer = () => {
   // Contexts from details context
   const { tempCompBody, tempCompJSX } = useContext(DetailsContext);
   const [tempCompJSXVal, setTempCompJSXVal] = tempCompJSX;
   const [tempCompBodyVal, setTempCompBodyVal] = tempCompBody;
-  
+
   // store htmlArray in state
   const [uploadedFiles, setUploadedFiles] = useState([]);
   // toggle sidebar
@@ -86,7 +85,7 @@ const FileExplorer = () => {
         // fs.statSync is how we get the data on whether a folder is a directory or not.
         const subPath = pathModule.join(directoryPath, file);
         const stats = fs.statSync(subPath);
-        
+
         // console.log(stats);
         return {
           name: file,
@@ -137,8 +136,8 @@ const FileExplorer = () => {
 
         // Extract the string representation of the JSX element
         const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-        console.log('PARSED STRING: ', `${parsedStr}`);
-      }
+        console.log("PARSED STRING: ", `${parsedStr}`);
+      },
     };
 
     //Use Babel to parse the input codee string into an Abstract Syntax Tree (AST)
@@ -190,9 +189,8 @@ const FileExplorer = () => {
           const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
           JSXArray.push(parsedStr);
         }
-      }
+      },
     });
-
     //Concatenate the parsed function declarations into a single string and save it to a state variable 
     let componentBodyString = '';
     if (componentBodyArray.length > 0) componentBodyString = componentBodyArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
@@ -204,11 +202,10 @@ const FileExplorer = () => {
     setTempCompJSXVal(JSXString);
   }
 
-  
   const fileParser = (path) => {
-    // asynchronously read file here passing in the absolute path. 
+    // asynchronously read file here passing in the absolute path.
     // data is a string
-    fs.readFile(path,'utf-8', (err, data) => {
+    fs.readFile(path, "utf-8", (err, data) => {
       //declare variable extension which gets the extension of our file i.e. .jsx
       const extension = pathModule.extname(path).toLowerCase();
       try {
@@ -226,12 +223,45 @@ const FileExplorer = () => {
         default: 
           console.log('File data:', data);
         }
-      }
-      //handle errors
-      catch(err) {
-        console.log('ERROR: error reading file in DirectoryComponent.jsx:', err);
+      } catch (err) {
+        //handle errors
+        console.log(
+          "ERROR: error reading file in DirectoryComponent.jsx:",
+          err
+        );
         return;
       }
+
+      // //switch statement for different file types? Do we just Need JSX?
+      // //I am going to keep the switch statement here for now, and remove it if we decide to only use JSX
+      // try {
+      //   switch(extension) {
+      //   case '.jsx':
+      //     // just the jsx return should be passed
+      //     // regex matches return(<statement>) and also <statement>
+      //     const returnRegex = /return\s*\((\s*<[\s\S]*?)\)/;
+      //     // data.match => [return(<statement>), <statement>]
+      //     const returnStatement = data.match(returnRegex)[1];
+      //     console.log('JSX File content:', returnStatement);
+      //     setTempCompHTMLVal(returnStatement);
+      //     break;
+      //   case '.json':
+      //     console.log('JSON File content:', data);
+      //     //how do we pass along this data into the JSX textarea?
+      //     break;
+      //   case '.js':
+      //     console.log('JS File content:', data);
+      //     //how do we pass along this data into the JSX textarea?
+      //     break;
+      //   default:
+      //     console.log('File data:', data);
+      //   }
+      // }
+      // //handle errors
+      // catch(err) {
+      //   console.log('ERROR: error reading file in DirectoryComponent.jsx:', err);
+      //   return;
+      // }
     });
   };
 
@@ -242,20 +272,23 @@ const FileExplorer = () => {
       const { name, files, path } = file;
       if (file.directory) {
         // if file is a directory
-        // create a directory component passing down name and files and push to htmlarray 
+        // create a directory component passing down name and files and push to htmlarray
         htmlArray.push(
           <DirectoryComponent
-            path = {path}
-            fileParser = {fileParser}
-            name={name} 
-            files={files}></DirectoryComponent>
+            path={path}
+            fileParser={fileParser}
+            name={name}
+            files={files}
+          ></DirectoryComponent>
         );
       } else {
         // else create a button to render that will render on click.
         htmlArray.push(
-          <button 
+          <button
             className="file-button"
-            onClick = {() => {fileParser(path)}}
+            onClick={() => {
+              fileParser(path);
+            }}
           >
             <span className="file-button-text">{name}</span>
           </button>
@@ -269,7 +302,7 @@ const FileExplorer = () => {
     <>
       {explorerVisible ? (
         <motion.div
-          key = 'expanded'
+          key="expanded"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -277,11 +310,11 @@ const FileExplorer = () => {
           <Resizable
             className={sidebarClass}
             defaultSize={{
-              width: 'auto',
-              height: 'auto',
+              width: "auto",
+              height: "auto",
             }}
-            minWidth={250} 
-            maxWidth={800} 
+            minWidth={250}
+            maxWidth={800}
             enable={{
               top: false,
               right: true,
@@ -293,32 +326,29 @@ const FileExplorer = () => {
               topLeft: false,
             }}
           >
-            <motion.div 
-              className='sidebar'
-            >
+            <motion.div className="sidebar">
               <div className="side-nav">
                 <div className="side-nav-buttons-top">
                   <span className="material-icons" onClick={handleToggle}>
-                      arrow_back_ios
+                    arrow_back_ios
                   </span>
                 </div>
               </div>
-              <div 
-                id="file-system-container">
+              <div id="file-system-container">
                 <div className="file-system-header">
                   <h2>File Explorer</h2>
                   <span
-                    id = "open-folder-button"
+                    id="open-folder-button"
                     onClick={() => {
                       handleOpenFolder();
                     }}
                   >
-                    <FaFolderOpen/>
+                    <FaFolderOpen />
                   </span>
                 </div>
                 <div className="root-directory">
-                  <hr/>
-                  <br/>
+                  <hr />
+                  <br />
                   {/* this is where we render htmlArray */}
                   <div className="root-dir-header">{uploadedFiles}</div>
                 </div>
@@ -327,16 +357,17 @@ const FileExplorer = () => {
           </Resizable>
         </motion.div>
       ) : (
-        <motion.div       
-          style={{ opacity: .9 }}
+        <motion.div
+          style={{ opacity: 0.9 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          key = 'closed' 
-          className='sidebar-closed'>
+          key="closed"
+          className="sidebar-closed"
+        >
           <div className="side-nav">
             <div className="side-nav-buttons-top">
               <span className="material-icons" onClick={handleToggle}>
-              arrow_forward_ios
+                arrow_forward_ios
               </span>
             </div>
           </div>

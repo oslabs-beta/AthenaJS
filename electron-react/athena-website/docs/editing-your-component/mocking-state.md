@@ -4,40 +4,12 @@ sidebar_position: 1
 
 # Mocking State
 
-Add **Markdown or React** files to `src/pages` to create a **standalone page**:
+AthenaJS offers a functional component syntax that allows users to simulate state, enabling developers to test their components' behavior in various scenarios. If you're looking to write and implement mock state using AthenaJS, here's a step-by-step guide:
 
-- `src/pages/index.js` → `localhost:3000/`
-- `src/pages/foo.md` → `localhost:3000/foo`
-- `src/pages/foo/bar.js` → `localhost:3000/foo/bar`
+- **Load Hooks**: Head over to the AthenaJS application and open your project directory. Select the component file you want to modify, and its hooks will be loaded into the state terminal situated in the bottom-left corner of the homepage.
 
-## Create your first React Page
+- **Define State Variables**: Use the state window to define/edit the state variables you want to mock.
 
-Create a file at `src/pages/my-react-page.js`:
+- **Manipulate State in JSX**: In the JSX terminal located in the bottom-right corner of the UI, you can implement the state variables you have defined.
 
-```jsx title="src/pages/my-react-page.js"
-import React from 'react';
-import Layout from '@theme/Layout';
-
-export default function MyReactPage() {
-  return (
-    <Layout>
-      <h1>My React page</h1>
-      <p>This is a React page</p>
-    </Layout>
-  );
-}
-```
-
-A new page is now available at [http://localhost:3000/my-react-page](http://localhost:3000/my-react-page).
-
-## Create your first Markdown Page
-
-Create a file at `src/pages/my-markdown-page.md`:
-
-```mdx title="src/pages/my-markdown-page.md"
-# My Markdown page
-
-This is a Markdown page
-```
-
-A new page is now available at [http://localhost:3000/my-markdown-page](http://localhost:3000/my-markdown-page).
+By following these steps, you can easily create and use mock state in your AthenaJS project to test your components' functionality.
