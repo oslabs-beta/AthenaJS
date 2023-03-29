@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { PerformanceContext } from './context/PerformanceContext';
+import { motion } from 'framer-motion';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +15,13 @@ ChartJS.register(
   BarElement,
   Tooltip
 );
+
+const transition = {
+  type: "spring",
+  damping: 30,
+  stiffness: 300,
+  duration: 1
+};
 
 
 const PerformanceCharts = () => {
@@ -37,7 +45,11 @@ const PerformanceCharts = () => {
 
   if (profilerData.length > 0){
     return(
-      <div className = 'graph-page'>
+      <motion.div 
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={transition} 
+        className = 'graph-page'>
         <h3>Component Render Times (ms)</h3>
         <Bar
           data={{
@@ -69,16 +81,20 @@ const PerformanceCharts = () => {
             },
           }}
         />
-        <button onClick = {handleReset}>Reset Chart</button>
-        <button onClick = {handleUndo}>Undo</button>
-      </div>
+        <button id = 'reset-chart' onClick = {handleReset}>Reset Chart</button>
+        <button id = 'undo-chart' onClick = {handleUndo}>Undo</button>
+      </motion.div>
     );
   }
   else{
     return(
-      <>
+      <motion.div 
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={transition}
+      >
         <h2>Save Render Data to Generate Bar Graph</h2>
-      </>
+      </motion.div>
     );
   }
 };
