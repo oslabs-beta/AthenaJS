@@ -5,6 +5,7 @@ import fetchMock from 'fetch-mock';
 import styled from 'styled-components';
 import '@reactflow/node-resizer/dist/style.css';
 
+//Custom React Flow Component to render our saved components on the react flow UI board.
 const ReactFlowComp = ({ data, selected }) => {
   const { component } = data;
   const scope = {useState, useEffect, useRef, useMemo, styled, fetchMock};

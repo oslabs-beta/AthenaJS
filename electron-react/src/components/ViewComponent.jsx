@@ -18,7 +18,7 @@ const ViewComponent = () => {
   const [ profilerData, setProfilerData ] = useState(null);
   const [ renderName, setRenderName ] = useState('');
   
-
+  //Set render data for the component being rendered.  We only measure the stats for mounting phase
   const handleProfilerData = (id, phase, actualDuration, baseDuration, startTime, commitTime) => {
     if (phase === 'mount'){
       setProfilerData({
@@ -32,21 +32,13 @@ const ViewComponent = () => {
     }
   };
 
-
+  //If we want to add the render time to our chart, we press the button and it adds the data to the graph data array.
   const updateGraph = () => {
     setPerformanceDataArr([...performanceDataArr, {renderName: renderName, ...profilerData}]);
   };
 
-  // fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });
-  // React.useEffect(() => {
-  // async function getData(){
-  // const res = await fetch('/api/users')
-  // const data = await res.json()
-  // if (res.ok) console.log(data.data)
-  // }
-  // getData()
-  // }, [])
 
+//This is the code for the react component we want to render.
   const string = `() => {
     ${mockServer[0]}
     ${compState[0]}
@@ -59,15 +51,13 @@ const ViewComponent = () => {
     )
       }`;
 
+  //These allow us to use common react hooks and styled + fetchMock libraries with react-live (the library we are using to render components)
   let scope = {useState, useEffect, useRef, useMemo, styled};
   if (mockServer[0]) scope = {useState, useEffect, useRef, useMemo,styled, fetchMock};
 
   return (
     <>
       <div id = 'component-data'>
-        {/* <strong>Mock Server:</strong> {mockServer[0]} <br/>
-        <strong>Props:</strong> {compProps[0]} <br/>
-        <strong>State:</strong> {compState[0]} <br/> */}
         <strong>Render Time:</strong> {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}<br/>
         <input
           id = 'render-name'
@@ -84,7 +74,7 @@ const ViewComponent = () => {
           height: 'auto',
         }}
         minHeight={400} 
-        maxHeight={1000} 
+        maxHeight={2000} 
         enable={{
           top: false,
           right: false,

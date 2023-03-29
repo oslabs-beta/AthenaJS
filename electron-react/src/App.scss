@@ -1,9 +1,12 @@
 //Variables
-$background-color-light: rgba(222, 218, 231);
+$background-color-light: #D0DBFE;
+$background-color-light-2: #D5DFFE;
 $background-color-solid: rgba(155, 144, 182);
-$background-color-primary: rgba(164, 153, 190, 0.6);
-$background-color-dark: rgba(133, 118, 167, 0.5);
+$background-color-primary: rgba(164, 153, 190);
+$background-color-dark: rgba(93, 80, 124);
+$background-side-nav: rgb(65, 56, 87);
 $font-color-primary: rgb(60, 55, 68);
+$font-color-light: rgb(239, 233, 231);
 
 // former index.scss
 
@@ -31,6 +34,25 @@ $font-color-primary: rgb(60, 55, 68);
   cursor: pointer;
 }
 
+body{
+  background: $background-color-light;
+}
+
+#athena-svg{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 100;
+}
+
+#athena-logo-svg{
+  position:absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  z-index: 100
+  // right: 10px;
+}
+
 #athena-logo{
   box-sizing: border-box;
   position: absolute;
@@ -54,13 +76,6 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -105,28 +120,21 @@ $transition-area: width 0.3s ease-in-out;
 
 }
 
-// currently absolute to get the element out of our way
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-  position: absolute;
-  right: 0px;
-}
-
 // sidebar
 .sidebar {
-  color: $font-color-primary;
+  color: $font-color-light;
   display: flex;
   // transition: $transition-area;
   width: 100%;
   height: 100vh;
-  background: $background-color-solid;
+  background: $background-side-nav;
 }
 
 .sidebar-closed{
-  background: $background-color-solid;
+  color: $font-color-light;
+  background: $background-side-nav;
   // transition: $transition-area;
-  width: 5rem;
+  width: 6rem;
 }
 
 .side-nav {
@@ -157,17 +165,24 @@ h1 {
 #open-folder-button {
   margin-top: 20px;
   margin-bottom: 20px;
+  font-size: 5rem;
+  cursor: pointer;
 }
 .material-icons#open-folder-button {
   font-size: 5rem; /* change the value to increase or decrease the size */
 }
 
 .root-directory {
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  padding-right: 5rem; /* Add padding to the right of the container */
+  box-sizing: border-box;
   height: 100%;
+  width: 100%;
   hr{
-    border-top: 1px solid rgba(0, 0, 0, .3);
-    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    width: 17rem;
   }
   .vl{
     border-left: 6px solid green;
@@ -232,7 +247,7 @@ h1 {
 }
 
 .file-button-text {
-  color: $font-color-primary;
+  color: $font-color-light;
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1rem;
@@ -266,7 +281,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
@@ -283,10 +297,11 @@ h1 {
 }
 
 .navbar {
+  border-top: 2px solid $background-color-primary;
   display: flex;
   align-items: center;
-  background-color: #663EFF;
-  height: 100px;
+  background-color: $background-color-light;
+  height: 4rem;
   width: 100%;
   ul {
     display: flex;
@@ -297,36 +312,49 @@ h1 {
       padding: 10px;
       a {
         padding: 10px;
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 10px;
-        border-color: black;
-        color: black;
+        color: $font-color-primary;
         text-decoration: none;
+        font-weight: 800;
+        font-size: 1.3rem;
+        text-shadow: 0px 1px 2px rgba(0, 0, 0, .3);
       }
       a:focus, a:hover {
         // background-color: #5f67f0;
-        box-shadow: inset 0 0 0 2em #FFC233;
+        border-bottom: 2px solid $font-color-primary;
+        padding-bottom: 5px;
       }
     }
   }
 }
 // temporary .props-toggle-nav addition, should have it's own styling later
 .props-toggle-nav {
-  background-color: $navbar-color;
+  border-top: 1px solid $background-color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $background-color-light;
+  height: 4rem;
   width: 100%;
   ul {
-    width: 100%;
     display: flex;
-    margin-left: 1rem;
+    justify-content: flex-start;
+    // align-items: left;
+    flex-direction: row;
     list-style-type: none;
     li {
+      padding: 10px;
       a {
+        padding: 10px;
+        color: $font-color-primary;
         text-decoration: none;
-        padding: 0 1.5em;
+        font-weight: 800;
+        font-size: 1.3rem;
+        text-shadow: 0px 1px 2px rgba(0, 0, 0, .3);
       }
-      a:focus {
-        background-color: $navbar-focus;
+      a:focus, a:hover {
+        // background-color: #5f67f0;
+        border-bottom: 2px solid $font-color-primary;
+        padding-bottom: 5px;
       }
     }
   }
@@ -335,15 +363,16 @@ h1 {
 #component-data {
   color: $font-color-primary;
   position: absolute;
-  top: 0.5rem;
+  top: 8rem;
   right: 0.5rem;
   padding: 1.2rem 1.2rem 1.5rem 1.2rem;
-  background: $background-color-primary;
+  background: $background-color-light-2;
   border: 0.1rem solid $background-color-dark;
   border-radius: 0.5rem;
   z-index: 20;
+  box-shadow: 5px 2px 2px rgba(0, 0, 0, .3);
   #render-name{
-    margin-top: 0.5rem;
+    margin-top: 1.2rem;
     margin-bottom: 0.5rem;
     border-radius: 0.2rem;
     width: 90%;
@@ -353,17 +382,40 @@ h1 {
     width: 65%;
     font-size: 1rem;
   }
+  input{
+    border: 1px solid $background-color-primary;
+    height: 2rem;
+    width: 10rem;
+    border-radius: 1rem;
+  }
+  input:focus{
+    border:$background-color-dark;
+  }
+  input:focus-visible {
+    outline: 1px solid $background-color-dark;
+  }
+  button{
+    background:transparent;
+    padding: 0 0;
+    font-weight: 600;
+  }
+  button:hover{
+    text-decoration: underline;
+  }
+  button:active{
+    transform: scale(0.97)
+  }
 }
 
 #navigation-area {
   position: relative;
+  background: $background-color-light;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
-  border: 1px solid red;
 }
 
 // PropsWindow.jsx
@@ -372,7 +424,6 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
   height: 100%;
   width: 100%;
   // padding: 20px 50px;
@@ -394,21 +445,63 @@ h1 {
   }
 }
 
+#props-window-page{
+  width:100%;
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  input{
+    border: 1px solid $background-color-primary;
+    height: 2rem;
+    width: 10rem;
+    border-radius: 1rem;
+    margin-right: 1.5rem;
+  }
+  input:focus{
+    border:$background-color-dark;
+  }
+  input:focus-visible {
+    outline: 1px solid $background-color-dark;
+  }
+  button{
+    background: transparent;
+    padding: 0rem 0rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  button:hover{
+    text-decoration: underline;
+  }
+  button:active{
+    transform: scale(0.97)
+  }
+  h1{
+    font-weight: 800;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+    margin-bottom: 2rem;
+  }
+}
+
 #props-header{
-  position: relative;
+  display:flex;
+  align-items: center;
+  margin-bottom: 4rem;
   #overwrite-modal{
     box-shadow: 7px 3px 3px rgba(0, 0, 0, .3);
+    color: $font-color-primary;
     border-radius: 5px;
-    background:#747bff;
-    border: 1px solid #5f67f0;
+    background:$background-color-light-2;
+    border: 1px solid $background-color-dark;
     padding: 5px 5px;
     position: absolute;
     height: 150px;
-    top: 0.4rem;
-    left: 3rem;
+    top: 0;
+    left: 44%;
     button{
-      margin-left: 5px;
-      margin-right: 5px;
+      margin-left: 12px;
+      margin-right: 12px;
     }
   }
 }
@@ -418,19 +511,23 @@ h1 {
   display: flex;
 }
 
+
 .props-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 1rem;
+  label{
+    margin-bottom: 1rem;
+    font-size: 1.7rem;
+    font-weight: 800;
+  }
 }
 
 #overwrite-modal{
   height: 200px;
   width: 200px;
   z-index: 100;
-  border: 1px solid black;
 }
 
 #function-definitions{
@@ -443,30 +540,129 @@ h1 {
 
 .saved-comp-page{
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: flex-start;
   align-items:center;
-  border: 1px solid red;
   height: 100%;
   width: 100%;
-}
-.saved-comp-container{
-  display:flex;
-  justify-content: flex-start;
-  align-items:center;
+  h1{
+    font-weight: 800;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  #save-library{
+    font-size: 1.5rem;
+    font-weight: 800;
+    position:absolute;
+    background: none;
+    top: 3rem;
+    left: 3rem;
+  }
+  #save-library:hover{
+    text-decoration: underline;
+  }
+  #save-library:active{
+    transform: scale(0.97)
+  }
+  .saved-comps{
+    padding: 5rem 5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .saved-comp-container{
+    position: relative;
+    border: 1px solid $background-color-dark;
+    background: $background-color-light-2;
+    margin-right: 1rem;
+    padding: 2rem 2rem;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center;
+    border-radius: 5px;
+    box-shadow: 0.5rem 0.2rem 0.2rem rgba(0, 0, 0, .2);
+    .comp-container-name{
+      position:absolute;
+      font-weight: 800;
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+    button{
+      color: white;
+      text-shadow: 0px 0.5px 1px rgba(255, 255, 255, 0.4);
+      margin-top: 1.3rem;
+      background:$background-color-dark;
+      margin-right: 1rem;
+    }
+    button:hover{
+      background: $background-color-primary
+    }
+    button:active{
+      transform: scale(0.97);
+    }
+  }
+  #flow-info{
+    position:absolute;
+    top: 2rem;
+    left: 2rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+  input{
+    border: 1px solid $background-color-primary;
+    height: 2rem;
+    width: 10rem;
+    border-radius: 1rem;
+  }
+  input:focus{
+    border:$background-color-dark;
+  }
+  input:focus-visible {
+    outline: 1px solid $background-color-dark;
+  }
+  #flow-background-submit{
+    background: transparent;
+    padding: 0rem 0rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-left: 1rem;
+  }
+  #flow-background-submit:hover{
+    text-decoration: underline;
+  }
+  #flow-background-submit:active{
+    transform: scale(0.97)
+  }
 }
 
 .graph-page{
-  border: 1px solid red;
-  width: 100%;
+  position: relative;
+  padding: 2rem 2rem;
+  width: 80%;
   height: 80%;
+  background: white;
+  border: 1px solid $background-color-primary;
+    #reset-chart{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+    #undo-chart{
+      position:absolute;
+      top:1rem;
+      right:10rem;
+    }
 }
 
 // actions panel in navigation area
 .actions{
   // position: absolute;
   bottom: 15px;
-  border: 1px solid black;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
@@ -474,22 +670,24 @@ h1 {
 
 #screenshot-btn{
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 6rem;
+  right: 3rem;
+  background: transparent;
 }
 
-.actions::-webkit-scrollbar{ 
+::-webkit-scrollbar{ 
   width: 10px;
 }
 
-.actions::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.25);
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(155, 144, 182, 0.25);
   border-radius: 10px;
-  background-color:  rgb(255, 255, 255, 0.25);;
+  background-color:  rgb(255, 255, 255, 0.25);
 }
 
-.actions::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-  background-color: #555;
+  background-color: rgba(164, 153, 190, .9);
 }
+

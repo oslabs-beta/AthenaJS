@@ -1,19 +1,45 @@
 // import Update from '@/components/update'
 import React, { useContext, useEffect } from 'react';
-import Workshop from './pages/Workshop'
-import UIPage from './pages/UIPage'
-import { DetailsProvider } from './components/context/DetailsContext'
-import { PerformanceProvider } from './components/context/PerformanceContext'
-import { CompUIProvider } from './components/context/CompUIContext';
+import Workshop from './pages/Workshop';
+import UIPage from './pages/UIPage';
+import { DetailsProvider } from './components/context/DetailsContext';
+import { PerformanceProvider } from './components/context/PerformanceContext';
 import { useUserCompContext } from './hooks/useUserCompContext';
-import './App.scss'
-import FileExplorer from './components/FileExplorer'
-import { MockFetchProvider } from './components/context/MockFetchContext'
-import { ShowUIContext } from './components/context/ShowUIContext'
-import AthenaLogo from './assets/athena_logo01.png';
+import './App.scss';
+import FileExplorer from './components/FileExplorer';
+import { MockFetchProvider } from './components/context/MockFetchContext';
+import { ShowUIContext } from './components/context/ShowUIContext';
+import {motion} from 'framer-motion';
 import path from 'path';
 import fs from 'fs';
 const os = require('os');
+
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    y: 5,
+    scale: 0.9
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 800,
+      damping: 100,
+      duration: 1
+    }
+  },
+  exit: {
+    opacity: 0,
+    y: -100,
+    scale: 1.2,
+    transition: {
+      duration: 1
+    }
+  }
+};
 
 function App() {
   const { showUI } = useContext(ShowUIContext)
@@ -40,16 +66,28 @@ function App() {
 
   if (showUIVal){
     return(
-      <div className = 'App'>
-          <CompUIProvider>
-            <UIPage/>
-          </CompUIProvider> 
-      </div>
+      <motion.div 
+      key={1}
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+        className = 'App'
+      >
+        <UIPage/>
+      </motion.div>
     )
   }
   
   else{ return (
-    <div className='App'>
+    <motion.div 
+    key={2}
+    variants={pageVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+      className='App'
+    >
             <DetailsProvider>
               <FileExplorer />
               <PerformanceProvider>
@@ -58,7 +96,7 @@ function App() {
                 </MockFetchProvider>
               </PerformanceProvider>
             </DetailsProvider>
-    </div>
+    </motion.div>
   )
   }
 }
