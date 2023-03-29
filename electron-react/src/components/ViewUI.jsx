@@ -1,13 +1,7 @@
 import React, { useState, useContext, useEffect, useMemo, useRef, useCallback } from 'react';
-import styled from 'styled-components';
-import fetchMock from 'fetch-mock';
 import { Resizable } from 're-resizable';
-import { CompUIContext } from './context/CompUIContext';
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import ReactFlow, {
-  MiniMap,
   Controls,
-  Background,
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
@@ -22,7 +16,7 @@ const nodeTypes = {customComp: ReactFlowComp};
 
 const ViewUI = () => {
   const [ nodes, setNodes, onNodesChange ] = useNodesState([]);
-  const [ bgColor, setBgColor ] = useState('white');
+  const [ bgColor, setBgColor ] = useState('#D0DBFE');
 
   const divRef = useRef(null);
 
@@ -30,14 +24,17 @@ const ViewUI = () => {
     background: bgColor
   };
 
+  //Add a node to the react flow UI
   const addNode = (component) => {
     return setNodes([...nodes, { id: component.name, type: 'customComp', position: { x: 200, y: 200 }, data: {component}}]);
   };
 
+  //Remove a specific node from the react flow UI (tied to that specific components remove button in UIComps.jsx)
   const removeNode = (component) => {
     return setNodes(nodes.filter((node) => node.id !== component.name));
   };
   
+  //Take a screenshot of the react flow UI div.  
   const captureScreenshot = () => {
     html2canvas(divRef.current).then(canvas => {
       const image = canvas.toDataURL('image/png');
