@@ -1,38 +1,34 @@
-import { ipcRenderer } from "electron";
-import React, { useState, useContext } from "react";
-import DirectoryComponent from "./DirectoryComponent";
-import { Resizable } from "re-resizable";
-import { DetailsContext } from "./context/DetailsContext";
+import { ipcRenderer } from 'electron';
+import React, { useState, useContext } from 'react';
+import DirectoryComponent from './DirectoryComponent';
+import { Resizable } from 're-resizable';
+import { DetailsContext } from './context/DetailsContext';
 import { motion } from 'framer-motion';
 import { FaFolderOpen } from 'react-icons/fa';
 
-const fs = window.require("fs");
-const pathModule = window.require("path");
-
-const acorn = window.require("acorn");
-import { parse } from 'acorn-loose';
-const walk = window.require("acorn-walk");
+const fs = window.require('fs');
+const pathModule = window.require('path');
 
 const babelParser = window.require('@babel/parser');
-import traverse from "@babel/traverse";
+import traverse from '@babel/traverse';
 
 
 const containerVariants = {
   hidden: {
-    x: "-5rem",
+    x: '-5rem',
   },
   visible: {
     x: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 600,
       damping: 100,
     },
   },
   exit: {
-    x: "-77%",
+    x: '-77%',
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 700,
       damping: 100,
     },
@@ -45,31 +41,28 @@ const containerVariants = {
 */
 const FileExplorer = () => {
   // Contexts from details context
-  const { tempCompProps, tempCompActions, tempCompHTML, tempCompState } = useContext(DetailsContext);
-  const [tempCompPropsVal, setTempCompPropsVal] = tempCompProps;
-  const [tempCompActionsVal, setTempCompActionsVal] = tempCompActions;
-  const [tempCompHTMLVal, setTempCompHTMLVal] = tempCompHTML;
-  const [tempCompStateVal, setTempCompStateVal] = tempCompState;
+  const { tempCompBody, tempCompJSX } = useContext(DetailsContext);
+  const [tempCompJSXVal, setTempCompJSXVal] = tempCompJSX;
+  const [tempCompBodyVal, setTempCompBodyVal] = tempCompBody;
   
   // store htmlArray in state
   const [uploadedFiles, setUploadedFiles] = useState([]);
   // toggle sidebar
   const [explorerVisible, setExplorerVisible] = useState(false);
-  //
 
   // sets CSS to transition sidebar to close
-  const sidebarClass = explorerVisible ? "sidebar" : "sidebar-closed";
+  const sidebarClass = explorerVisible ? 'sidebar' : 'sidebar-closed';
   const handleToggle = (e) => {
     setExplorerVisible(!explorerVisible);
   };
 
   const handleOpenFolder = () => {
     // open folder
-    const directory = ipcRenderer.sendSync("OpenFolder");
+    const directory = ipcRenderer.sendSync('OpenFolder');
     // console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
     // accounting for windows backslash to normalize the path
-    directoryPath = directoryPath.replace(/\\/g, "/");
+    directoryPath = directoryPath.replace(/\\/g, '/');
     // generate first level of file tree
     const fileArr = fileTreeObject(directoryPath);
     // generate full tree
@@ -85,7 +78,7 @@ const FileExplorer = () => {
     // filter filesObj for node modules or git files
     const filteredFileArr = filesArray
       .filter((file) => {
-        return file !== "node_modules" && file !== ".git";
+        return file !== 'node_modules' && file !== '.git';
       })
       // map over each file name, instead returning object that has name, directory, and files properties
       // ['src', 'index']
@@ -119,73 +112,96 @@ const FileExplorer = () => {
       const file = fileArr[i];
       // if it is a directory
       if (file.directory === true) {
-        //create a subdirectory path of the given directory
-        // const subDirectoryPath = pathModule.join(directoryPath, file.name);
-        // assign the files property to the eval result of
-        // calling generateSubTrees, passing in eval result of
-        // fileTreeObject(subDirectoryPath), and subDirectoryPath
+        // this line uses the fileTreeObject funciton to generate alevel of file objects, and generateSubTrees allows us to move down the file 'tree' and create all file objects.
         file.files = generateSubTrees(fileTreeObject(file.path), file.path);
       }
     }
     return fileArr;
   };
 
+  //This function allows us to parse files in order to populate our text areas within PropsWindow.jsx
   function parseAndTraverseAST (dataString) {
-    const functionArray = [];
-    const returnArray = [];
+    
+    //Initialize two empty arrays to store parsed function declarations and JSX returns
+    const componentBodyArray = [];
+    const JSXArray = [];
+
+    //Initialize a bool flag to track whether or not there is JSX within a function 
     let isJSX = false;
 
+    //This object defines a vistor for traversing nested JSX elements with a function declaration
     const nestedJSXVisitor = {
       JSXElement(path) {
         isJSX = true;
         console.log('this is a nestedJSXVisitor', path.node);
+
+        // Extract the string representation of the JSX element
         const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
         console.log('PARSED STRING: ', `${parsedStr}`);
       }
     };
 
+    //Use Babel to parse the input codee string into an Abstract Syntax Tree (AST)
     const ast = babelParser.parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
 
+    //Traverse the AST using the visitor pattern to extract function declarations and JSX Elements nested within return statements
     traverse(ast, {
       enter(path) {
+        console.log('PATH!!!: ', path.node);
+        if(path.isCallExpression()) {
+          if(path.node.callee.name === 'useEffect') {
+            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+            componentBodyArray.push(parsedStr);
+          }
+        }
         if (path.isFunctionDeclaration()) {
+          //Traverse any nested JSX elements within the function declaration using the nestedJSXVisitor
           path.traverse(nestedJSXVisitor);
-          console.log(isJSX);
+          //If the function declaration does not contain JSX, extract its string representation 
           if(isJSX === false) {
             const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-            console.log('PARSED STRING: ', `${parsedStr}`);
-            functionArray.push(parsedStr);
+            componentBodyArray.push(parsedStr);
           }
+          //Reset the isJSX bool flag for the next function declaration 
           isJSX = false;
         }
         if (path.isVariableDeclaration()) {
           if(path.node.declarations[0].init.type === 'ArrowFunctionExpression') {
-            console.log(isJSX);
+
+            //Traverse any nested JSX elements within the arrow function expression using the nestedJSXVisitor again
             path.traverse(nestedJSXVisitor);
-            console.log(isJSX);
+            
+            //If the arrow function does not contain JSX, extract its string representation
             if(isJSX === false) {
               const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-              console.log('PARSED STRING: ', `${parsedStr}`);
-              functionArray.push(parsedStr);
+              componentBodyArray.push(parsedStr);
             }
+
+            // Reset the isJSX flag for the next arrow function expression
             isJSX = false;
+          } else {
+            // Parses normal variable declarations
+            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+            componentBodyArray.push(parsedStr);
           }
         }
+        //This conditional checks for JSX content as well as checks if the JSX's parent is a return statement. 
         if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
           const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-          console.log('PARSED JSX RETURN: ', `${parsedStr}`);
-          returnArray.push(parsedStr);
+          JSXArray.push(parsedStr);
         }
       }
     });
 
-    let functionString = '';
-    if (functionArray.length > 0) functionString = functionArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
-    console.log('this is my functionString: ', functionString);
-    setTempCompActionsVal(functionString);
+    //Concatenate the parsed function declarations into a single string and save it to a state variable 
+    let componentBodyString = '';
+    if (componentBodyArray.length > 0) componentBodyString = componentBodyArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    console.log('this is my componentBodyString: ', componentBodyString);
+    setTempCompBodyVal(componentBodyString);
     
-    const returnString = returnArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
-    setTempCompHTMLVal(returnString);
+    //Concatenate the parsed JSX elements into a single string and save it to a state variable 
+    const JSXString = JSXArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    setTempCompJSXVal(JSXString);
   }
 
   
@@ -200,13 +216,12 @@ const FileExplorer = () => {
         case '.jsx':
           parseAndTraverseAST(data);
           break;
-        case '.json':
-          console.log('JSON File content:', data);
-          //how do we pass along this data into the JSX textarea? 
-          break;
+          
         case '.js':
           console.log('JS File content:', data);
-          //how do we pass along this data into the JSX textarea? 
+          break;
+        case '.css':
+          console.log('CSS File content:', data);
           break;
         default: 
           console.log('File data:', data);

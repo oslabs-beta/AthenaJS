@@ -19,11 +19,9 @@ const transition = {
 const SavedComps = () => {
   const {components, dispatch} = useUserCompContext();
   //Global state to handle component in the viewer
-  const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
-  const [compPropsVal, setCompPropsVal] = compProps;
-  const [compActionsVal, setCompActionsVal] = compActions;
-  const [compHTMLVal, setCompHTMLVal] = compHTML;
-  const [compStateVal, setCompStateVal] = compState;
+  const { compBody, compJSX } = useContext(DetailsContext);
+  const [compBodyVal, setCompBodyVal] = compBody;
+  const [compJSXVal, setCompJSXVal] = compJSX;
   const { mockServer } = useContext(MockFetchContext);
   const [ mockServerVal, setMockServerVal ] = mockServer;
 
@@ -49,10 +47,8 @@ const SavedComps = () => {
   
   //Render the selected component by setting the states that the renderer uses
   const renderComponent = (component) => {
-    setCompPropsVal(component.props);
-    setCompActionsVal(component.actions);
-    setCompHTMLVal(component.html);
-    setCompStateVal(component.state);
+    setCompBodyVal(component.body);
+    setCompJSXVal(component.jsx);
     setMockServerVal(component.mockServer);
     setKeyCountVal(keyCountVal + 1);
   };
@@ -64,12 +60,10 @@ const SavedComps = () => {
     import React, { useState, useEffect } from 'react';
 
     const ${component.name} = () => {
-      ${component.state}
-      ${component.props}
-      ${component.actions}
+      ${component.body}
       return(
         <>
-          ${component.html}
+          ${component.jsx}
         </>
       )
     }
