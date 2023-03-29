@@ -4,30 +4,33 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: 'Edit/Develop Components With Live Rendering',
+    img: '../../static/img/athenaFull_transparent.jpg',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        AthenaJS lets users to either edit currently existing components from your
+        project or develop new components for use in your project. 
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Build UI Screenshots from Saved Component Library',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        AthenaJS allows users to save their newly edited/created components to a component library
+        which can then be used to create mock UI images from their saved components.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Easily Export Created/Updated Components back to Project',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
+
+
         Extend or customize your website layout by reusing React. Docusaurus can
         be extended while reusing the same header and footer.
       </>
@@ -39,7 +42,7 @@ function Feature({Svg, title, description}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        {/* <Svg className={styles.featureSvg} role="img" /> */}
       </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
