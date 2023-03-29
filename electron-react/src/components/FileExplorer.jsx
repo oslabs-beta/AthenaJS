@@ -193,8 +193,25 @@ const FileExplorer = () => {
     });
     //Concatenate the parsed function declarations into a single string and save it to a state variable 
     let componentBodyString = '';
-    if (componentBodyArray.length > 0) componentBodyString = componentBodyArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
-    console.log('this is my componentBodyString: ', componentBodyString);
+
+    // purpose of this function:
+      // previously, variables and functions within useEffectHook would be duplicated in component body window
+      // this function filters all elements that are contained within other elements
+      // with this, all functions or variables within a useEffect hook will only be printed once.
+    function filterDuplicateFunctions(arr) {
+      return arr.filter((el, index) => {
+        const otherEls = arr.slice(0, index).concat(arr.slice(index + 1));
+        return !otherEls.some((otherEl) => otherEl.includes(el));
+      });
+    }
+
+    const filteredComponentBodyArr =
+      filterDuplicateFunctions(componentBodyArray);
+
+    if (filteredComponentBodyArr.length > 0)
+      componentBodyString = filteredComponentBodyArr.reduce(
+        (acc, curr) => acc + "\n" + "\n" + curr
+      );
     setTempCompBodyVal(componentBodyString);
     
     //Concatenate the parsed JSX elements into a single string and save it to a state variable 
