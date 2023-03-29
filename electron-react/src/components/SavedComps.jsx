@@ -19,9 +19,11 @@ const transition = {
 const SavedComps = () => {
   const {components, dispatch} = useUserCompContext();
   //Global state to handle component in the viewer
-  const { compBody, compJSX } = useContext(DetailsContext);
+  const { compBody, compJSX, tempCompBody, tempCompJSX } = useContext(DetailsContext);
   const [compBodyVal, setCompBodyVal] = compBody;
   const [compJSXVal, setCompJSXVal] = compJSX;
+  const [ tempCompBodVal, setTempCompBodyVal ] = tempCompBody;
+  const [ tempCompJSXVal, setTempCompJSXVal ] = tempCompJSX;
   const { mockServer } = useContext(MockFetchContext);
   const [ mockServerVal, setMockServerVal ] = mockServer;
 
@@ -49,6 +51,8 @@ const SavedComps = () => {
   const renderComponent = (component) => {
     setCompBodyVal(component.body);
     setCompJSXVal(component.jsx);
+    setTempCompBodyVal(component.body);
+    setTempCompJSXVal(component.jsx);
     setMockServerVal(component.mockServer);
     setKeyCountVal(keyCountVal + 1);
   };
