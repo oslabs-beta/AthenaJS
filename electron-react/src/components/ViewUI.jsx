@@ -26,7 +26,8 @@ const ViewUI = () => {
 
   //Add a node to the react flow UI
   const addNode = (component) => {
-    return setNodes([...nodes, { id: component.name, type: 'customComp', position: { x: 200, y: 200 }, data: {component}}]);
+    //pass in removeNode function as a prop to be destructured in the ReactFlowComp component
+    return setNodes([...nodes, { id: component.name, type: 'customComp', position: { x: 200, y: 200 }, data: {component, removeNode}}]);
   };
 
   //Remove a specific node from the react flow UI (tied to that specific components remove button in UIComps.jsx)
