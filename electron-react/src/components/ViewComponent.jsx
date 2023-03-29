@@ -11,7 +11,7 @@ import { Resizable } from 're-resizable';
 
 
 const ViewComponent = () => {
-  const { compProps, compActions, compHTML, compState } = useContext(DetailsContext);
+  const { compBody, compJSX } = useContext(DetailsContext);
   const { mockServer } = useContext(MockFetchContext);
   const { keyCount, performanceData } = useContext(PerformanceContext);
   const [ performanceDataArr, setPerformanceDataArr] = performanceData;
@@ -41,12 +41,10 @@ const ViewComponent = () => {
 //This is the code for the react component we want to render.
   const string = `() => {
     ${mockServer[0]}
-    ${compState[0]}
-    ${compActions[0]}
-    ${compProps[0]}
+    ${compBody[0]}
     return(  
       <>
-      ${compHTML[0]}
+      ${compJSX[0]}
       </>
     )
       }`;
@@ -87,7 +85,7 @@ const ViewComponent = () => {
         }}
       >
         <div id="navigation-area">
-          {/* Actions: {stringifyObject(compActions[0])} <br/> */}
+          {/* Body: {stringifyObject(compBody[0])} <br/> */}
           <LiveProvider code={string} scope = {scope}>
             <Profiler key={keyCount[0]} id = 'preview-component' onRender={handleProfilerData}>
               <LivePreview/>
