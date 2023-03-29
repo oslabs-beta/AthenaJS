@@ -16,12 +16,10 @@ const ReactFlowComp = ({ data, selected }) => {
       <LiveProvider code = {
         `() => {
             ${component.mockServer}
-            ${component.state}
-            ${component.actions}
-            ${component.props}
+            ${component.body}
             return(
             <>
-                ${component.html}
+                ${component.jsx}
             </>
             )
         }`

@@ -37,22 +37,17 @@ const transitionPage = {
 //form for adjusting component
 const PropsWindow = () => {
   //Global state: temp versions are for the text editor states
-  const { compProps, compActions, compHTML, compState, tempCompProps, tempCompActions, tempCompHTML, tempCompState } = useContext(DetailsContext);
-  const [compPropsVal, setCompPropsVal] = compProps;
-  const [compActionsVal, setCompActionsVal] = compActions;
-  const [compHTMLVal, setCompHTMLVal] = compHTML;
-  const [compStateVal, setCompStateVal] = compState;
+  const { compBody, compJSX, tempCompBody, tempCompJSX} = useContext(DetailsContext);
+  const [compBodyVal, setCompBodyVal] = compBody;
+  const [compJSXVal, setCompJSXVal] = compJSX;
   const { mockServer } = useContext(MockFetchContext);
   const [ mockServerVal, setMockServerVal ] = mockServer;
-  //States for text editors 
-  const [ tempCompActionsVal, setTempCompActionsVal ] = tempCompActions;
-  const [ tempCompHTMLVal, setTempCompHTMLVal ] = tempCompHTML;
-  const [ tempCompPropsVal, setTempCompPropsVal ] = tempCompProps;
-  const [ tempCompStateVal, setTempCompStateVal ] = tempCompState;
+  // States for text editors 
+  const [ tempCompBodyVal, setTempCompBodyVal ] = tempCompBody;
+  const [ tempCompJSXVal, setTempCompJSXVal ] = tempCompJSX;
   const [ tempMockServer, setTempMockServer ] = useState(`fetchMock.mock('*', {data: 'mock data'}, { overwriteRoutes: true });`)
   // toggle states for windows (props, state, mockFetch)
-  const [propsWindowVisible, setPropsWindowVisible] = useState(true);
-  const [stateWindowVisible, setStateWindowVisible] = useState(false);
+  const [bodyWindowVisible, setBodyWindowVisible] = useState(true);
   const [mockServerWindowVisible, setMockServerWindowVisible] = useState(false);
   //Key count to force remount on component update -> this is used for the React Profiler API in ViewComponent.jsx
   const { keyCount } = useContext(PerformanceContext);
@@ -68,10 +63,8 @@ const PropsWindow = () => {
     //On form submission (Update View button), we set the states for the component renderer
     //We also adjust keyCount so that we measure a new render time with react profiler API
     try {
-      setCompActionsVal(tempCompActionsVal);
-      setCompHTMLVal(tempCompHTMLVal);
-      setCompPropsVal(tempCompPropsVal);
-      setCompStateVal(tempCompStateVal);
+      setCompBodyVal(tempCompBodyVal);
+      setCompJSXVal(tempCompJSXVal);
       setMockServerVal(tempMockServer);
       setKeyCountVal(keyCountVal + 1);
     } catch (error) {
@@ -93,10 +86,8 @@ const PropsWindow = () => {
       //Overwrite the object for the existing component in the UserComponents global state
       dispatch({type: 'EDIT_COMPS', payload: {
         name: saveName, 
-        html: compHTMLVal,
-        actions: compActionsVal,
-        props: compPropsVal,
-        state: compStateVal,
+        jsx: compJSXVal,
+        body: compBodyVal,
         mockServer: mockServerVal,
       }});
       //Close the modal
@@ -117,10 +108,8 @@ const PropsWindow = () => {
     try{
       dispatch({type: 'ADD_COMPS', payload: {
         name: saveName, 
-        html: compHTMLVal,
-        actions: compActionsVal,
-        props: compPropsVal,
-        state: compStateVal,
+        jsx: compJSXVal,
+        body: compBodyVal,
         mockServer: mockServerVal,
       }});
     } catch(error){
@@ -128,21 +117,14 @@ const PropsWindow = () => {
     }
   };
 
-  // handle toggling the props and state containers
+  // handle toggling the body and mockServer containers
   const handleToggleWindow = {
-    props : (e) => {
-      setPropsWindowVisible(true);
-      setStateWindowVisible(false);
-      setMockServerWindowVisible(false);
-    },
-    state : (e) => {
-      setStateWindowVisible(true);
-      setPropsWindowVisible(false);
+    body : (e) => {
+      setBodyWindowVisible(true);
       setMockServerWindowVisible(false);
     },
     mockServer: (e) => {
-      setStateWindowVisible(false);
-      setPropsWindowVisible(false);
+      setBodyWindowVisible(false);
       setMockServerWindowVisible(true);
     }
   };
@@ -181,7 +163,7 @@ const PropsWindow = () => {
         <div className='props-window'>
           {/* toggleable containers */}
           <div className='props-container' id='toggle-edit-container'>
-            {propsWindowVisible && 
+            {bodyWindowVisible && 
               <motion.div 
                 initial="hidden"
                 animate="visible"
@@ -189,12 +171,11 @@ const PropsWindow = () => {
                 transition={transition}
                 className='props-container' 
                 id='prop-edit-container'>
-                <label>Variables</label>
+                <label>Function Definitions</label>
                 <nav className='props-toggle-nav'>
                   <ul>
-                    <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
-                    <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
-                    <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.body}>Body</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.mockServer}>Mock Server</a></li>
                   </ul>
                 </nav>
                 <AceEditor
@@ -202,41 +183,17 @@ const PropsWindow = () => {
                   theme="monokai"
                   fontSize="1.5rem"
                   wrapEnabled={true}
-                  onChange={(value) => setTempCompPropsVal(value)}
-                  value={tempCompPropsVal}
+                  onChange={(value) => setTempCompBodyVal(value)}
+                  value={tempCompBodyVal}
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
-                />
-              </motion.div>
-            }
-            {stateWindowVisible &&
-              <motion.div 
-                initial="hidden"
-                animate="visible"
-                variants={fadeInVariants}
-                transition={transition}
-                className='props-container' 
-                id='state-edit-container'
-              >
-                <label>State</label>
-                <nav className='props-toggle-nav'>
-                  <ul>
-                    <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
-                    <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
-                    <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
-                  </ul>
-                </nav>
-                <AceEditor
-                  mode="javascript"
-                  theme="monokai"
-                  fontSize="1.5rem"
-                  wrapEnabled={true}
-                  onChange={(value) => setTempCompStateVal(value)}
-                  value={tempCompStateVal}
-                  editorProps={{ $blockScrolling: true }}
-                  width={styleOptions.width}
-                  height={styleOptions.height}
+                  placeholder= 'insert function definition e.g. () => console.log(&quot;Hello World&quot;)'
+                  setOptions={{
+                    useWorker: true,
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                  }}
                 />
               </motion.div>
             }
@@ -252,9 +209,8 @@ const PropsWindow = () => {
                 <label>Mock Server</label>
                 <nav className='props-toggle-nav'>
                   <ul>
-                    <li><a href="#" onClick={handleToggleWindow.props}>props</a></li>
-                    <li><a href="#" onClick={handleToggleWindow.state}>state</a></li>
-                    <li><a href="#" onClick={handleToggleWindow.mockServer}>mock server</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.body}>Body</a></li>
+                    <li><a href="#" onClick={handleToggleWindow.mockServer}>Mock Server</a></li>
                   </ul>
                 </nav>
                 <AceEditor
@@ -271,27 +227,6 @@ const PropsWindow = () => {
               </motion.div>
             }
           </div>
-          {/* static containers */}
-          <div className='props-container' id='function-definitions'>
-            <label>Function Definitions</label>
-            <AceEditor
-              mode="javascript"
-              theme="monokai"
-              fontSize="1.5rem"
-              wrapEnabled={true}
-              onChange={(value) => setTempCompActionsVal(value)}
-              value={tempCompActionsVal}
-              editorProps={{ $blockScrolling: true }}
-              width={styleOptions.width}
-              height={styleOptions.height}
-              placeholder= 'insert function definition e.g. () => console.log(&quot;Hello World&quot;)'
-              setOptions={{
-                useWorker: true,
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-              }}
-            />
-          </div>
           <div className='props-container' id='jsx-edit-container'>
             <label>JSX</label>
             <AceEditor
@@ -299,8 +234,8 @@ const PropsWindow = () => {
               theme="monokai"
               fontSize="1.5rem"
               wrapEnabled={true}
-              onChange={(value) => setTempCompHTMLVal(value)}
-              value={tempCompHTMLVal}
+              onChange={(value) => setTempCompJSXVal(value)}
+              value={tempCompJSXVal}
               editorProps={{ $blockScrolling: true }}
               width={styleOptions.width}
               height={styleOptions.height}
