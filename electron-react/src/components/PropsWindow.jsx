@@ -66,7 +66,7 @@ const PropsWindow = () => {
       setCompBodyVal(tempCompBodyVal);
       setCompJSXVal(tempCompJSXVal);
       setMockServerVal(tempMockServer);
-      setTimeout(() => setKeyCountVal(keyCountVal + 1), 1000);
+      setTimeout(() => setKeyCountVal(keyCountVal + 1), 50);
     } catch (error) {
       console.log(error);
     }
