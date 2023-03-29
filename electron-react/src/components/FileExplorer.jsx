@@ -8,6 +8,15 @@ import { FaFolderOpen } from 'react-icons/fa';
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
+
+const acorn = window.require("acorn");
+import { parse } from 'acorn-loose';
+const walk = window.require("acorn-walk");
+
+const babelParser = window.require('@babel/parser');
+import traverse from "@babel/traverse";
+
+
 const containerVariants = {
   hidden: {
     x: "-5rem",
@@ -29,6 +38,7 @@ const containerVariants = {
     },
   },
 };
+
 /**
  * interface file {name:string, directory: boolean, files: file[] }
  * @returns
@@ -120,28 +130,75 @@ const FileExplorer = () => {
     return fileArr;
   };
 
-  const fileParser = (path) => {
-    // console.log(path);
-    //We only really need plaintext here since AthenaJS handles the logic for us, do we even need to parse? 
+  function parseAndTraverseAST (dataString) {
+    const functionArray = [];
+    const returnArray = [];
+    let isJSX = false;
 
+    const nestedJSXVisitor = {
+      JSXElement(path) {
+        isJSX = true;
+        console.log('this is a nestedJSXVisitor', path.node);
+        const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+        console.log('PARSED STRING: ', `${parsedStr}`);
+      }
+    };
+
+    const ast = babelParser.parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
+
+    traverse(ast, {
+      enter(path) {
+        if (path.isFunctionDeclaration()) {
+          path.traverse(nestedJSXVisitor);
+          console.log(isJSX);
+          if(isJSX === false) {
+            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+            console.log('PARSED STRING: ', `${parsedStr}`);
+            functionArray.push(parsedStr);
+          }
+          isJSX = false;
+        }
+        if (path.isVariableDeclaration()) {
+          if(path.node.declarations[0].init.type === 'ArrowFunctionExpression') {
+            console.log(isJSX);
+            path.traverse(nestedJSXVisitor);
+            console.log(isJSX);
+            if(isJSX === false) {
+              const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+              console.log('PARSED STRING: ', `${parsedStr}`);
+              functionArray.push(parsedStr);
+            }
+            isJSX = false;
+          }
+        }
+        if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
+          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+          console.log('PARSED JSX RETURN: ', `${parsedStr}`);
+          returnArray.push(parsedStr);
+        }
+      }
+    });
+
+    let functionString = '';
+    if (functionArray.length > 0) functionString = functionArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    console.log('this is my functionString: ', functionString);
+    setTempCompActionsVal(functionString);
+    
+    const returnString = returnArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+    setTempCompHTMLVal(returnString);
+  }
+
+  
+  const fileParser = (path) => {
     // asynchronously read file here passing in the absolute path. 
     // data is a string
     fs.readFile(path,'utf-8', (err, data) => {
       //declare variable extension which gets the extension of our file i.e. .jsx
       const extension = pathModule.extname(path).toLowerCase();
-
-      //switch statement for different file types? Do we just Need JSX? 
-      //I am going to keep the switch statement here for now, and remove it if we decide to only use JSX
       try {
         switch(extension) {
         case '.jsx':
-          // just the jsx return should be passed
-          // regex matches return(<statement>) and also <statement>
-          const returnRegex = /return\s*\((\s*<[\s\S]*?)\)/;
-          // data.match => [return(<statement>), <statement>]
-          const returnStatement = data.match(returnRegex)[1];
-          console.log('JSX File content:', returnStatement);
-          setTempCompHTMLVal(returnStatement);
+          parseAndTraverseAST(data);
           break;
         case '.json':
           console.log('JSON File content:', data);

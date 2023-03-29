@@ -18,9 +18,14 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@babel/parser": "^7.21.3",
+    "@babel/traverse": "^7.21.3",
     "@electron/remote": "^2.0.9",
     "@reactflow/node-resizer": "^2.1.0",
     "ace-builds": "^1.16.0",
+    "acorn": "^8.8.2",
+    "acorn-loose": "^8.3.0",
+    "acorn-walk": "^8.2.0",
     "chart.js": "^4.2.1",
     "electron-updater": "^5.3.0",
     "fetch-mock": "^9.11.0",
