@@ -3,19 +3,13 @@ import React, { useState, useContext } from "react";
 import DirectoryComponent from "./DirectoryComponent";
 import { Resizable } from "re-resizable";
 import { DetailsContext } from "./context/DetailsContext";
-import { motion } from 'framer-motion';
-import { FaFolderOpen } from 'react-icons/fa';
+import { motion } from "framer-motion";
+import { FaFolderOpen } from "react-icons/fa";
+import traverse from "@babel/traverse";
 
 const fs = window.require("fs");
 const pathModule = window.require("path");
-
-const acorn = window.require("acorn");
-import { parse } from 'acorn-loose';
-const walk = window.require("acorn-walk");
-
-const babelParser = window.require('@babel/parser');
-import traverse from "@babel/traverse";
-
+const babelParser = window.require("@babel/parser");
 
 const containerVariants = {
   hidden: {
@@ -131,7 +125,7 @@ const FileExplorer = () => {
     return fileArr;
   };
 
-  function parseAndTraverseAST (dataString) {
+  function parseAndTraverseAST(dataString) {
     const functionArray = [];
     const returnArray = [];
     let isJSX = false;
@@ -139,83 +133,103 @@ const FileExplorer = () => {
     const nestedJSXVisitor = {
       JSXElement(path) {
         isJSX = true;
-        console.log('this is a nestedJSXVisitor', path.node);
+        console.log("this is a nestedJSXVisitor", path.node);
         const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-        console.log('PARSED STRING: ', `${parsedStr}`);
-      }
+        console.log("PARSED STRING: ", `${parsedStr}`);
+      },
     };
 
-    const ast = babelParser.parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
+    const ast = babelParser.parse(dataString, {
+      sourceType: "module",
+      plugins: ["jsx", "flow"],
+    });
 
     traverse(ast, {
       enter(path) {
         if (path.isFunctionDeclaration()) {
           path.traverse(nestedJSXVisitor);
           console.log(isJSX);
-          if(isJSX === false) {
-            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-            console.log('PARSED STRING: ', `${parsedStr}`);
+          if (isJSX === false) {
+            const parsedStr = `${dataString.slice(
+              path.node.start,
+              path.node.end
+            )}`;
+            console.log("PARSED STRING: ", `${parsedStr}`);
             functionArray.push(parsedStr);
           }
           isJSX = false;
         }
         if (path.isVariableDeclaration()) {
-          if(path.node.declarations[0].init.type === 'ArrowFunctionExpression') {
+          if (
+            path.node.declarations[0].init.type === "ArrowFunctionExpression"
+          ) {
             console.log(isJSX);
             path.traverse(nestedJSXVisitor);
             console.log(isJSX);
-            if(isJSX === false) {
-              const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-              console.log('PARSED STRING: ', `${parsedStr}`);
+            if (isJSX === false) {
+              const parsedStr = `${dataString.slice(
+                path.node.start,
+                path.node.end
+              )}`;
+              console.log("PARSED STRING: ", `${parsedStr}`);
               functionArray.push(parsedStr);
             }
             isJSX = false;
           }
         }
         if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
-          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-          console.log('PARSED JSX RETURN: ', `${parsedStr}`);
+          const parsedStr = `${dataString.slice(
+            path.node.start,
+            path.node.end
+          )}`;
+          console.log("PARSED JSX RETURN: ", `${parsedStr}`);
           returnArray.push(parsedStr);
         }
-      }
+      },
     });
 
-    let functionString = '';
-    if (functionArray.length > 0) functionString = functionArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
-    console.log('this is my functionString: ', functionString);
+    let functionString = "";
+    if (functionArray.length > 0)
+      functionString = functionArray.reduce(
+        (acc, curr) => acc + "\n" + "\n" + curr
+      );
+    console.log("this is my functionString: ", functionString);
     setTempCompActionsVal(functionString);
-    
-    const returnString = returnArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+
+    const returnString = returnArray.reduce(
+      (acc, curr) => acc + "\n" + "\n" + curr
+    );
     setTempCompHTMLVal(returnString);
   }
 
-  
   const fileParser = (path) => {
-    // asynchronously read file here passing in the absolute path. 
+    // asynchronously read file here passing in the absolute path.
     // data is a string
     fs.readFile(path, "utf-8", (err, data) => {
       //declare variable extension which gets the extension of our file i.e. .jsx
       const extension = pathModule.extname(path).toLowerCase();
       try {
-        switch(extension) {
-        case '.jsx':
-          parseAndTraverseAST(data);
-          break;
-        case '.json':
-          console.log('JSON File content:', data);
-          //how do we pass along this data into the JSX textarea? 
-          break;
-        case '.js':
-          console.log('JS File content:', data);
-          //how do we pass along this data into the JSX textarea? 
-          break;
-        default: 
-          console.log('File data:', data);
+        switch (extension) {
+          case ".jsx":
+            parseAndTraverseAST(data);
+            break;
+          case ".json":
+            console.log("JSON File content:", data);
+            //how do we pass along this data into the JSX textarea?
+            break;
+          case ".js":
+            console.log("JS File content:", data);
+            //how do we pass along this data into the JSX textarea?
+            break;
+          default:
+            console.log("File data:", data);
         }
-      }
-      //handle errors
-      catch(err) {
-        console.log('ERROR: error reading file in DirectoryComponent.jsx:', err);
+      } catch (err) {
+        //handle errors
+        console.log(
+          "ERROR: error reading file in DirectoryComponent.jsx:",
+          err
+        );
         return;
       }
 
@@ -289,7 +303,7 @@ const FileExplorer = () => {
     <>
       {explorerVisible ? (
         <motion.div
-          key = 'expanded'
+          key="expanded"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -297,11 +311,11 @@ const FileExplorer = () => {
           <Resizable
             className={sidebarClass}
             defaultSize={{
-              width: 'auto',
-              height: 'auto',
+              width: "auto",
+              height: "auto",
             }}
-            minWidth={250} 
-            maxWidth={800} 
+            minWidth={250}
+            maxWidth={800}
             enable={{
               top: false,
               right: true,
@@ -313,32 +327,29 @@ const FileExplorer = () => {
               topLeft: false,
             }}
           >
-            <motion.div 
-              className='sidebar'
-            >
+            <motion.div className="sidebar">
               <div className="side-nav">
                 <div className="side-nav-buttons-top">
                   <span className="material-icons" onClick={handleToggle}>
-                      arrow_back_ios
+                    arrow_back_ios
                   </span>
                 </div>
               </div>
-              <div 
-                id="file-system-container">
+              <div id="file-system-container">
                 <div className="file-system-header">
                   <h2>File Explorer</h2>
                   <span
-                    id = "open-folder-button"
+                    id="open-folder-button"
                     onClick={() => {
                       handleOpenFolder();
                     }}
                   >
-                    <FaFolderOpen/>
+                    <FaFolderOpen />
                   </span>
                 </div>
                 <div className="root-directory">
-                  <hr/>
-                  <br/>
+                  <hr />
+                  <br />
                   {/* this is where we render htmlArray */}
                   <div className="root-dir-header">{uploadedFiles}</div>
                 </div>
@@ -347,12 +358,13 @@ const FileExplorer = () => {
           </Resizable>
         </motion.div>
       ) : (
-        <motion.div       
-          style={{ opacity: .9 }}
+        <motion.div
+          style={{ opacity: 0.9 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          key = 'closed' 
-          className='sidebar-closed'>
+          key="closed"
+          className="sidebar-closed"
+        >
           <div className="side-nav">
             <div className="side-nav-buttons-top">
               <span className="material-icons" onClick={handleToggle}>
