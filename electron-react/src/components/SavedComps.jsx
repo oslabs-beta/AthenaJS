@@ -54,7 +54,7 @@ const SavedComps = () => {
     setTempCompBodyVal(component.body);
     setTempCompJSXVal(component.jsx);
     setMockServerVal(component.mockServer);
-    setTimeout(() => {setKeyCountVal(keyCountVal + 1)}, 1000);
+    setTimeout(() => {setKeyCountVal(keyCountVal + 1)}, 50);
   };
 
   //Export file as JSX (we build the component in the template literal)
