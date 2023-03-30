@@ -9,8 +9,9 @@ import { FaFolderOpen } from 'react-icons/fa';
 const fs = window.require('fs');
 const pathModule = window.require('path');
 
-const babelParser = window.require('@babel/parser');
-import traverse from '@babel/traverse';
+import { parse } from '@babel/parser';
+import * as babel from '@babel/core';
+const traverse = babel.traverse;
 
 const containerVariants = {
   hidden: {
@@ -141,7 +142,7 @@ const FileExplorer = () => {
     };
 
     //Use Babel to parse the input codee string into an Abstract Syntax Tree (AST)
-    const ast = babelParser.parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
+    const ast = parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
 
     //Traverse the AST using the visitor pattern to extract function declarations and JSX Elements nested within return statements
     traverse(ast, {
