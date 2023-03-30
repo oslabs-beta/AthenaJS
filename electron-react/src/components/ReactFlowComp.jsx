@@ -32,7 +32,10 @@ const ReactFlowComp = ({ data: { component, removeNode }, selected }) => {
         </div>
       )}
       <NodeResizer color="#ff0071" isVisible={selected} minWidth={100} minHeight={30} />
-      <LiveProvider code={`() => {${component.mockServer}${component.body}return(${component.jsx})}`} scope={scope}>
+      <LiveProvider code={`() => {
+        ${component.mockServer}
+        ${component.body}
+      return(<>${component.jsx}</>)}`} scope={scope}>
         <LivePreview />
       </LiveProvider>
     </>
