@@ -1,4 +1,4 @@
-/**
+/*
  * @see https://www.electron.build/configuration/configuration
  */
 {
@@ -14,7 +14,7 @@
   ],
   "mac": {
     "artifactName": "${productName}_${version}.${ext}",
-    "icon": "src/assets/Athena_Icon.png",
+    "icon": "src/assets/icon-512.png"
     "target": [
       "dmg",
       "zip"
