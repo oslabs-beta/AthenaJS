@@ -9,10 +9,12 @@
   },
   "files": [
     "dist-electron",
-    "dist"
+    "dist",
+    "src/assets/**/*"
   ],
   "mac": {
     "artifactName": "${productName}_${version}.${ext}",
+    "icon": "src/assets/Athena_Icon.png",
     "target": [
       "dmg",
       "zip"
