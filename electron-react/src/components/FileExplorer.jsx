@@ -10,8 +10,7 @@ const fs = window.require("fs");
 const pathModule = window.require("path");
 
 import { parse } from '@babel/parser';
-import * as babel from '@babel/core';
-const traverse = babel.traverse;
+const traverse = require('@babel/traverse').default;
 
 const containerVariants = {
   hidden: {
