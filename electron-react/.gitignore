@@ -31,3 +31,6 @@ yarn.lock
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+#Zone identifier
+*.Zone.Identifier

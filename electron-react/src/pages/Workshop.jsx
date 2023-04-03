@@ -1,12 +1,7 @@
 import React, { useContext } from 'react';
-import { DetailsContext } from '@/components/context/DetailsContext';
-import NavigationContainer from '@/components/NavigationContainer';
-import ViewComponent from '@/components/ViewComponent';
-import { motion } from 'framer-motion';
-import AthenaSvg from '@/components/AthenaSvg';
-import AthenaLogoSvg from '@/components/AthenaLogo';
-
-
+import NavigationContainer from '@/components/Navigation/NavigationContainer';
+import ViewComponent from '@/components/WorkshopMain/ViewComponent';
+import AthenaLogoSvg from '@/components/framerMotion/AthenaLogo';
 
 const Workshop = () => {
   return(

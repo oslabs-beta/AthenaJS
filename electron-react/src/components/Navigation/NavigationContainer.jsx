@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { DetailsContext } from './context/DetailsContext';
-import PropsWindow from './PropsWindow';
+import { DetailsContext } from '../context/DetailsContext';
+import PropsWindow from '../WorkshopMain/PropsWindow';
 import NavBar from './NavBar';
-import PerformanceCharts from './PerformanceCharts';
-import SavedComps from './SavedComps';
+import PerformanceCharts from '../WorkshopMain/PerformanceCharts';
+import SavedComps from '../WorkshopMain/SavedComps';
 
 const NavigationContainer = () => {
   const { compActions } = useContext(DetailsContext);

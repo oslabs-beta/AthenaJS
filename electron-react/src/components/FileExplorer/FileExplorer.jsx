@@ -1,34 +1,33 @@
-import { ipcRenderer } from "electron";
-import React, { useState, useContext } from "react";
-import DirectoryComponent from "./DirectoryComponent";
-import { Resizable } from "re-resizable";
-import { DetailsContext } from "./context/DetailsContext";
-import { motion } from "framer-motion";
-import { FaFolderOpen } from "react-icons/fa";
+import { ipcRenderer } from 'electron';
+import React, { useState, useContext } from 'react';
+import DirectoryComponent from './DirectoryComponent';
+import { Resizable } from 're-resizable';
+import { DetailsContext } from '../context/DetailsContext';
+import { motion } from 'framer-motion';
+import { FaFolderOpen } from 'react-icons/fa';
 
-const fs = window.require("fs");
-const pathModule = window.require("path");
+const fs = window.require('fs');
+const pathModule = window.require('path');
 
 import { parse } from '@babel/parser';
-import * as babel from '@babel/core';
-const traverse = babel.traverse;
+const traverse = require('@babel/traverse').default;
 
 const containerVariants = {
   hidden: {
-    x: "-5rem",
+    x: '-5rem',
   },
   visible: {
     x: 0,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 600,
       damping: 100,
     },
   },
   exit: {
-    x: "-77%",
+    x: '-77%',
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 700,
       damping: 100,
     },
@@ -51,18 +50,18 @@ const FileExplorer = () => {
   const [explorerVisible, setExplorerVisible] = useState(false);
 
   // sets CSS to transition sidebar to close
-  const sidebarClass = explorerVisible ? "sidebar" : "sidebar-closed";
+  const sidebarClass = explorerVisible ? 'sidebar' : 'sidebar-closed';
   const handleToggle = (e) => {
     setExplorerVisible(!explorerVisible);
   };
 
   const handleOpenFolder = () => {
     // open folder
-    const directory = ipcRenderer.sendSync("OpenFolder");
+    const directory = ipcRenderer.sendSync('OpenFolder');
     // console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
     // accounting for windows backslash to normalize the path
-    directoryPath = directoryPath.replace(/\\/g, "/");
+    directoryPath = directoryPath.replace(/\\/g, '/');
     // generate first level of file tree
     const fileArr = fileTreeObject(directoryPath);
     // generate full tree
@@ -78,7 +77,7 @@ const FileExplorer = () => {
     // filter filesObj for node modules or git files
     const filteredFileArr = filesArray
       .filter((file) => {
-        return file !== "node_modules" && file !== ".git";
+        return file !== 'node_modules' && file !== '.git';
       })
       // map over each file name, instead returning object that has name, directory, and files properties
       // ['src', 'index']
@@ -120,19 +119,20 @@ const FileExplorer = () => {
   };
 
   //This function allows us to parse files in order to populate our text areas within PropsWindow.jsx
-  function parseAndTraverseAST(dataString) {
+  function parseAndTraverseAST (dataString) {
+    
     //Initialize two empty arrays to store parsed function declarations and JSX returns
     const componentBodyArray = [];
     const JSXArray = [];
 
-    //Initialize a bool flag to track whether or not there is JSX within a function
+    //Initialize a bool flag to track whether or not there is JSX within a function 
     let isJSX = false;
 
     //This object defines a vistor for traversing nested JSX elements with a function declaration
     const nestedJSXVisitor = {
       JSXElement(path) {
         isJSX = true;
-        console.log("this is a nestedJSXVisitor", path.node);
+        console.log('this is a nestedJSXVisitor', path.node);
 
         // Extract the string representation of the JSX element
         const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
@@ -146,43 +146,33 @@ const FileExplorer = () => {
     //Traverse the AST using the visitor pattern to extract function declarations and JSX Elements nested within return statements
     traverse(ast, {
       enter(path) {
-        console.log("PATH!!!: ", path.node);
-        if (path.isCallExpression()) {
-          if (path.node.callee.name === "useEffect") {
-            const parsedStr = `${dataString.slice(
-              path.node.start,
-              path.node.end
-            )}`;
+        console.log('PATH!!!: ', path.node);
+        if(path.isCallExpression()) {
+          if(path.node.callee.name === 'useEffect') {
+            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
             componentBodyArray.push(parsedStr);
           }
         }
         if (path.isFunctionDeclaration()) {
           //Traverse any nested JSX elements within the function declaration using the nestedJSXVisitor
           path.traverse(nestedJSXVisitor);
-          //If the function declaration does not contain JSX, extract its string representation
-          if (isJSX === false) {
-            const parsedStr = `${dataString.slice(
-              path.node.start,
-              path.node.end
-            )}`;
+          //If the function declaration does not contain JSX, extract its string representation 
+          if(isJSX === false) {
+            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
             componentBodyArray.push(parsedStr);
           }
-          //Reset the isJSX bool flag for the next function declaration
+          //Reset the isJSX bool flag for the next function declaration 
           isJSX = false;
         }
         if (path.isVariableDeclaration()) {
-          if (
-            path.node.declarations[0].init.type === "ArrowFunctionExpression"
-          ) {
+          if(path.node.declarations[0].init.type === 'ArrowFunctionExpression') {
+
             //Traverse any nested JSX elements within the arrow function expression using the nestedJSXVisitor again
             path.traverse(nestedJSXVisitor);
-
+            
             //If the arrow function does not contain JSX, extract its string representation
-            if (isJSX === false) {
-              const parsedStr = `${dataString.slice(
-                path.node.start,
-                path.node.end
-              )}`;
+            if(isJSX === false) {
+              const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
               componentBodyArray.push(parsedStr);
             }
 
@@ -190,30 +180,24 @@ const FileExplorer = () => {
             isJSX = false;
           } else {
             // Parses normal variable declarations
-            const parsedStr = `${dataString.slice(
-              path.node.start,
-              path.node.end
-            )}`;
+            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
             componentBodyArray.push(parsedStr);
           }
         }
-        //This conditional checks for JSX content as well as checks if the JSX's parent is a return statement.
+        //This conditional checks for JSX content as well as checks if the JSX's parent is a return statement. 
         if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
-          const parsedStr = `${dataString.slice(
-            path.node.start,
-            path.node.end
-          )}`;
+          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
           JSXArray.push(parsedStr);
         }
       },
     });
-    //Concatenate the parsed function declarations into a single string and save it to a state variable
-    let componentBodyString = "";
+    //Concatenate the parsed function declarations into a single string and save it to a state variable 
+    let componentBodyString = '';
 
     // purpose of this function:
-    // previously, variables and functions within useEffectHook would be duplicated in component body window
-    // this function filters all elements that are contained within other elements
-    // with this, all functions or variables within a useEffect hook will only be printed once.
+      // previously, variables and functions within useEffectHook would be duplicated in component body window
+      // this function filters all elements that are contained within other elements
+      // with this, all functions or variables within a useEffect hook will only be printed once.
     function filterDuplicateFunctions(arr) {
       return arr.filter((el, index) => {
         const otherEls = arr.slice(0, index).concat(arr.slice(index + 1));
@@ -229,9 +213,9 @@ const FileExplorer = () => {
         (acc, curr) => acc + "\n" + "\n" + curr
       );
     setTempCompBodyVal(componentBodyString);
-
-    //Concatenate the parsed JSX elements into a single string and save it to a state variable
-    const JSXString = JSXArray.reduce((acc, curr) => acc + "\n" + "\n" + curr);
+    
+    //Concatenate the parsed JSX elements into a single string and save it to a state variable 
+    const JSXString = JSXArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
     setTempCompJSXVal(JSXString);
   }
 
@@ -242,19 +226,19 @@ const FileExplorer = () => {
       //declare variable extension which gets the extension of our file i.e. .jsx
       const extension = pathModule.extname(path).toLowerCase();
       try {
-        switch (extension) {
-          case ".jsx":
-            parseAndTraverseAST(data);
-            break;
-
-          case ".js":
-            console.log("JS File content:", data);
-            break;
-          case ".css":
-            console.log("CSS File content:", data);
-            break;
-          default:
-            console.log("File data:", data);
+        switch(extension) {
+        case '.jsx':
+          parseAndTraverseAST(data);
+          break;
+          
+        case '.js':
+          console.log('JS File content:', data);
+          break;
+        case '.css':
+          console.log('CSS File content:', data);
+          break;
+        default: 
+          console.log('File data:', data);
         }
       } catch (err) {
         //handle errors

@@ -1,11 +1,11 @@
 import React, { Profiler, useContext, useState, useEffect, useRef, useMemo } from 'react';
-import { DetailsContext } from './context/DetailsContext';
-import { PerformanceContext } from './context/PerformanceContext';
+import { DetailsContext } from '../context/DetailsContext';
+import { PerformanceContext } from '../context/PerformanceContext';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import fetchMock from 'fetch-mock';
 import stringifyObject from 'stringify-object';
 import styled from 'styled-components';
-import { MockFetchContext } from './context/MockFetchContext';
+import { MockFetchContext } from '../context/MockFetchContext';
 import { Resizable } from 're-resizable';
 
 

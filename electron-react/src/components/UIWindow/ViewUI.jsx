@@ -5,7 +5,7 @@ import ReactFlow, {
   useNodesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import NavContainerUI from '@/components/NavContainerUI';
+import NavContainerUI from '@/components/Navigation/NavContainerUI';
 import ReactFlowComp from './ReactFlowComp';
 import html2canvas from 'html2canvas';
 import path from 'path';

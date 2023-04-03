@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ShowUIContext } from './context/ShowUIContext';
+import { ShowUIContext } from '../context/ShowUIContext';
 import { motion } from 'framer-motion';
 
 
