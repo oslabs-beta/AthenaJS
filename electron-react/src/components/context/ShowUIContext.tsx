@@ -1,9 +1,13 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, SetStateAction, Dispatch } from 'react';
 
-export const ShowUIContext = createContext();
+interface ShowUIType {
+  showUI: (boolean | Dispatch<SetStateAction<boolean>>)[]
+}
+
+export const ShowUIContext = createContext<ShowUIType | null>(null);
 
 //This state is used to determine if we show the UI page or the Component page (UI Mode/Component mode)
-export const ShowUIProvider = ({ children }) => {
+export const ShowUIProvider = ({ children } : any) => {
   const [showUI, setShowUI] = useState(false);
 
   return (
