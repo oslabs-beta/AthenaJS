@@ -1,10 +1,3 @@
-<style>
-h1, h2, h3, h4 {
-  border-bottom: none;
-}
-</style>
-
-
 <p align='center'>
   <a href='#'>
     <img alt = 'AthenaJS Logo' src = './electron-react/src/assets/athena_logo01.png' width = '100%' style='background-color: white' />
@@ -39,57 +32,57 @@ h1, h2, h3, h4 {
 AthenaJS is a component visualizer workshop that allows developers to quickly develop and edit their React 
 components without codebase integration.  
 
-    Easy to use: AthenaJS is a standalone electron application that allows developers to import their
-    own React components or create components from scratch within the application's code editor. 
-    Dynamic: Developers can mock fetch request/data, edit the state, props and functions of their components wihtin the application's code editor. They will be able to see those changes reflected within the component visualizer.
+**Easy to use**: AthenaJS is a standalone electron application that allows developers to import their
+own React components or create components from scratch within the application's code editor.
 
+**Dynamic**: Developers can mock fetch request/data, edit the state, props and functions of their components within the application's code editor. They will be able to see those changes reflected within the component visualizer.
+
+**UI Mode**: After developers have created/edited their react components, they can navigate to the UI Mode section and create a mock UI from their saved component library. 
 
 <hr/>    
 
 ## Documentation
 
-You can find the React documentation on the website.
-
-Check out the Getting Started page for a quick overview.
-
-The documentation is divided into several sections:
-
-Tutorial
-Main Concepts
-Advanced Guides
-API Reference
-Where to Get Support
-You can improve it by sending pull requests to this repository.
-
-<hr/>    
-
-## Examples
-
-```js
-// something something something
-function foo
+Check out our documentation on docusaurus for AthenaJS: 
+```sh
+cd ./electron-react/athena-website
+npm install
+npm start
 ```
+<hr/>    
 
-lorem ipsum
+## Contributing
+
+Navigate to the [CONTRIBUTING.md](CONTRIBUTING.md) file to get started with setting up the repo.
 
 <hr/>    
 
-## FAQ
-
-Who maintains Athena JS?
+## Additional Resources
 
 Please check out our team page!
+| Developed By       | Github          | LinkedIn        |
+| :------------------: | :-------------: | :-------------: |
+| Christopher Long   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cvalong) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cvalong) |
+| Daniel Chang       | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Chang254) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dkc213) |
+| Derrick Oh         | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Igniphis) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/derrick-oh-37a84a182/) |
+| Matthew Fukudome   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mattfookoo) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matthewfukudome/) |
+| Ryan Motamen       | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ryanmotamen) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ryan-motamen/) |
 
-Looking for support?
-
-lorem ipsum
 
 Some resources:
 
-Our CONTRIBUTING.md to get started with setting up the repo.
-Our discussions/notes/roadmap: Athena JS/notes
-Our blog which contains release posts and explanations: /blog
+
+- Our discussions/notes/roadmap: Athena JS/notes
+- Our blog which contains release posts and explanations: /blog
 
 How is the repo structured?
 
-The Athena JS repo is managed as a monorepo check out the CONTRIBUTING.md for development and checkout WEBSITE.md doc website.
+The Athena JS repo is managed as a monorepo check out the [CONTRIBUTING.md](CONTRIBUTING.md) for development and checkout for the doc website.
+
+<hr/>
+
+## License 
+
+Athena is [MIT licensed](https://github.com/oslabs-beta/Athena/blob/main/LICENSE). 
+
+<hr/>

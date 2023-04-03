@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import NavBarUI from './NavBarUI';
-import UIComps from './UIComps';
+import UIComps from '../UIWindow/UIComps';
 
 
 const NavContainerUI = ({bg, addNode, removeNode}) => {

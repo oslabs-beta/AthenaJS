@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
-import NavigationContainer from '@/components/NavigationContainer';
-import ViewUI from '@/components/ViewUI';
-import NavContainerUI from '@/components/NavContainerUI';
-import AthenaLogoSvg from '@/components/AthenaLogo';
+import ViewUI from '@/components/UIWindow/ViewUI';
+import AthenaLogoSvg from '@/components/framerMotion/AthenaLogo';
 
 const UIPage = () => {
   return(
