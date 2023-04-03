@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import React, { useState, useContext } from 'react';
 import DirectoryComponent from './DirectoryComponent';
 import { Resizable } from 're-resizable';
-import { DetailsContext } from './context/DetailsContext';
+import { DetailsContext } from '../context/DetailsContext';
 import { motion } from 'framer-motion';
 import { FaFolderOpen } from 'react-icons/fa';
 
