@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { DetailsContext } from './context/DetailsContext';
+import { DetailsContext } from '../context/DetailsContext';
 import { useUserCompContext } from '@/hooks/useUserCompContext';
-import { MockFetchContext } from './context/MockFetchContext';
-import { PerformanceContext } from './context/PerformanceContext';
+import { MockFetchContext } from '../context/MockFetchContext';
+import { PerformanceContext } from '../context/PerformanceContext';
 import {motion} from 'framer-motion';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { PerformanceContext } from './context/PerformanceContext';
+import { PerformanceContext } from '../context/PerformanceContext'; //updated import statement for file restructure 
 import { motion } from 'framer-motion';
 import {
   Chart as ChartJS,
