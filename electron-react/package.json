@@ -22,6 +22,7 @@
     "@babel/traverse": "^7.21.3",
     "@electron/remote": "^2.0.9",
     "@reactflow/node-resizer": "^2.1.0",
+    "@types/babel__traverse": "^7.18.3",
     "ace-builds": "^1.16.0",
     "babel-loader": "^9.1.2",
     "chart.js": "^4.2.1",
