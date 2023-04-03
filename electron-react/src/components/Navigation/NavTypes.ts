@@ -13,7 +13,7 @@ export interface NavBarProps {
   }
 
 export interface NavContainerUiProps {
-    bg: string,
+    bg: [string, React.Dispatch<React.SetStateAction<string>>],
     addNode: (component: object) => void,
     removeNode: (component: object) => void
 }
