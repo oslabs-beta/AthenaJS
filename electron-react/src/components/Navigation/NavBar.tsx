@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { ShowUIContext } from '../context/ShowUIContext';
 import { motion } from 'framer-motion';
+import { NavBarProps, handleToggleWindow } from './NavTypes'
 
 
-const NavBar = ({handleToggleWindow}) => {
+const NavBar = ({handleToggleWindow}: NavBarProps): JSX.Element => {
   const { showUI } = useContext(ShowUIContext);
   const [ showUIVal, setShowUIVal ] = showUI;
 
