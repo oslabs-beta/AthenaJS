@@ -1,6 +1,15 @@
 import React, { useState } from "react";
+import { Folder } from './FileExplorer';
 
-const DirectoryComponent = ({ name, files, fileParser, path }) => {
+interface DirectoryProps {
+  name: string;
+  files: Folder[];
+  fileParser: Function;
+  path: string;
+  
+}
+
+const DirectoryComponent = ({ name, files, fileParser, path }: DirectoryProps): JSX.Element => {
   // each directory component has access to it's name and files on property object
   // hook to tell whether button is opened or not
   const [isOpen, setOpen] = useState(false);
@@ -8,14 +17,13 @@ const DirectoryComponent = ({ name, files, fileParser, path }) => {
   const handleFolderToggle = () => {
     setOpen(!isOpen);
   };
-  // console.log(fileParser);
 
   // TODO: readability refactor for recursive call
   return (
     <div className="folder">
       <button className="folder-button" onClick={handleFolderToggle}>
         <svg className={isOpen ? 'folder-button-icon chevron-down' : 'folder-button-icon'} 
-          alt="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+         xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
           <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
         </svg>
         <span className="file-button-text">{name}</span>
