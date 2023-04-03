@@ -4,7 +4,7 @@ import Workshop from './pages/Workshop';
 import UIPage from './pages/UIPage';
 import { useUserCompContext } from './hooks/useUserCompContext';
 import './App.scss';
-import FileExplorer from './components/FileExplorer';
+import FileExplorer from './components/FileExplorer/FileExplorer';
 import { ShowUIContext } from './components/context/ShowUIContext';
 import {motion} from 'framer-motion';
 import path from 'path';
