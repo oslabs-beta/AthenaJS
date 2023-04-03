@@ -4,14 +4,16 @@ import PropsWindow from '../WorkshopMain/PropsWindow';
 import NavBar from './NavBar';
 import PerformanceCharts from '../WorkshopMain/PerformanceCharts';
 import SavedComps from '../WorkshopMain/SavedComps';
+import { NavigationContainerProps , handleToggleWindow } from './NavTypes';
 
-const NavigationContainer = () => {
+
+const NavigationContainer = (): JSX.Element => {
   const { compActions } = useContext(DetailsContext);
-  const [ showPropsWindow, setShowPropsWindow ] = useState(true);
-  const [ showPerformanceCharts, setShowPerformanceCharts ] = useState(false);
-  const [ showSavedComps, setShowSavedComps ] = useState(false);
+  const [ showPropsWindow, setShowPropsWindow ] = useState<boolean>(true);
+  const [ showPerformanceCharts, setShowPerformanceCharts ] = useState<boolean>(false);
+  const [ showSavedComps, setShowSavedComps ] = useState<boolean>(false);
   // console.log(`logs are in NavigationContainer: ${logs}`);
-  const handleToggleWindow = {
+  const handleToggleWindow: handleToggleWindow = {
     props : (e) => {
       setShowPropsWindow(true);
       setShowPerformanceCharts(false);
