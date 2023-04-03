@@ -3,7 +3,7 @@ import { ShowUIContext } from '../context/ShowUIContext';
 import { motion } from 'framer-motion';
 
 
-const NavBarUI = () => {
+const NavBarUI = (): JSX.Element => {
   const { showUI } = useContext(ShowUIContext);
   const [ showUIVal, setShowUIVal ] = showUI;
   return (

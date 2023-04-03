@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import NavBarUI from './NavBarUI';
 import UIComps from '../UIWindow/UIComps';
+import { NavContainerUiProps } from './NavTypes';
 
 
-const NavContainerUI = ({bg, addNode, removeNode}) => {
+const NavContainerUI = ({bg, addNode, removeNode}: NavContainerUiProps) => {
 
   return (
     <div id ="navigation-container">
