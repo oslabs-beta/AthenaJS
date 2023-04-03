@@ -2,12 +2,9 @@
 import React, { useContext, useEffect } from 'react';
 import Workshop from './pages/Workshop';
 import UIPage from './pages/UIPage';
-import { DetailsProvider } from './components/context/DetailsContext';
-import { PerformanceProvider } from './components/context/PerformanceContext';
 import { useUserCompContext } from './hooks/useUserCompContext';
 import './App.scss';
-import FileExplorer from './components/FileExplorer';
-import { MockFetchProvider } from './components/context/MockFetchContext';
+import FileExplorer from './components/FileExplorer/FileExplorer';
 import { ShowUIContext } from './components/context/ShowUIContext';
 import {motion} from 'framer-motion';
 import path from 'path';
@@ -88,15 +85,9 @@ function App() {
     exit="exit"
       className='App'
     >
-            <DetailsProvider>
-              <FileExplorer />
-              <PerformanceProvider>
-                <MockFetchProvider>
-                  <Workshop />
-                </MockFetchProvider>
-              </PerformanceProvider>
-            </DetailsProvider>
-    </motion.div>
+      <FileExplorer />
+      <Workshop />
+     </motion.div>
   )
   }
 }
