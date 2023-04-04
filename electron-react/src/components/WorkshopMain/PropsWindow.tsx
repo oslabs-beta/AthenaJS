@@ -13,6 +13,14 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/worker-javascript';
 import 'ace-builds/src-noconflict/worker-json';
 
+// https://www.typescriptlang.org/docs/handbook/declaration-files/templates/global-d-ts.html
+// exposing an any type for the ace editor on the window
+declare global {
+  interface Window {
+    ace: any;
+  }
+}
+
 //Need these to make workers function for ace editor (allows linting and other code editor functionality)
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
 window.ace.config.setModuleUrl('ace/mode/json_worker', '../../node_modules/ace-builds/src-noconflict/worker-json.js');
@@ -58,7 +66,7 @@ const PropsWindow = () => {
   const [ checkSaveModal, setCheckSaveModal ] = useState(false);
 
   //Handle the submit of the create props form
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     //On form submission (Update View button), we set the states for the component renderer
     //We also adjust keyCount so that we measure a new render time with react profiler API
@@ -73,7 +81,7 @@ const PropsWindow = () => {
   };
 
   //Check if component has already been saved when we press save component
-  const checkCompExist = () => {
+  const checkCompExist = (): void => {
     for (let i = 0; i < components.length; i++){
       if (components[i].name === saveName) return setCheckSaveModal(true);
     }
@@ -81,7 +89,7 @@ const PropsWindow = () => {
   };
 
   //If user says they want to overwrite component -> do this
-  const handleOverWriteYes = () => {
+  const handleOverWriteYes = (): void => {
     try{
       //Overwrite the object for the existing component in the UserComponents global state
       dispatch({type: 'EDIT_COMPS', payload: {
@@ -98,13 +106,13 @@ const PropsWindow = () => {
   };
 
   //If user says they don't want to overwrite component
-  const handleOverWriteNo = () => {
+  const handleOverWriteNo = (): void => {
     //close modal
     setCheckSaveModal(false);
   };
 
   //Save current component by adding to the UserComponent array (via reducer)
-  const handleSave = () => {
+  const handleSave = (): void => {
     try{
       dispatch({type: 'ADD_COMPS', payload: {
         name: saveName, 
@@ -119,11 +127,11 @@ const PropsWindow = () => {
 
   // handle toggling the body and mockServer containers
   const handleToggleWindow = {
-    body : (e) => {
+    body : (e: React.MouseEvent<HTMLAnchorElement>): void => {
       setBodyWindowVisible(true);
       setMockServerWindowVisible(false);
     },
-    mockServer: (e) => {
+    mockServer: (e: React.MouseEvent<HTMLAnchorElement>): void => {
       setBodyWindowVisible(false);
       setMockServerWindowVisible(true);
     }

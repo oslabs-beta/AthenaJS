@@ -15,31 +15,31 @@ ChartJS.register(
   BarElement,
   Tooltip
 );
-
 const transition = {
-  type: "spring",
+  type: 'spring',
   damping: 30,
   stiffness: 300,
   duration: 1
 };
+import { performanceData } from './WorkshopTypes';
 
 
 const PerformanceCharts = () => {
   const { performanceData } = useContext(PerformanceContext);
   const [ profilerData, setProfilerData ] = performanceData;
 
-  const getActualDurationData = () => {
-    return performanceData[0].map((data) => data.actualDuration);
+  const getActualDurationData = (): number[] => {
+    return performanceData[0].map((data: performanceData ) => data.actualDuration);
   };
-  const getIds = () => {
-    return performanceData[0].map((data) => data.renderName);
+  const getIds = (): string[] => {
+    return performanceData[0].map((data: performanceData ) => data.renderName);
   };
 
-  const handleUndo = () => {
+  const handleUndo = (): void => {
     setProfilerData(profilerData.slice(0,profilerData.length - 1));
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setProfilerData([]);
   };
 
@@ -69,7 +69,7 @@ const PerformanceCharts = () => {
               }
             ]
           }}
-          options={{
+          options = {{
             responsive: true,
             maintainAspectRatio: false,
             height: 1000,
@@ -79,7 +79,7 @@ const PerformanceCharts = () => {
               text: 'Component Render Times',
               fontSize: 25
             },
-          }}
+          } as object}
         />
         <button id = 'reset-chart' onClick = {handleReset}>Reset Chart</button>
         <button id = 'undo-chart' onClick = {handleUndo}>Undo</button>
