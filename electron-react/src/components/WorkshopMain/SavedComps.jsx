@@ -80,7 +80,7 @@ const SavedComps = () => {
     
   //Delete the selected component
   const handleDelete = (component) => {
-    dispatch({type: 'DELETE_COMPS', payload: component.name});
+    dispatch({type: 'DELETE_COMPS', payload: component});
   };
 
   return(
