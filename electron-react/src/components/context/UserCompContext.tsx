@@ -1,44 +1,10 @@
-import React, { createContext, useReducer } from 'react';
-
-interface UserCompType {
-  components: string[];
-}
-
-interface UserActionType {
-  type: string,
-  payload: string
-}
-
-interface UserStateType {
-  components: React.Component[];
-}
-
-// interface UserComponent {
-//   name: string;
-// }
-
-// interface UserCompState {
-//   components: UserComponent[];
-// }
-
-// interface UserCompAction {
-//   type: string;
-//   payload: any;
-// }
-
-// interface UserCompContextType {
-//   state: UserCompState;
-//   dispatch: React.Dispatch<UserCompAction>;
-// }
-
-// const initialState: UserCompState = {
-//   components: [],
-// };
+import React, { createContext, ReducerWithoutAction, useReducer } from 'react';
+import { UserCompType, UserActionType, UserStateType, PayloadType } from './ContextTypes';
 
 export const UserCompContext = createContext<UserCompType | null>(null);
 
 //Comp reducer which defines various actions that can be made to mutate comp state
-export const UserCompReducer = (state: UserStateType, action: UserActionType) => {
+export const UserCompReducer = (state: UserStateType, action: UserActionType): UserStateType => {
   switch (action.type) {
     //useEffect in App.tsx gets user's component library from local system and sets the component array content using the SET_COMPS action type
     case 'SET_COMPS':
@@ -53,7 +19,7 @@ export const UserCompReducer = (state: UserStateType, action: UserActionType) =>
     //Filter to find the specific component to be deleted, reassign state to be the array that does not contain that component
     case 'DELETE_COMPS':
       return {
-        components: state.components.filter((comp) => comp.name !== action.payload)
+        components: state.components.filter((comp) => comp.name !== action.payload.name)
       };
     //If the user wants to overwrite a component that exists already, we use this action type
     case 'EDIT_COMPS':
@@ -67,12 +33,10 @@ export const UserCompReducer = (state: UserStateType, action: UserActionType) =>
 };
 
 //Define context provider -> reducer is UserCompReducer and initial argument is components
-export const UserCompProvider = ({ children }) => {
+export const UserCompProvider = ({ children }: any) => {
 
-  const [state, dispatch] = useReducer(UserCompReducer, {
-    components: []
-  });
-
+  // Currently not typing the react reducer, will reroute to this to fully implement typing once get better hang of it.
+  const [state, dispatch] = useReducer(UserCompReducer, { components: [] });
 
   //Provider passes state and dispatch props to children
   return (

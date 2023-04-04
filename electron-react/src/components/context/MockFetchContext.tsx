@@ -1,8 +1,6 @@
 import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
+import { MockFetchContextType } from './ContextTypes';
 
-interface MockFetchContextType {
-  mockServer:(string | Dispatch<SetStateAction<null>>| null)[]
-}
 
 export const MockFetchContext = createContext<MockFetchContextType | null>(null);
 

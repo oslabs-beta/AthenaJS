@@ -1,12 +1,5 @@
 import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
-
-
-interface DetailsContextType {
-  compJSX: (string | Dispatch<SetStateAction<string>>)[],
-  compBody:(string | Dispatch<SetStateAction<string>>)[],
-  tempCompBody:(string | Dispatch<SetStateAction<string>>)[],
-  tempCompJSX:(string | Dispatch<SetStateAction<string>>)[]
-}
+import { DetailsContextType } from './ContextTypes';
 
 
 export const DetailsContext = createContext<DetailsContextType | null>(null);
