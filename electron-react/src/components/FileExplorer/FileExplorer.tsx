@@ -177,11 +177,9 @@ const FileExplorer = (): JSX.Element => {
     const nestedJSXVisitor = {
       JSXElement(path: any) {
         isJSX = true;
-        console.log('this is a nestedJSXVisitor', path.node);
 
         // Extract the string representation of the JSX element
         const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-        console.log("PARSED STRING: ", `${parsedStr}`);
       },
     };
 
@@ -191,7 +189,6 @@ const FileExplorer = (): JSX.Element => {
     //Traverse the AST using the visitor pattern to extract function declarations and JSX Elements nested within return statements
     traverse(ast, {
       enter(path: any) {
-        console.log('PATH!!!: ', path.node);
         if(path.isCallExpression()) {
           if(path.node.callee.name === 'useEffect') {
             const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
