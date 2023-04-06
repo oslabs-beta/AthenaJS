@@ -1,10 +1,10 @@
 import React, {useState, useContext} from 'react';
-import { useUserCompContext } from '@/hooks/useUserCompContext';
+import { useUserComp } from '@/hooks/useContextHooks';
 import { UICompProps, component } from './UITypes';
 
 //This is the UI we use to add/remove components from the react flow UI & change the background color for the react flow UI
 const UIComps = ({bg, addNode, removeNode}: UICompProps) => {
-  const {components, dispatch} = useUserCompContext();
+  const {components, dispatch} = useUserComp();
   const [ bgColor, setBgColor ] = bg;
   const [ bgColorIn, setBgColorIn ] = useState<string>(bgColor);
    
