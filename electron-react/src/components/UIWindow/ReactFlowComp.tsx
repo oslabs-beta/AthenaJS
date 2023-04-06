@@ -4,9 +4,10 @@ import { NodeResizer } from '@reactflow/node-resizer';
 import fetchMock from 'fetch-mock';
 import styled from 'styled-components';
 import '@reactflow/node-resizer/dist/style.css';
+import { ReactFlowCompProps, component } from './UITypes';
 
 //Custom React Flow Component to render our saved components on the react flow UI board.
-const ReactFlowComp = ({ data: { component, removeNode }, selected }) => {
+const ReactFlowComp = ({ data: { component, removeNode }, selected }: ReactFlowCompProps) => {
   const scope = { useState, useEffect, useRef, useMemo, styled, fetchMock, component };
 
   const buttonStyle = {
@@ -20,14 +21,14 @@ const ReactFlowComp = ({ data: { component, removeNode }, selected }) => {
     fontSize: '2rem',
   };
 
-  const handleRemoveNode = () => {
+  const handleRemoveNode = (): void => {
     removeNode(component);
   };
 
   return (
     <>
       {selected && (
-        <div style={buttonStyle} onClick={handleRemoveNode}>
+        <div style={buttonStyle as object} onClick={handleRemoveNode}>
           <span>&times;</span>
         </div>
       )}

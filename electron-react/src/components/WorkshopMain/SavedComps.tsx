@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { useUserCompContext } from '@/hooks/useUserCompContext';
+import { useUserComp, usePerformance, useMockFetch, useDetails } from '@/hooks/useContextHooks';
 import { DetailsContext } from '../context/DetailsContext';
 import { MockFetchContext } from '../context/MockFetchContext';
 import { PerformanceContext } from '../context/PerformanceContext';
@@ -18,17 +18,17 @@ const transition = {
 };
 
 const SavedComps = () => {
-  const {components, dispatch} = useUserCompContext();
+  const {components, dispatch} = useUserComp();
   //Global state to handle component in the viewer
-  const { compBody, compJSX, tempCompBody, tempCompJSX } = useContext(DetailsContext);
+  const { compBody, compJSX, tempCompBody, tempCompJSX } = useDetails();
   const [compBodyVal, setCompBodyVal] = compBody;
   const [compJSXVal, setCompJSXVal] = compJSX;
   const [ tempCompBodVal, setTempCompBodyVal ] = tempCompBody;
   const [ tempCompJSXVal, setTempCompJSXVal ] = tempCompJSX;
-  const { mockServer } = useContext(MockFetchContext);
+  const { mockServer } = useMockFetch();
   const [ mockServerVal, setMockServerVal ] = mockServer;
 
-  const { keyCount } = useContext(PerformanceContext);
+  const { keyCount } = usePerformance();
   const [ keyCountVal , setKeyCountVal] = keyCount;
  
   //Save component JSON

@@ -11,6 +11,8 @@ const pathModule = window.require('path');
 
 import { parse } from '@babel/parser';
 const traverse = require('@babel/traverse').default;
+import type { NodePath } from '@babel/traverse';
+const { Node } = require('@babel/types')
 
 const containerVariants = {
   hidden: {
@@ -34,11 +36,18 @@ const containerVariants = {
   },
 };
 
+// might move to it's own type file
+export interface Folder {
+  name: string; 
+  path: string;
+  directory: boolean, 
+  files: Folder[];
+}
+
 /**
- * interface file {name:string, directory: boolean, files: file[] }
  * @returns
  */
-const FileExplorer = () => {
+const FileExplorer = (): JSX.Element => {
   // Contexts from details context
   const { tempCompBody, tempCompJSX } = useContext(DetailsContext);
   const [tempCompJSXVal, setTempCompJSXVal] = tempCompJSX;
@@ -51,11 +60,11 @@ const FileExplorer = () => {
 
   // sets CSS to transition sidebar to close
   const sidebarClass = explorerVisible ? 'sidebar' : 'sidebar-closed';
-  const handleToggle = (e) => {
+  const handleToggle = () => {
     setExplorerVisible(!explorerVisible);
   };
 
-  const handleOpenFolder = () => {
+  const handleOpenFolder = (): void => {
     // open folder
     const directory = ipcRenderer.sendSync('OpenFolder');
     // console.log("DIRECTORY HERE!!!: ", directory);
@@ -71,11 +80,12 @@ const FileExplorer = () => {
     setUploadedFiles(htmlArray);
   };
 
-  const fileTreeObject = (directoryPath) => {
+  const fileTreeObject = (directoryPath: string): Folder[]  => {
     // console.log("DIRECTORY PATH: ", directoryPath);
-    const filesArray = fs.readdirSync(directoryPath);
+    const filesArray: string[] = fs.readdirSync(directoryPath); // temp any
     // filter filesObj for node modules or git files
     const filteredFileArr = filesArray
+      //using type inference since we know files in filesArray are strings, so all 'file' args should already be strings
       .filter((file) => {
         return file !== 'node_modules' && file !== '.git';
       })
@@ -105,32 +115,66 @@ const FileExplorer = () => {
   };
 
   // this function generates all of the subtrees after the first level is generated from fileTreeObject func
-  const generateSubTrees = (fileArr) => {
+  const generateSubTrees = (fileArr: Folder[]): Folder[] => {
     // iterate over fileObj param
     for (let i = 0; i < fileArr.length; i++) {
       const file = fileArr[i];
       // if it is a directory
       if (file.directory === true) {
-        // this line uses the fileTreeObject funciton to generate alevel of file objects, and generateSubTrees allows us to move down the file 'tree' and create all file objects.
-        file.files = generateSubTrees(fileTreeObject(file.path), file.path);
+        // this line uses the fileTreeObject function to generate a level of file objects, and generateSubTrees allows us to move down the file 'tree' and create all file objects.
+        // file.files = generateSubTrees(fileTreeObject(file.path), file.path);
+        file.files = generateSubTrees(fileTreeObject(file.path));
       }
     }
     return fileArr;
   };
 
+  const generateFileHTML = (fullTreeArr: Folder[]): JSX.Element[] => {
+    // taking in a full file tree
+    const htmlArray: JSX.Element[] = [];
+    for (const file of fullTreeArr) {
+      const { name, files, path } = file;
+      if (file.directory) {
+        // if file is a directory
+        // create a directory component passing down name and files and push to htmlarray
+        htmlArray.push(
+          <DirectoryComponent
+            path={path}
+            fileParser={fileParser}
+            name={name}
+            files={files}
+          ></DirectoryComponent>
+        );
+      } else {
+        // else create a button to render that will render on click.
+        htmlArray.push(
+          <button
+            className="file-button"
+            onClick={() => {
+              fileParser(path);
+            }}
+          >
+            <span className="file-button-text">{name}</span>
+          </button>
+        );
+      }
+    }
+    return htmlArray;
+  };
+
   //This function allows us to parse files in order to populate our text areas within PropsWindow.jsx
-  function parseAndTraverseAST (dataString) {
+  function parseAndTraverseAST (dataString: string): void {
     
     //Initialize two empty arrays to store parsed function declarations and JSX returns
-    const componentBodyArray = [];
-    const JSXArray = [];
+    const componentBodyArray: string[] = [];
+    const JSXArray: string[] = [];
 
     //Initialize a bool flag to track whether or not there is JSX within a function 
     let isJSX = false;
 
     //This object defines a vistor for traversing nested JSX elements with a function declaration
     const nestedJSXVisitor = {
-      JSXElement(path) {
+      JSXElement(path: NodePath<Node>) {
         isJSX = true;
         console.log('this is a nestedJSXVisitor', path.node);
 
@@ -198,7 +242,7 @@ const FileExplorer = () => {
       // previously, variables and functions within useEffectHook would be duplicated in component body window
       // this function filters all elements that are contained within other elements
       // with this, all functions or variables within a useEffect hook will only be printed once.
-    function filterDuplicateFunctions(arr) {
+    function filterDuplicateFunctions(arr: string[]): string[] {
       return arr.filter((el, index) => {
         const otherEls = arr.slice(0, index).concat(arr.slice(index + 1));
         return !otherEls.some((otherEl) => otherEl.includes(el));
@@ -219,10 +263,10 @@ const FileExplorer = () => {
     setTempCompJSXVal(JSXString);
   }
 
-  const fileParser = (path) => {
+  const fileParser = (path: string): void => {
     // asynchronously read file here passing in the absolute path.
     // data is a string
-    fs.readFile(path, "utf-8", (err, data) => {
+    fs.readFile(path, "utf-8", (err: NodeJS.ErrnoException | null, data: string) => {
       //declare variable extension which gets the extension of our file i.e. .jsx
       const extension = pathModule.extname(path).toLowerCase();
       try {
@@ -248,71 +292,7 @@ const FileExplorer = () => {
         );
         return;
       }
-
-      // //switch statement for different file types? Do we just Need JSX?
-      // //I am going to keep the switch statement here for now, and remove it if we decide to only use JSX
-      // try {
-      //   switch(extension) {
-      //   case '.jsx':
-      //     // just the jsx return should be passed
-      //     // regex matches return(<statement>) and also <statement>
-      //     const returnRegex = /return\s*\((\s*<[\s\S]*?)\)/;
-      //     // data.match => [return(<statement>), <statement>]
-      //     const returnStatement = data.match(returnRegex)[1];
-      //     console.log('JSX File content:', returnStatement);
-      //     setTempCompHTMLVal(returnStatement);
-      //     break;
-      //   case '.json':
-      //     console.log('JSON File content:', data);
-      //     //how do we pass along this data into the JSX textarea?
-      //     break;
-      //   case '.js':
-      //     console.log('JS File content:', data);
-      //     //how do we pass along this data into the JSX textarea?
-      //     break;
-      //   default:
-      //     console.log('File data:', data);
-      //   }
-      // }
-      // //handle errors
-      // catch(err) {
-      //   console.log('ERROR: error reading file in DirectoryComponent.jsx:', err);
-      //   return;
-      // }
     });
-  };
-
-  const generateFileHTML = (fullTreeArr) => {
-    // taking in a full file tree
-    const htmlArray = [];
-    for (const file of fullTreeArr) {
-      const { name, files, path } = file;
-      if (file.directory) {
-        // if file is a directory
-        // create a directory component passing down name and files and push to htmlarray
-        htmlArray.push(
-          <DirectoryComponent
-            path={path}
-            fileParser={fileParser}
-            name={name}
-            files={files}
-          ></DirectoryComponent>
-        );
-      } else {
-        // else create a button to render that will render on click.
-        htmlArray.push(
-          <button
-            className="file-button"
-            onClick={() => {
-              fileParser(path);
-            }}
-          >
-            <span className="file-button-text">{name}</span>
-          </button>
-        );
-      }
-    }
-    return htmlArray;
   };
 
   return (
