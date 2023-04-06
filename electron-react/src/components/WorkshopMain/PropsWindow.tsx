@@ -1,8 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { DetailsContext } from '../context/DetailsContext';
-import { useUserCompContext } from '@/hooks/useUserCompContext';
 import { MockFetchContext } from '../context/MockFetchContext';
 import { PerformanceContext } from '../context/PerformanceContext';
+import { 
+  usePerformance,
+  useMockFetch,
+  useDetails,
+  useUserComp 
+} from '@/hooks/useContextHooks';
 import {motion} from 'framer-motion';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
@@ -45,10 +50,10 @@ const transitionPage = {
 //form for adjusting component
 const PropsWindow = () => {
   //Global state: temp versions are for the text editor states
-  const { compBody, compJSX, tempCompBody, tempCompJSX} = useContext(DetailsContext);
+  const { compBody, compJSX, tempCompBody, tempCompJSX} = useDetails();
   const [compBodyVal, setCompBodyVal] = compBody;
   const [compJSXVal, setCompJSXVal] = compJSX;
-  const { mockServer } = useContext(MockFetchContext);
+  const { mockServer } = useMockFetch();
   const [ mockServerVal, setMockServerVal ] = mockServer;
   // States for text editors 
   const [ tempCompBodyVal, setTempCompBodyVal ] = tempCompBody;
@@ -58,10 +63,10 @@ const PropsWindow = () => {
   const [bodyWindowVisible, setBodyWindowVisible] = useState(true);
   const [mockServerWindowVisible, setMockServerWindowVisible] = useState(false);
   //Key count to force remount on component update -> this is used for the React Profiler API in ViewComponent.jsx
-  const { keyCount } = useContext(PerformanceContext);
+  const { keyCount } = usePerformance();
   const [ keyCountVal , setKeyCountVal] = keyCount;
   //state and dispatch for saved user components
-  const {components, dispatch} = useUserCompContext();
+  const {components, dispatch} = useUserComp();
   const [ saveName, setSaveName ] = useState('my_component');
   const [ checkSaveModal, setCheckSaveModal ] = useState(false);
 

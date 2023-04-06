@@ -1,19 +1,19 @@
 import React, { Profiler, useContext, useState, useEffect, useRef, useMemo } from 'react';
-import { DetailsContext } from '../context/DetailsContext';
-import { PerformanceContext } from '../context/PerformanceContext';
+import { useDetails, useMockFetch, usePerformance} from '@/hooks/useContextHooks'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import fetchMock from 'fetch-mock';
 import styled from 'styled-components';
 import { MockFetchContext } from '../context/MockFetchContext';
 import { Resizable } from 're-resizable';
-import { performanceData } from './WorkshopTypes';
+import { performanceData } from '../context/ContextTypes';
+import { profilerData } from './WorkshopTypes';
 
 const ViewComponent = () => {
-  const { compBody, compJSX } = useContext(DetailsContext);
-  const { mockServer } = useContext(MockFetchContext);
-  const { keyCount, performanceData } = useContext(PerformanceContext);
+  const { compBody, compJSX } = useDetails();
+  const { mockServer } = useContext(MockFetchContext) ?? {mockServer: [null, null]};
+  const { keyCount, performanceData } = usePerformance();
   const [ performanceDataArr, setPerformanceDataArr] = performanceData;
-  const [ profilerData, setProfilerData ] = useState<performanceData | null>(null);
+  const [ profilerData, setProfilerData ] = useState<profilerData | null>(null);
   const [ renderName, setRenderName ] = useState('');
   
   // Set render data for the component being rendered.  We only measure the stats for mounting phase
@@ -33,7 +33,10 @@ const ViewComponent = () => {
 
   //If we want to add the render time to our chart, we press the button and it adds the data to the graph data array.
   const updateGraph = (): void => {
-    setPerformanceDataArr([...performanceDataArr, {renderName: renderName, ...profilerData}]);
+    setPerformanceDataArr([
+      ...performanceDataArr, 
+      {renderName: renderName, ...profilerData} as performanceData
+    ]);
   };
 
 

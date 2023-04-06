@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { PerformanceContext } from '../context/PerformanceContext'; //updated import statement for file restructure 
+import { usePerformance } from '@/hooks/useContextHooks';
 import { motion } from 'framer-motion';
 import {
   Chart as ChartJS,
@@ -21,26 +22,26 @@ const transition = {
   stiffness: 300,
   duration: 1
 };
-import { performanceData } from './WorkshopTypes';
+import { performanceData } from '../context/ContextTypes';
 
 
 const PerformanceCharts = () => {
-  const { performanceData } = useContext(PerformanceContext);
-  const [ profilerData, setProfilerData ] = performanceData;
+  const perfContext = usePerformance();
+  const [ profilerData, setProfilerData ] = perfContext.performanceData;
 
   const getActualDurationData = (): number[] => {
-    return performanceData[0].map((data: performanceData ) => data.actualDuration);
+    return profilerData.map((data: performanceData ) => data.actualDuration);
   };
   const getIds = (): string[] => {
-    return performanceData[0].map((data: performanceData ) => data.renderName);
+    return profilerData.map((data: performanceData ) => data.renderName);
   };
 
   const handleUndo = (): void => {
-    setProfilerData(profilerData.slice(0,profilerData.length - 1));
+    setProfilerData && setProfilerData(profilerData.slice(0,profilerData.length - 1));
   };
 
   const handleReset = (): void => {
-    setProfilerData([]);
+    setProfilerData && setProfilerData([]);
   };
 
   if (profilerData.length > 0){
@@ -98,5 +99,3 @@ const PerformanceCharts = () => {
     );
   }
 };
-
-export default PerformanceCharts;
