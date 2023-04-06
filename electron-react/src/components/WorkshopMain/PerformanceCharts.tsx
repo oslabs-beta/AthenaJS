@@ -99,3 +99,5 @@ const PerformanceCharts = () => {
     );
   }
 };
+
+export default PerformanceCharts;
