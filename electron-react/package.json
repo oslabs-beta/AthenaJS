@@ -32,6 +32,7 @@
     "framer-motion": "^10.9.1",
     "html2canvas": "^1.4.1",
     "i": "^0.3.7",
+    "jest": "^29.5.0",
     "npm": "^9.6.2",
     "re-resizable": "^6.9.9",
     "react-ace": "^10.1.0",
