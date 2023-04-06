@@ -1,21 +1,30 @@
 import { Dispatch, SetStateAction } from "react"
 
 export interface DetailsContextType {
-  compJSX: (string | Dispatch<SetStateAction<string>>)[],
-  compBody:(string | Dispatch<SetStateAction<string>>)[],
-  tempCompBody:(string | Dispatch<SetStateAction<string>>)[],
-  tempCompJSX:(string | Dispatch<SetStateAction<string>>)[]
+  compJSX: [string, Dispatch<SetStateAction<string>>],
+  compBody:[string, Dispatch<SetStateAction<string>>],
+  tempCompBody:[string, Dispatch<SetStateAction<string>>],
+  tempCompJSX:[string, Dispatch<SetStateAction<string>>]
 }
 
 export interface MockFetchContextType {
-  mockServer:(string | Dispatch<SetStateAction<null>>| null)[]
+  mockServer:[string | null, Dispatch<SetStateAction<string | null>>]
 }
+
+export type performanceData = {
+  renderName: string,
+  id: string,
+  phase: string,
+  actualDuration: number,
+  baseDuration: number,
+  startTime: number,
+  commitTime: number,
+};
 
 export interface PerformanceContextType {
-  performanceData: (never[] | Dispatch<SetStateAction<never[]>>)[],
-  keyCount: (number | Dispatch<SetStateAction<number>>)[]
+  performanceData: [performanceData[], Dispatch<SetStateAction<performanceData[]>>],
+  keyCount: [number, Dispatch<SetStateAction<number>>]
 }
-
 
 export interface ShowUIType {
   showUI: [boolean , Dispatch<SetStateAction<boolean>>] 

@@ -3,7 +3,6 @@ import { ShowUIContext } from '../context/ShowUIContext';
 import { motion } from 'framer-motion';
 
 
-//  for more info on useContext with typescript: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context
 const NavBarUI = (): JSX.Element => {
   const contextVal = useContext(ShowUIContext) ?? { showUI: [null, null] }
   const [showUIVal, setShowUIVal] = contextVal.showUI
