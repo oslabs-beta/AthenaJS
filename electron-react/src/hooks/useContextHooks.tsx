@@ -3,7 +3,9 @@ import { UserCompContext } from '@/components/context/UserCompContext';
 import { PerformanceContext } from '@/components/context/PerformanceContext';
 import { MockFetchContext } from '@/components/context/MockFetchContext';
 import { DetailsContext } from '@/components/context/DetailsContext';
+import { ShowUIContext } from '@/components/context/ShowUIContext';
 
+// TODO add return typing to useContextChecker 
 const useContextChecker = (reactContext: React.Context<any> , contextName: String) => {
   const context = useContext(reactContext);
 
@@ -19,3 +21,4 @@ export const useUserComp = () => useContextChecker(UserCompContext, 'UserCompCon
 export const usePerformance = () => useContextChecker(PerformanceContext, 'PerformanceContext');
 export const useMockFetch = () => useContextChecker(MockFetchContext, 'MockFetchContext');
 export const useDetails = () => useContextChecker(DetailsContext, 'DetailsContext');
+export const useShowUI = () => useContextChecker(ShowUIContext, 'ShowUIContext');

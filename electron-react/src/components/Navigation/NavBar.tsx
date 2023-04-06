@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { ShowUIContext } from '../context/ShowUIContext';
 import { motion } from 'framer-motion';
 import { NavBarProps, handleToggleWindow } from './NavTypes'
+import { useShowUI } from '@/hooks/useContextHooks';
 
 
-const NavBar = ({handleToggleWindow}: NavBarProps): JSX.Element => {
-  const contextVal = useContext(ShowUIContext) ?? { showUI: [null, null] }
-  const [showUIVal, setShowUIVal] = contextVal.showUI
+const NavBar: React.FC<NavBarProps> = ({handleToggleWindow}) => {
+  const [showUIVal, setShowUIVal] = useShowUI();
 
   return (
     <motion.nav 

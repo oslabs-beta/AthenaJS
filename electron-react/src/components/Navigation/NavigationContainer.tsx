@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { DetailsContext } from '../context/DetailsContext';
 import PropsWindow from '../WorkshopMain/PropsWindow';
 import NavBar from './NavBar';
 import PerformanceCharts from '../WorkshopMain/PerformanceCharts';
@@ -7,7 +6,7 @@ import SavedComps from '../WorkshopMain/SavedComps';
 import { NavigationContainerProps, handleToggleWindow } from './NavTypes';
 
 
-const NavigationContainer = (): JSX.Element => {
+const NavigationContainer: React.FC = () => {
   const [showPropsWindow, setShowPropsWindow] = useState<boolean>(true);
   const [showPerformanceCharts, setShowPerformanceCharts] = useState<boolean>(false);
   const [showSavedComps, setShowSavedComps] = useState<boolean>(false);
