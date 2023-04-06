@@ -54,7 +54,7 @@ const FileExplorer = (): JSX.Element => {
   const [tempCompBodyVal, setTempCompBodyVal] = tempCompBody;
 
   // store htmlArray in state
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState<JSX.Element[]>([]);
   // toggle sidebar
   const [explorerVisible, setExplorerVisible] = useState(false);
 
@@ -173,8 +173,9 @@ const FileExplorer = (): JSX.Element => {
     let isJSX = false;
 
     //This object defines a vistor for traversing nested JSX elements with a function declaration
+    // this should be a NodePath from @types/babel__traverse, but the NodePath type was not functioning so left path: any
     const nestedJSXVisitor = {
-      JSXElement(path: NodePath<Node>) {
+      JSXElement(path: any) {
         isJSX = true;
         console.log('this is a nestedJSXVisitor', path.node);
 
@@ -189,7 +190,7 @@ const FileExplorer = (): JSX.Element => {
 
     //Traverse the AST using the visitor pattern to extract function declarations and JSX Elements nested within return statements
     traverse(ast, {
-      enter(path) {
+      enter(path: any) {
         console.log('PATH!!!: ', path.node);
         if(path.isCallExpression()) {
           if(path.node.callee.name === 'useEffect') {
