@@ -5,7 +5,8 @@ import { useShowUI } from '@/hooks/useContextHooks';
 
 
 const NavBar: React.FC<NavBarProps> = ({handleToggleWindow}) => {
-  const [showUIVal, setShowUIVal] = useShowUI();
+  const { showUI } = useShowUI();
+  const [showUIVal, setShowUIVal] = showUI;
 
   return (
     <motion.nav 
@@ -44,7 +45,7 @@ const NavBar: React.FC<NavBarProps> = ({handleToggleWindow}) => {
             scale: [1, 1.1, 1],}}
           transition={{ duration: 1, delay: 2 }}
           className = 'nav-link'>
-          <a href='#' onClick={() => setShowUIVal && setShowUIVal(true)}>UI Mode</a> 
+          <a href='#' onClick={() => setShowUIVal(true)}>UI Mode</a> 
         </motion.li>
       </ul>
     </motion.nav>

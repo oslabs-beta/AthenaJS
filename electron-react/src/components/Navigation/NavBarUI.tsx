@@ -5,7 +5,8 @@ import { useShowUI } from '@/hooks/useContextHooks';
 
 
 const NavBarUI: React.FC = () => {
-  const [showUIVal, setShowUIVal] = useShowUI();
+  const { showUI } = useShowUI();
+  const [showUIVal, setShowUIVal] = showUI;
   return (
     <motion.nav
       initial={{ width: 0 }}
