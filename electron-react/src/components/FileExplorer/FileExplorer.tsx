@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import React, { useState, useContext } from 'react';
 import DirectoryComponent from './DirectoryComponent';
 import { Resizable } from 're-resizable';
-import { DetailsContext } from '../context/DetailsContext';
+import { useDetails } from '@/hooks/useContextHooks';
 import { motion } from 'framer-motion';
 import { FaFolderOpen } from 'react-icons/fa';
 
@@ -49,7 +49,7 @@ export interface Folder {
  */
 const FileExplorer = (): JSX.Element => {
   // Contexts from details context
-  const { tempCompBody, tempCompJSX } = useContext(DetailsContext);
+  const { tempCompBody, tempCompJSX } = useDetails();
   const [tempCompJSXVal, setTempCompJSXVal] = tempCompJSX;
   const [tempCompBodyVal, setTempCompBodyVal] = tempCompBody;
 
