@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import Workshop from './pages/Workshop';
 import UIPage from './pages/UIPage';
-import { useUserCompContext } from './hooks/useUserCompContext';
+import { useUserComp } from './hooks/useContextHooks';
 import './App.scss';
 import FileExplorer from './components/FileExplorer/FileExplorer';
 import { ShowUIContext } from './components/context/ShowUIContext';
@@ -40,9 +40,10 @@ const pageVariants = {
 };
 
 function App() {
+  //  for more info on useContext with typescript: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context
   const contextVal = useContext(ShowUIContext) ?? { showUI: [null, null] } 
   const [showUIVal, setShowUIVal] = contextVal.showUI
-  const { components, dispatch } = useUserCompContext();
+  const { components, dispatch } = useUserComp();
 
 
   useEffect(() => {

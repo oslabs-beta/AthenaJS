@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { useUserCompContext } from '@/hooks/useUserCompContext';
+import { useUserComp, usePerformance, useMockFetch, useDetails } from '@/hooks/useContextHooks';
 import { DetailsContext } from '../context/DetailsContext';
 import { MockFetchContext } from '../context/MockFetchContext';
 import { PerformanceContext } from '../context/PerformanceContext';
@@ -7,7 +7,8 @@ const { ipcRenderer } = require('electron');
 import path from 'path';
 import fs from 'fs';
 const os = require('os');
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
+import { componentsData } from './WorkshopTypes';
 
 const transition = {
   type: "spring",
@@ -17,21 +18,21 @@ const transition = {
 };
 
 const SavedComps = () => {
-  const {components, dispatch} = useUserCompContext();
+  const {components, dispatch} = useUserComp();
   //Global state to handle component in the viewer
-  const { compBody, compJSX, tempCompBody, tempCompJSX } = useContext(DetailsContext);
+  const { compBody, compJSX, tempCompBody, tempCompJSX } = useDetails();
   const [compBodyVal, setCompBodyVal] = compBody;
   const [compJSXVal, setCompJSXVal] = compJSX;
   const [ tempCompBodVal, setTempCompBodyVal ] = tempCompBody;
   const [ tempCompJSXVal, setTempCompJSXVal ] = tempCompJSX;
-  const { mockServer } = useContext(MockFetchContext);
+  const { mockServer } = useMockFetch();
   const [ mockServerVal, setMockServerVal ] = mockServer;
 
-  const { keyCount } = useContext(PerformanceContext);
+  const { keyCount } = usePerformance();
   const [ keyCountVal , setKeyCountVal] = keyCount;
  
   //Save component JSON
-  const saveJson = () => {
+  const saveJson = (): void => {
     const data = components;
     //file AthenaData123.json in home directory
     const filePath = path.join(os.homedir(), 'AthenaData123.json');
@@ -48,7 +49,7 @@ const SavedComps = () => {
   };
   
   //Render the selected component by setting the states that the renderer uses
-  const renderComponent = (component) => {
+  const renderComponent = (component: componentsData): void => {
     setCompBodyVal(component.body);
     setCompJSXVal(component.jsx);
     setTempCompBodyVal(component.body);
@@ -58,7 +59,7 @@ const SavedComps = () => {
   };
 
   //Export file as JSX (we build the component in the template literal)
-  function handleExportClick(component) {
+  function handleExportClick(component: componentsData): void {
     const fileContent = 
     `
     import React, { useState, useEffect } from 'react';
@@ -79,8 +80,8 @@ const SavedComps = () => {
   }
     
   //Delete the selected component
-  const handleDelete = (component) => {
-    dispatch({type: 'DELETE_COMPS', payload: component});
+  const handleDelete = (component: componentsData): void => {
+    dispatch({type: 'DELETE_COMPS', payload: component.name});
   };
 
   return(
@@ -93,7 +94,7 @@ const SavedComps = () => {
       <h1>Component Library</h1><br/>
       <button id = 'save-library' onClick = {saveJson}>Save Library</button>
       <div className = 'saved-comps'>
-        {components.length > 0 && components.map( (component) => (
+        {components.length > 0 && components.map( (component: componentsData) => (
           <div key = {component.name} className = 'saved-comp-container'>
             <span className = 'comp-container-name'>{component.name}</span>
             <button className = 'render-comp-button' onClick = {() => renderComponent(component)}>Render</button>
