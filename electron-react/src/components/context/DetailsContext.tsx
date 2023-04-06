@@ -1,9 +1,10 @@
-import React, { useState, createContext } from 'react';
-import stringifyObject from 'stringify-object';
+import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
+import { DetailsContextType } from './ContextTypes';
 
-export const DetailsContext = createContext();
+
+export const DetailsContext = createContext<DetailsContextType | null>(null);
 //These are the details that define the component that gets rendered on the screen
-export const DetailsProvider = ({ children }) => {
+export const DetailsProvider = ({ children } : any) => {
   //States for the component in the renderer
   const [compBody, setCompBody] = useState(
     `
