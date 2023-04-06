@@ -30,7 +30,20 @@ const SavedComps = () => {
 
   const { keyCount } = usePerformance();
   const [ keyCountVal , setKeyCountVal] = keyCount;
+
+  const [ search, setSearch ] = useState<string>('')
+  const [ showComponents, setShowComponents ] = useState<componentsData[]>([...components])
  
+  useEffect((): void => {
+    if (search){
+      return setShowComponents(showComponents.filter(component => component.name.toLowerCase().includes(search.toLowerCase())))
+    }
+    else{
+      return setShowComponents([...components])
+    }
+
+  }, [search])
+
   //Save component JSON
   const saveJson = (): void => {
     const data = components;
@@ -48,6 +61,8 @@ const SavedComps = () => {
     });
   };
   
+  
+
   //Render the selected component by setting the states that the renderer uses
   const renderComponent = (component: componentsData): void => {
     setCompBodyVal(component.body);
@@ -93,8 +108,14 @@ const SavedComps = () => {
     >
       <h1>Component Library</h1><br/>
       <button id = 'save-library' onClick = {saveJson}>Save Library</button>
+      <input 
+        type = 'text'
+        value = {search}
+        onChange = {(e) => setSearch(e.target.value)}
+        placeholder='Search Components'
+      />
       <div className = 'saved-comps'>
-        {components.length > 0 && components.map( (component: componentsData) => (
+        {showComponents.length > 0 && showComponents.map( (component: componentsData) => (
           <div key = {component.name} className = 'saved-comp-container'>
             <span className = 'comp-container-name'>{component.name}</span>
             <button className = 'render-comp-button' onClick = {() => renderComponent(component)}>Render</button>
