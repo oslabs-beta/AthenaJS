@@ -4,7 +4,7 @@ import UIComps from '../UIWindow/UIComps';
 import { NavContainerUiProps } from './NavTypes';
 
 
-const NavContainerUI = ({bg, addNode, removeNode}: NavContainerUiProps) => {
+const NavContainerUI: React.FC<NavContainerUiProps> = ({bg, addNode, removeNode}) => {
 
   return (
     <div id ="navigation-container">
