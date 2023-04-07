@@ -22,7 +22,7 @@ const containerVariants = {
     x: 0,
     transition: {
       type: 'spring',
-      stiffness: 600,
+      stiffness: 2000,
       damping: 100,
     },
   },

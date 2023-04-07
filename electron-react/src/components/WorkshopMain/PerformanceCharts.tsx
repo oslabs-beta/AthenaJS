@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { PerformanceContext } from '../context/PerformanceContext'; //updated import statement for file restructure 
-import { usePerformance } from '@/hooks/useContextHooks';
+import { usePerformance } from '../../hooks/useContextHooks';
 import { motion } from 'framer-motion';
 import {
   Chart as ChartJS,
@@ -81,6 +80,7 @@ const PerformanceCharts = () => {
               fontSize: 25
             },
           } as object}
+          data-testid="bar-chart"
         />
         <button id = 'reset-chart' onClick = {handleReset}>Reset Chart</button>
         <button id = 'undo-chart' onClick = {handleUndo}>Undo</button>
