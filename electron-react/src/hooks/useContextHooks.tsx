@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { UserCompContext } from '@/components/context/UserCompContext';
-import { PerformanceContext } from '@/components/context/PerformanceContext';
-import { MockFetchContext } from '@/components/context/MockFetchContext';
-import { DetailsContext } from '@/components/context/DetailsContext';
-import { ShowUIContext } from '@/components/context/ShowUIContext';
+import { UserCompContext } from '../components/context/UserCompContext';
+import { PerformanceContext } from '../components/context/PerformanceContext';
+import { MockFetchContext } from '../components/context/MockFetchContext';
+import { DetailsContext } from '../components/context/DetailsContext';
+import { ShowUIContext } from '../components/context/ShowUIContext';
 
 // custom hook to perform runtime check on PerformanceContext output
 // these have to be separate error checks for each context for typescript runtime checking
