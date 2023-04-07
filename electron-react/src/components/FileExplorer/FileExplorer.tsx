@@ -22,7 +22,7 @@ const containerVariants = {
     x: 0,
     transition: {
       type: 'spring',
-      stiffness: 600,
+      stiffness: 2000,
       damping: 100,
     },
   },
@@ -47,7 +47,7 @@ export interface Folder {
 /**
  * @returns
  */
-const FileExplorer = (): JSX.Element => {
+const FileExplorer: React.FC = () => {
   // Contexts from details context
   const { tempCompBody, tempCompJSX } = useDetails();
   const [tempCompJSXVal, setTempCompJSXVal] = tempCompJSX;
@@ -66,39 +66,39 @@ const FileExplorer = (): JSX.Element => {
 
   const handleOpenFolder = (): void => {
     // open folder
-    const directory = ipcRenderer.sendSync('OpenFolder');
+    const directory: string[] = ipcRenderer.sendSync('OpenFolder');
     // console.log("DIRECTORY HERE!!!: ", directory);
     let directoryPath = directory[0];
     // accounting for windows backslash to normalize the path
     directoryPath = directoryPath.replace(/\\/g, '/');
     // generate first level of file tree
-    const fileArr = fileTreeObject(directoryPath);
+    const firstLevelFileTree = directoryToFolderMapper(directoryPath);
     // generate full tree
-    const fullTreeArr = generateSubTrees(fileArr);
+    const completeFileTree = generateSubTrees(firstLevelFileTree);
     // generate array of html elements for render.
-    const htmlArray = generateFileHTML(fullTreeArr);
-    setUploadedFiles(htmlArray);
+    const uploadedFileComponents = generateFileComponents(completeFileTree);
+    setUploadedFiles(uploadedFileComponents);
   };
 
-  const fileTreeObject = (directoryPath: string): Folder[]  => {
+  const directoryToFolderMapper = (directoryPath: string): Folder[]  => {
     // console.log("DIRECTORY PATH: ", directoryPath);
-    const filesArray: string[] = fs.readdirSync(directoryPath); // temp any
-    // filter filesObj for node modules or git files
-    const filteredFileArr = filesArray
-      //using type inference since we know files in filesArray are strings, so all 'file' args should already be strings
-      .filter((file) => {
-        return file !== 'node_modules' && file !== '.git';
+    const pathToFilesFolders: string[] = fs.readdirSync(directoryPath); // temp any
+    // filter pathToFilesFolders for node modules or git files
+    const filesAndFolders = pathToFilesFolders
+      //using type inference since we know files in pathToFilesFolders are strings, so all 'filename' args should already be strings
+      .filter((filename) => {
+        return filename !== 'node_modules' && filename !== '.git';
       })
-      // map over each file name, instead returning object that has name, directory, and files properties
+      // map over each filename, instead returning object that has name, directory, and filename's properties
       // ['src', 'index']
-      .map((file) => {
+      .map((filename) => {
         // fs.statSync is how we get the data on whether a folder is a directory or not.
-        const subPath = pathModule.join(directoryPath, file);
+        const subPath = pathModule.join(directoryPath, filename);
         const stats = fs.statSync(subPath);
 
         // console.log(stats);
         return {
-          name: file,
+          name: filename,
           path: subPath,
           directory: stats.isDirectory(),
           files: [],
@@ -111,33 +111,33 @@ const FileExplorer = (): JSX.Element => {
         }
         return a.directory ? -1 : 1;
       });
-    return filteredFileArr;
+    return filesAndFolders;
   };
 
-  // this function generates all of the subtrees after the first level is generated from fileTreeObject func
-  const generateSubTrees = (fileArr: Folder[]): Folder[] => {
+  // this function generates all of the subtrees after the first level is generated from directoryToFolderMapper func
+  const generateSubTrees = (filesAndFolders: Folder[]): Folder[] => {
     // iterate over fileObj param
-    for (let i = 0; i < fileArr.length; i++) {
-      const file = fileArr[i];
+    for (let i = 0; i < filesAndFolders.length; i++) {
+      const file = filesAndFolders[i];
       // if it is a directory
       if (file.directory === true) {
-        // this line uses the fileTreeObject function to generate a level of file objects, and generateSubTrees allows us to move down the file 'tree' and create all file objects.
-        // file.files = generateSubTrees(fileTreeObject(file.path), file.path);
-        file.files = generateSubTrees(fileTreeObject(file.path));
+        // this line uses the directoryToFolderMapper function to generate a level of file objects, and generateSubTrees allows us to move down the file 'tree' and create all file objects.
+        // file.files = generateSubTrees(directoryToFolderMapper(file.path), file.path);
+        file.files = generateSubTrees(directoryToFolderMapper(file.path));
       }
     }
-    return fileArr;
+    return filesAndFolders;
   };
 
-  const generateFileHTML = (fullTreeArr: Folder[]): JSX.Element[] => {
+  const generateFileComponents = (fullTreeArr: Folder[]): JSX.Element[] => {
     // taking in a full file tree
-    const htmlArray: JSX.Element[] = [];
+    const uploadedFileComponents: JSX.Element[] = [];
     for (const file of fullTreeArr) {
       const { name, files, path } = file;
       if (file.directory) {
         // if file is a directory
-        // create a directory component passing down name and files and push to htmlarray
-        htmlArray.push(
+        // create a directory component passing down name and files and push to uploadedFileComponents
+        uploadedFileComponents.push(
           <DirectoryComponent
             path={path}
             fileParser={fileParser}
@@ -147,7 +147,7 @@ const FileExplorer = (): JSX.Element => {
         );
       } else {
         // else create a button to render that will render on click.
-        htmlArray.push(
+        uploadedFileComponents.push(
           <button
             className="file-button"
             onClick={() => {
@@ -159,7 +159,7 @@ const FileExplorer = (): JSX.Element => {
         );
       }
     }
-    return htmlArray;
+    return uploadedFileComponents;
   };
 
   //This function allows us to parse files in order to populate our text areas within PropsWindow.jsx

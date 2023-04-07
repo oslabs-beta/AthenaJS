@@ -1,5 +1,5 @@
 import React, { Profiler, useContext, useState, useEffect, useRef, useMemo } from 'react';
-import { useDetails, useMockFetch, usePerformance} from '@/hooks/useContextHooks'
+import { useDetails, useMockFetch, usePerformance} from '../../hooks/useContextHooks'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import fetchMock from 'fetch-mock';
 import styled from 'styled-components';
@@ -40,7 +40,7 @@ const ViewComponent = () => {
   };
 
 
-//This is the code for the react component we want to render.
+  //This is the code for the react component we want to render.
   const string = `() => {
     ${mockServer[0]}
     ${compBody[0]}
