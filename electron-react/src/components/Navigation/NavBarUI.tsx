@@ -11,7 +11,7 @@ const NavBarUI: React.FC = () => {
     <motion.nav
       initial={{ width: 0 }}
       animate={{ width: "100%" }}
-      transition={{ duration: 1.5 }}
+      transition={{ duration: 0.5 }}
       className='navbar'>
       <ul>
         <motion.li
@@ -20,7 +20,7 @@ const NavBarUI: React.FC = () => {
             opacity: 1,
             scale: [1, 1.1, 1],
           }}
-          transition={{ duration: 1, delay: 2 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className='nav-link'>
           <a href='#' onClick={() => setShowUIVal && setShowUIVal(false)}>Component Mode</a>
         </motion.li>
