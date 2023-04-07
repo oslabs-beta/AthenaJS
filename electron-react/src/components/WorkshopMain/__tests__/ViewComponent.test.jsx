@@ -1,27 +1,24 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import PerformanceCharts from '../PerformanceCharts';
-import { PerformanceContext } from '../../context/PerformanceContext';
 import '@testing-library/jest-dom';
+import { ViewComponent } from '../ViewComponent';
 
-/**
- * should display a render time
- *  with data
- *  not without data
- * should be able to input a render name
- * should have a button that will update the graph 
- * should render an element 
- *  from a context
- */
+describe('ViewComponent component', () => {
+  it.todo('should display a render time', 
+  // () => {
+  //   const mockSetProfilerData = jest.fn();
+  //   let testProfilerData = 400;
+  //   const useStateSpy = jest.spyOn(React, 'useState');
+  //   useStateSpy.mockReturnValue([testProfilerData, mockSetProfilerData]);
 
-xdescribe('ViewComponent component', () => {
-  test('display a render time', () => {
-    const testData = [];
-    const contextValue = [];
-    render(
-      
-    );
-    const something = screen.getByAltText('');
-    expect(something).toBeInTheDocument();
-  });
+  //   render(<ViewComponent />);
+
+  //   const componentDataDiv = screen.getAllByRole('div')[0];
+  //   expect(componentDataDiv).toHaveTextContent('Render Time:');
+  //   // expect(componentDataDiv).toHaveTextContent('Render Time:');
+  // }
+  );
+  it.todo('should be able to input a render name');
+  it.todo('should have a button that will can execute a function');
+  it.todo('should render an element (from a context)');
 });
