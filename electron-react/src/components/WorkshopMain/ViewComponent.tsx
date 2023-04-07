@@ -40,7 +40,7 @@ const ViewComponent = () => {
   };
 
 
-//This is the code for the react component we want to render.
+  //This is the code for the react component we want to render.
   const string = `() => {
     ${mockServer[0]}
     ${compBody[0]}
