@@ -32,52 +32,89 @@ const safeDOM = {
  * https://matejkustec.github.io/SpinThatShit
  */
 function useLoading() {
-  const className = `loaders-css__square-spin`
+  const className = `loaders-css__circular-spinner`;
   const styleContent = `
-@keyframes square-spin {
-  25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
-  50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
-  75% { transform: perspective(100px) rotateX(0) rotateY(180deg); }
-  100% { transform: perspective(100px) rotateX(0) rotateY(0); }
-}
-.${className} > div {
-  animation-fill-mode: both;
-  width: 50px;
-  height: 50px;
-  background: #fff;
-  animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
-}
-.app-loading-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #282c34;
-  z-index: 9;
-}
-    `
-  const oStyle = document.createElement('style')
-  const oDiv = document.createElement('div')
+    @keyframes circular-spinner {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-  oStyle.id = 'app-loading-style'
-  oStyle.innerHTML = styleContent
-  oDiv.className = 'app-loading-wrap'
-  oDiv.innerHTML = `<div class="${className}"><div></div></div>`
+    .${className} {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 6px solid #A499BE;
+      border-top-color: #663EFF;
+      animation: circular-spinner 1s linear infinite;
+      background-color: white;
+    }
+
+    .app-loading-wrap {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      animation: fade-in 0.5s ease-in-out forwards;
+    }
+
+    .app-loading-wrap img {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .spinner-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fade-out {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  `;
+  
+  const oStyle = document.createElement('style');
+  const oDiv = document.createElement('div');
+
+  oStyle.id = 'app-loading-style';
+  oStyle.innerHTML = styleContent;
+  oDiv.className = 'app-loading-wrap';
+  oDiv.innerHTML = `
+    <div class="spinner-wrap">
+      <img src="../src/assets/athena_logo01.png" alt="Loading..." />
+      <div class="${className}"><div></div></div>
+    </div>
+  `;
 
   return {
     appendLoading() {
-      safeDOM.append(document.head, oStyle)
-      safeDOM.append(document.body, oDiv)
+      safeDOM.append(document.head, oStyle);
+      safeDOM.append(document.body, oDiv);
     },
     removeLoading() {
-      safeDOM.remove(document.head, oStyle)
-      safeDOM.remove(document.body, oDiv)
+      oDiv.addEventListener('animationend', () => {
+        safeDOM.remove(document.head, oStyle);
+        safeDOM.remove(document.body, oDiv);
+      });
+      oDiv.style.animation = 'fade-out 0.5s ease-in-out forwards';
     },
-  }
+  };
 }
 
 // ----------------------------------------------------------------------

@@ -1,20 +1,33 @@
 import React, { useContext } from 'react';
-import { DetailsContext } from '@/components/context/DetailsContext';
-import NavigationContainer from '@/components/NavigationContainer';
-import ViewComponent from '@/components/ViewComponent';
-import { motion } from 'framer-motion';
-import AthenaSvg from '@/components/AthenaSvg';
-import AthenaLogoSvg from '@/components/AthenaLogo';
-
-
+import NavigationContainer from '@/components/Navigation/NavigationContainer';
+import ViewComponent from '@/components/WorkshopMain/ViewComponent';
+import { Resizable } from 're-resizable';
 
 const Workshop = () => {
   return(
     <div id = 'workshop-page'>
-      <AthenaLogoSvg/>
-      {/* <AthenaSvg/> */}
       <ViewComponent />
+      <Resizable
+      className="navigation-area-resizable"
+      defaultSize={{
+        width: '100%',
+        height: 'auto',
+      }}
+      minHeight={'30vh'} 
+      maxHeight={'70vh'} 
+      enable={{
+        top: true,
+        right: false,
+        bottom: false,
+        left: false,
+        topRight: false,
+        bottomRight: false,
+        bottomLeft: false,
+        topLeft: false,
+      }}
+    >
       <NavigationContainer />
+    </Resizable>
     </div>
   );
 

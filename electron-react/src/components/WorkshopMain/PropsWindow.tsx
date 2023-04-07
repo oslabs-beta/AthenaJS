@@ -1,8 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { DetailsContext } from './context/DetailsContext';
-import { useUserCompContext } from '@/hooks/useUserCompContext';
-import { MockFetchContext } from './context/MockFetchContext';
-import { PerformanceContext } from './context/PerformanceContext';
+import { DetailsContext } from '../context/DetailsContext';
+import { MockFetchContext } from '../context/MockFetchContext';
+import { PerformanceContext } from '../context/PerformanceContext';
+import { 
+  usePerformance,
+  useMockFetch,
+  useDetails,
+  useUserComp 
+} from '@/hooks/useContextHooks';
 import {motion} from 'framer-motion';
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-javascript';
@@ -12,6 +17,14 @@ import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/worker-javascript';
 import 'ace-builds/src-noconflict/worker-json';
+
+// https://www.typescriptlang.org/docs/handbook/declaration-files/templates/global-d-ts.html
+// exposing an any type for the ace editor on the window
+declare global {
+  interface Window {
+    ace: any;
+  }
+}
 
 //Need these to make workers function for ace editor (allows linting and other code editor functionality)
 window.ace.config.setModuleUrl('ace/mode/javascript_worker', '../../node_modules/ace-builds/src-noconflict/worker-javascript.js');
@@ -37,10 +50,10 @@ const transitionPage = {
 //form for adjusting component
 const PropsWindow = () => {
   //Global state: temp versions are for the text editor states
-  const { compBody, compJSX, tempCompBody, tempCompJSX} = useContext(DetailsContext);
+  const { compBody, compJSX, tempCompBody, tempCompJSX} = useDetails();
   const [compBodyVal, setCompBodyVal] = compBody;
   const [compJSXVal, setCompJSXVal] = compJSX;
-  const { mockServer } = useContext(MockFetchContext);
+  const { mockServer } = useMockFetch();
   const [ mockServerVal, setMockServerVal ] = mockServer;
   // States for text editors 
   const [ tempCompBodyVal, setTempCompBodyVal ] = tempCompBody;
@@ -50,15 +63,15 @@ const PropsWindow = () => {
   const [bodyWindowVisible, setBodyWindowVisible] = useState(true);
   const [mockServerWindowVisible, setMockServerWindowVisible] = useState(false);
   //Key count to force remount on component update -> this is used for the React Profiler API in ViewComponent.jsx
-  const { keyCount } = useContext(PerformanceContext);
+  const { keyCount } = usePerformance();
   const [ keyCountVal , setKeyCountVal] = keyCount;
   //state and dispatch for saved user components
-  const {components, dispatch} = useUserCompContext();
+  const {components, dispatch} = useUserComp();
   const [ saveName, setSaveName ] = useState('my_component');
   const [ checkSaveModal, setCheckSaveModal ] = useState(false);
 
   //Handle the submit of the create props form
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     //On form submission (Update View button), we set the states for the component renderer
     //We also adjust keyCount so that we measure a new render time with react profiler API
@@ -66,14 +79,14 @@ const PropsWindow = () => {
       setCompBodyVal(tempCompBodyVal);
       setCompJSXVal(tempCompJSXVal);
       setMockServerVal(tempMockServer);
-      setKeyCountVal(keyCountVal + 1);
+      setTimeout(() => setKeyCountVal(keyCountVal + 1), 0);
     } catch (error) {
       console.log(error);
     }
   };
 
   //Check if component has already been saved when we press save component
-  const checkCompExist = () => {
+  const checkCompExist = (): void => {
     for (let i = 0; i < components.length; i++){
       if (components[i].name === saveName) return setCheckSaveModal(true);
     }
@@ -81,7 +94,7 @@ const PropsWindow = () => {
   };
 
   //If user says they want to overwrite component -> do this
-  const handleOverWriteYes = () => {
+  const handleOverWriteYes = (): void => {
     try{
       //Overwrite the object for the existing component in the UserComponents global state
       dispatch({type: 'EDIT_COMPS', payload: {
@@ -98,13 +111,13 @@ const PropsWindow = () => {
   };
 
   //If user says they don't want to overwrite component
-  const handleOverWriteNo = () => {
+  const handleOverWriteNo = (): void => {
     //close modal
     setCheckSaveModal(false);
   };
 
   //Save current component by adding to the UserComponent array (via reducer)
-  const handleSave = () => {
+  const handleSave = (): void => {
     try{
       dispatch({type: 'ADD_COMPS', payload: {
         name: saveName, 
@@ -119,11 +132,11 @@ const PropsWindow = () => {
 
   // handle toggling the body and mockServer containers
   const handleToggleWindow = {
-    body : (e) => {
+    body : (e: React.MouseEvent<HTMLAnchorElement>): void => {
       setBodyWindowVisible(true);
       setMockServerWindowVisible(false);
     },
-    mockServer: (e) => {
+    mockServer: (e: React.MouseEvent<HTMLAnchorElement>): void => {
       setBodyWindowVisible(false);
       setMockServerWindowVisible(true);
     }
@@ -132,7 +145,7 @@ const PropsWindow = () => {
   // ace editor style options object
   const styleOptions = {
     width: '100%',
-    height: '500px',
+    height: '100%',
   };
 
   return (

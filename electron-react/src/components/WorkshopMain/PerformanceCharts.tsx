@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { PerformanceContext } from './context/PerformanceContext';
+import { usePerformance } from '../../hooks/useContextHooks';
 import { motion } from 'framer-motion';
 import {
   Chart as ChartJS,
@@ -15,32 +15,32 @@ ChartJS.register(
   BarElement,
   Tooltip
 );
-
 const transition = {
-  type: "spring",
+  type: 'spring',
   damping: 30,
   stiffness: 300,
   duration: 1
 };
+import { performanceData } from '../context/ContextTypes';
 
 
 const PerformanceCharts = () => {
-  const { performanceData } = useContext(PerformanceContext);
-  const [ profilerData, setProfilerData ] = performanceData;
+  const perfContext = usePerformance();
+  const [ profilerData, setProfilerData ] = perfContext.performanceData;
 
-  const getActualDurationData = () => {
-    return performanceData[0].map((data) => data.actualDuration);
+  const getActualDurationData = (): number[] => {
+    return profilerData.map((data: performanceData ) => data.actualDuration);
   };
-  const getIds = () => {
-    return performanceData[0].map((data) => data.renderName);
-  };
-
-  const handleUndo = () => {
-    setProfilerData(profilerData.slice(0,profilerData.length - 1));
+  const getIds = (): string[] => {
+    return profilerData.map((data: performanceData ) => data.renderName);
   };
 
-  const handleReset = () => {
-    setProfilerData([]);
+  const handleUndo = (): void => {
+    setProfilerData && setProfilerData(profilerData.slice(0,profilerData.length - 1));
+  };
+
+  const handleReset = (): void => {
+    setProfilerData && setProfilerData([]);
   };
 
   if (profilerData.length > 0){
@@ -69,7 +69,7 @@ const PerformanceCharts = () => {
               }
             ]
           }}
-          options={{
+          options = {{
             responsive: true,
             maintainAspectRatio: false,
             height: 1000,
@@ -79,7 +79,8 @@ const PerformanceCharts = () => {
               text: 'Component Render Times',
               fontSize: 25
             },
-          }}
+          } as object}
+          data-testid="bar-chart"
         />
         <button id = 'reset-chart' onClick = {handleReset}>Reset Chart</button>
         <button id = 'undo-chart' onClick = {handleUndo}>Undo</button>
