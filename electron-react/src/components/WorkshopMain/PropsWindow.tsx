@@ -145,7 +145,7 @@ const PropsWindow = () => {
   // ace editor style options object
   const styleOptions = {
     width: '100%',
-    height: '500px',
+    height: '100%',
   };
 
   return (
