@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { UserCompContext } from '@/components/context/UserCompContext';
-import { PerformanceContext } from '@/components/context/PerformanceContext';
-import { MockFetchContext } from '@/components/context/MockFetchContext';
-import { DetailsContext } from '@/components/context/DetailsContext';
+import { UserCompContext } from '../components/context/UserCompContext';
+import { PerformanceContext } from '../components/context/PerformanceContext';
+import { MockFetchContext } from '../components/context/MockFetchContext';
+import { DetailsContext } from '../components/context/DetailsContext';
 
 const useContextChecker = (reactContext: React.Context<any> , contextName: String) => {
   const context = useContext(reactContext);
