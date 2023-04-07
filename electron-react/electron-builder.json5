@@ -1,4 +1,4 @@
-/**
+/*
  * @see https://www.electron.build/configuration/configuration
  */
 {
@@ -9,26 +9,29 @@
   },
   "files": [
     "dist-electron",
-    "dist"
+    "dist",
+    "src/assets/**/*"
   ],
   "mac": {
     "artifactName": "${productName}_${version}.${ext}",
+    "icon": "build/icon.png",
     "target": [
       "dmg",
       "zip"
-    ]
+  ]
   },
-  "win": {
-    "target": [
-      {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      }
-    ],
-    "artifactName": "${productName}_${version}.${ext}"
-  },
+"win": {
+  "target": [
+    {
+      "target": "nsis",
+      "arch": [
+        "x64"
+      ]
+    }
+  ],
+  "artifactName": "${productName}_${version}.${ext}",
+  "icon": "build/icon.png"
+},
   "nsis": {
     "oneClick": false,
     "perMachine": false,

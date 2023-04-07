@@ -9,7 +9,10 @@ $ yarn
 ```
 
 ### Local Development
-
+navigate to electron-react/athena-website and run:
+```
+npm start
+```
 ```
 $ yarn start
 ```

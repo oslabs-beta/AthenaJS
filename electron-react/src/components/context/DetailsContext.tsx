@@ -1,23 +1,27 @@
-import React, { useState, createContext } from 'react';
-import stringifyObject from 'stringify-object';
+import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
+import { DetailsContextType } from './ContextTypes';
 
-export const DetailsContext = createContext();
+
+export const DetailsContext = createContext<DetailsContextType | null>(null);
 //These are the details that define the component that gets rendered on the screen
-export const DetailsProvider = ({ children }) => {
+export const DetailsProvider = ({ children } : any) => {
   //States for the component in the renderer
   const [compBody, setCompBody] = useState(
-    `const var1 = 1
-    const handleClick = () => console.log('button clicked')
-    const [count, setCount] = useState(1)`
+    `
+const [count, setCount] = useState(1)
+const var1 = 1
+const handleClick = () => console.log('button clicked')
+    `
   );
   const [compJSX, setCompJSX] = useState(
     '<button onClick = {handleClick}>Click Me</button>'
   );
   //States for the code written in the code editors, it gets transferred to the states above when we press the update view button in PropsWindow.jsx
   const [ tempCompBody, setTempCompBody ] = useState(
-    `const var1 = 1
-    const handleClick = () => console.log('button clicked')
-    const [count, setCount] = useState(1)`
+    `const [count, setCount] = useState(1)
+const var1 = 1
+const handleClick = () => console.log('button clicked')
+    `
   );
   const [ tempCompJSX, setTempCompJSX ] = useState(
     '<button onClick = {handleClick}>Click Me</button>'
