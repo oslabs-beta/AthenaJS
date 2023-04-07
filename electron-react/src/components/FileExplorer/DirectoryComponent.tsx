@@ -9,7 +9,7 @@ interface DirectoryProps {
   
 }
 
-const DirectoryComponent = ({ name, files, fileParser, path }: DirectoryProps): JSX.Element => {
+const DirectoryComponent: React.FC<DirectoryProps> = ({ name, files, fileParser, path }) => {
   // each directory component has access to it's name and files on property object
   // hook to tell whether button is opened or not
   const [isOpen, setOpen] = useState(false);
