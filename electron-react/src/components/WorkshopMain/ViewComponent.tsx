@@ -60,7 +60,7 @@ const ViewComponent = () => {
 
   return (
       <div id="navigation-area" className='view-relative'>
-        <AthenaLogoSvg/>
+        {/* <AthenaLogoSvg/> */}
         <div id = 'component-data'>
           <strong>Render Time:</strong> {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}<br/>
           <input
