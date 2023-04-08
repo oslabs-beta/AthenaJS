@@ -4,8 +4,6 @@
 <strong><a href="#File-Structure">File Structure</a></strong>
 |
 <strong><a href="#iteration-roadmap">Iteration Roadmap</a></strong>
-|
-<strong><a href="#externals">Externals</a></strong>
 </p>
 <hr/>
 
@@ -13,17 +11,27 @@
 
 If you're reading this document, we're really excited that you want to contribute to the project!  All work on AthenaJS happens directly on GitHub. If you would like to contribute, please send a pull request to the dev branch.  The following guide has some useful information, so we highly recommend you take a look at it before getting started!
 
+## Code of Conduct
+
+We expect contributors to adhere to our code of conduct. Please read the full text so that you can understand what actions are expected of contributors to the project.
+
 ## Not sure where to start?
 
-- You'll most likely need to read up on a few topics
-  - Parsing
-  - [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree) (Abstract Syntax Tree): 
-    - We use Babel for parsing and traversing user uploaded files:  the Babel AST [spec](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md) is a bit different from [ESTree](https://github.com/estree/estree).
-    - Check out [the Babel Plugin Handbook](https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md#babel-plugin-handbook), in particular the parser, traverser, and best practices section
-    - Check out [AST Explorer](http://astexplorer.net/#/scUfOmVOG5) to learn more about ASTs
-  - File Reader
-    - [FileReader - Web API MDN](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)
-  - 
+- You'll most likely need to read up on a few tools and libraries
+  - <a href = 'https://github.com/FormidableLabs/react-live'>React Live</a>
+    - Used to render components 
+  - <a href = 'https://reactflow.dev/docs/quickstart/'>React Flow</a>
+    - Enables the drag and drop UI prototyping tool with custom nodes
+  - <a href = 'https://styled-components.com/docs'>Styled Components</a>
+    - Styling components within the app is primarily done using the Styled Components Library
+  - <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'>Fetch Mock</a>
+    - Used to set up a mock server
+  - Parsing user uploaded files
+    - [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree) (Abstract Syntax Tree): 
+      - We use Babel for parsing and traversing user uploaded files:  the Babel AST [spec](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md) is a bit different from [ESTree](https://github.com/estree/estree).
+      - Check out [the Babel Plugin Handbook](https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md#babel-plugin-handbook), in particular the parser, traverser, and best practices section
+      - Check out [AST Explorer](http://astexplorer.net/#/scUfOmVOG5) to learn more about ASTs
+
   - Helpful diagrams
     - [Athena App Diagram (Excalidraw)](#)
 <hr/>
@@ -70,10 +78,6 @@ Not sure what contribution you want to make?  Here are a few starting points:
     - If you make a pull request with a new component, consider adding an accompanying test file
   2. Adding support for class components
   3. Adding support for components written in TypeScript
-
-## Externals
-
-- AST spec ([babel-parser/ast/spec.md](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md))
 
 ## License
 By contributing to AthenaJS, you agree that your contributions will be licensed under its MIT license.
