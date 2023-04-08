@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import ViewUI from '@/components/UIWindow/ViewUI';
-import AthenaLogoSvg from '@/components/framerMotion/AthenaLogo';
+import ViewUI from '../components/UIWindow/ViewUI';
+import AthenaLogoSvg from '../components/framerMotion/AthenaLogo';
 
 const UIPage = () => {
   return(
