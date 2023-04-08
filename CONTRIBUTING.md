@@ -1,11 +1,11 @@
 <p align="center" class="toc">
 <strong><a href="#setup">Setup</a></strong>
 |
-<strong><a href="#documentation-editing">Documentation Editing</a></strong>
-|
-<strong><a href="#externals">Externals</a></strong>
+<strong><a href="#File-Structure">File Structure</a></strong>
 |
 <strong><a href="#iteration-roadmap">Iteration Roadmap</a></strong>
+|
+<strong><a href="#externals">Externals</a></strong>
 </p>
 <hr/>
 
@@ -44,10 +44,6 @@ npm run dev
 ```
 Which will spin up the application on your local machine.  AthenaJS uses Vite for an enhanced development experience with really fast HMR.  Any changes you make to the codebase on your local machine will be quickly reflected on your running instance of AthenaJS!
 
-## Externals
-
-- AST spec ([babel-parser/ast/spec.md](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md))
-
 ## File Structure
 
 - Electron React (Root Directory for AthenaJS Project)
@@ -64,6 +60,20 @@ Which will spin up the application on your local machine.  AthenaJS uses Vite fo
       - Components are grouped by category
         - Accompanying tests should be placed in a __test__ folder next to the components they are unit testing
         - Files containing TypeScript Types used for components are located in the same category folder as the components
+        
+## Iteration Roadmap
+
+Not sure what contribution you want to make?  Here are a few starting points:
+
+  1. Add unit tests with Jest.  We are continually adding unit tests for components in order to enhance the quality and reliability of the codebase.
+    - If you notice tests are missing for a component, we welcome additions to the testing ecosystem of AthenaJS!
+    - If you make a pull request with a new component, consider adding an accompanying test file
+  2. Adding support for class components
+  3. Adding support for components written in TypeScript
+
+## Externals
+
+- AST spec ([babel-parser/ast/spec.md](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md))
 
 ## License
 By contributing to AthenaJS, you agree that your contributions will be licensed under its MIT license.
