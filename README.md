@@ -68,14 +68,7 @@ Please check out our team page!
 | Matthew Fukudome   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mattfookoo) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matthewfukudome/) |
 | Ryan Motamen       | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ryanmotamen) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ryan-motamen/) |
 
-
-Some resources:
-
-
-- Our discussions/notes/roadmap: Athena JS/notes
-- Our blog which contains release posts and explanations: /blog
-
-How is the repo structured?
+## How is the repo structured?
 
 The Athena JS repo is managed as a monorepo check out the [CONTRIBUTING.md](CONTRIBUTING.md) for development and checkout for the doc website.
 
