@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { useUserComp } from '@/hooks/useContextHooks';
+import { useUserComp } from '../../hooks/useContextHooks';
 import { UICompProps, component } from './UITypes';
 
 //This is the UI we use to add/remove components from the react flow UI & change the background color for the react flow UI
