@@ -52,6 +52,8 @@ Which will spin up the application on your local machine.  AthenaJS uses Vite fo
 
 - Electron React (Root Directory for AthenaJS Project)
   - Electron (Electron)
+    - Main (Electron-main)
+    - Preload (Pre-load scripts)
   - src (React)
     - Index.tsx (Hangs app off of root and wraps app in context providers)
     - App.tsx
@@ -59,8 +61,9 @@ Which will spin up the application on your local machine.  AthenaJS uses Vite fo
       - UI Page
       - Workshop
     - Components
-
-
+      - Components are grouped by category
+        - Accompanying tests should be placed in a __test__ folder next to the components they are unit testing
+        - Files containing TypeScript Types used for components are located in the same category folder as the components
 
 ## License
 By contributing to AthenaJS, you agree that your contributions will be licensed under its MIT license.
