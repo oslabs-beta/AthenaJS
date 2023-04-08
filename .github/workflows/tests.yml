@@ -1,27 +1,25 @@
-name: Tests
+name: Athena CI
 
 on:
   push:
-    branches:
-      - '*'
+    branches: [ '*' ]
   pull_request:
-    branches:
-      - main
-      - dev
+    branches: [ main ]
+
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-      - name: Install dependencies
-        run: npm install
-        working-directory: electron-react
-      - name: Run tests
-        run: |
-          cd electron-react
-          npm test
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Build the Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: false
+        tags: my-electron-app:latest
+
+    - name: Run the tests
+      uses: docker://my-electron-app:latest
