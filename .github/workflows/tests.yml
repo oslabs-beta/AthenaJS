@@ -1,0 +1,24 @@
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: 
+      - main
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - name: Install dependencies
+        run: npm install
+        working-directory: electron-react
+      - name: Run tests
+        run: |
+          cd electron-react
+          npm test
