@@ -71,29 +71,46 @@ Please note AthenaJS only works for ***functional components***, but work is cur
 
 https://user-images.githubusercontent.com/35904733/230973355-08ee1f98-7428-48ec-9b7a-d8a31f8cd1d2.mov
 
+<br/>
+
 💠 You can develop components from scratch and export them to your React project using our code editors!  The JSX terminal holds the return statement of the component and the body contains everything else (your hooks, functions, etc.).  Press update view to view your changes live in the component renderer.  Save your progress by choosing a name for your component and saving it to the component library.
 
 ### Upload and Edit Components
+
+
+https://user-images.githubusercontent.com/35904733/230982140-5f46aa3d-eb19-4bde-be6c-f82d078a858e.mov
+
+<br/>
 
 💠 If you already have components built for your project and want to edit them, open the file explorer and import any of your React components! Our parser will inject your code into the terminals so you can get started easily.  Simply define any props your component relies on in the body terminal and update the view to get your component working in the app!
 
 ### Mocking Server
 
+<br/>
+
 💠 If your component makes use of an API, AthenaJS includes feck-motch integration to mock the response.  If you are interested in all of the great features available to you with feck-motch, check out the <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'> documentation </a>.  By default, our settings intercept all requests and respond with an object {data: 'mock data'} to get you started quickly.
 
 ### Styling Your Components
+
+<br/>
 
 💠 AthenaJS includes styled-components integration, check out the <a href = 'https://styled-components.com/docs'> documentation </a> here to get started.  Styled components lets you write actual CSS code to style your components, so you can get started quick and easy! Declare your styled component variable in the body terminal and write CSS or copy over code from your CSS file to quickly style your component! 
 
 ### Compare Component Render Times
 
+<br/>
+
 💠 Curious which components are causing or have the potential to cause a bottleneck in your application? Every time you render a new component, the render time is captured using the React Profiler API, the same API that React Dev Tools are built on.  Render times can be added to a bar graph with the click of a button to easily compare render times across different components.
 
 ### Save Components
 
+<br/>
+
 💠 Press 'Save Library' to save your component library to your home directory.  Your components will be persisted between sessions, so you can easily pick up from where you left off.  Render any of your components and make changes to them, delete them from your library, or export them as a jsx file to easily integrate the components you develop into your React projects.
 
 ### UI Whiteboard
+
+<br/>
 
 💠 Once you build a component library, you can easily prototype UIs using the drag and drop UI whiteboard.  The whiteboard area can be saved as a screenshot to your downloads folder by pressing the screenshot button on the top right portion of the screen.   
 
