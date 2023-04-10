@@ -109,7 +109,8 @@ Check out our <a href = '#'> Medium article </a> to read more!
 
 ## The Team
 
-Please check out our team page!
+***AthenaJS Core Team***
+
 | Developed By       | Github          | LinkedIn        |
 | :------------------: | :-------------: | :-------------: |
 | Christopher Long   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cvalong) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cvalong) |
