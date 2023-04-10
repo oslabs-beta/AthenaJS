@@ -1,8 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { useUserComp, usePerformance, useMockFetch, useDetails } from '@/hooks/useContextHooks';
-import { DetailsContext } from '../context/DetailsContext';
-import { MockFetchContext } from '../context/MockFetchContext';
-import { PerformanceContext } from '../context/PerformanceContext';
+import { useUserComp, usePerformance, useMockFetch, useDetails } from '../../hooks/useContextHooks';
 const { ipcRenderer } = require('electron');
 import path from 'path';
 import fs from 'fs';
@@ -106,7 +103,6 @@ const SavedComps = () => {
       transition={transition}
       className = 'saved-comp-page'
     >
-      <h1>Component Library</h1><br/>
       <button id = 'save-library' onClick = {saveJson}>Save Library</button>
       <input 
         type = 'text'

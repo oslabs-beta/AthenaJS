@@ -46,9 +46,9 @@ body{
 }
 
 #athena-logo-svg{
-  position:absolute;
+  position: absolute;
   top: 0.2rem;
-  right: 0.2rem;
+  right: 0.5rem;
   z-index: 100
   // right: 10px;
 }
@@ -115,9 +115,7 @@ $transition-area: width 0.3s ease-in-out;
   display: flex;
   // TODO figure out why are scroll bars activating
   height: 100vh;
-  // this width is only here to remove the px so scroll bars don't appear
-  width: calc(100vw - 14px); 
-
+  width: 100%;
 }
 
 // sidebar
@@ -265,6 +263,7 @@ $transition-area: width 0.3s ease-in-out;
   align-items: center;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
 }
 
 #ui-page{
@@ -363,6 +362,7 @@ $transition-area: width 0.3s ease-in-out;
 #component-data {
   color: $font-color-primary;
   position: absolute;
+  height: 9.5rem;
   top: 8rem;
   right: 0.5rem;
   padding: 1.2rem 1.2rem 1.5rem 1.2rem;
@@ -416,6 +416,10 @@ $transition-area: width 0.3s ease-in-out;
   align-items: center;
   height: 100%;
   width: 100%;
+}
+
+.view-relative {
+  position: relative;
 }
 
 // PropsWindow.jsx
@@ -487,7 +491,6 @@ $transition-area: width 0.3s ease-in-out;
 #props-header{
   display:flex;
   align-items: center;
-  margin-bottom: 4rem;
   #overwrite-modal{
     box-shadow: 7px 3px 3px rgba(0, 0, 0, .3);
     color: $font-color-primary;
@@ -507,12 +510,14 @@ $transition-area: width 0.3s ease-in-out;
 }
 
 .props-window {
+  height: 100%;
   width: 100%;
   display: flex;
 }
 
 
 .props-container {
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -7,6 +7,7 @@ import { MockFetchContext } from '../context/MockFetchContext';
 import { Resizable } from 're-resizable';
 import { performanceData } from '../context/ContextTypes';
 import { profilerData } from './WorkshopTypes';
+import AthenaLogoSvg from '../framerMotion/AthenaLogo';
 
 const ViewComponent = () => {
   const { compBody, compJSX } = useDetails();
@@ -58,46 +59,25 @@ const ViewComponent = () => {
   if (mockServer[0]) scope = {useState, useEffect, useRef, useMemo, styled, fetchMock};
 
   return (
-    <>
-      <div id = 'component-data'>
-        <strong>Render Time:</strong> {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}<br/>
-        <input
-          id = 'render-name'
-          onChange = {(e) => setRenderName(e.target.value)}
-          value = {renderName}
-          placeholder = 'Render Name'
-        /><br/>
-        <button id = 'add-render' onClick={updateGraph}>Add Data</button>
-      </div>
-      <Resizable
-        className="navigation-area-resizable"
-        defaultSize={{
-          width: '100%',
-          height: 'auto',
-        }}
-        minHeight={400} 
-        maxHeight={2000} 
-        enable={{
-          top: false,
-          right: false,
-          bottom: true,
-          left: false,
-          topRight: false,
-          bottomRight: false,
-          bottomLeft: false,
-          topLeft: false,
-        }}
-      >
-        <div id="navigation-area">
-          <LiveProvider code={string} scope = {scope}>
-            <Profiler key={keyCount[0]} id = 'preview-component' onRender={handleProfilerData}>
-              <LivePreview/>
-            </Profiler>
-            <LiveError />
-          </LiveProvider>
+      <div id="navigation-area" className='view-relative'>
+        <AthenaLogoSvg/>
+        <div id = 'component-data'>
+          <strong>Render Time:</strong> {profilerData ? profilerData.actualDuration.toFixed(3) + ' ms' : 'N/A'}<br/>
+          <input
+            id = 'render-name'
+            onChange = {(e) => setRenderName(e.target.value)}
+            value = {renderName}
+            placeholder = 'Render Name'
+          /><br/>
+          <button id = 'add-render' onClick={updateGraph}>Add Data</button>
         </div>
-      </Resizable>
-    </>
+        <LiveProvider code={string} scope = {scope}>
+          <Profiler key={keyCount[0]} id = 'preview-component' onRender={handleProfilerData}>
+            <LivePreview/>
+          </Profiler>
+          <LiveError />
+        </LiveProvider>
+      </div>
   );
 };
 
