@@ -22,6 +22,20 @@
 </span>
 <hr/>
 
+<p align="center" class="toc">
+<strong><a href="#Documentation-&-Installation">Documentation & Installation</a></strong>
+•
+<strong><a href="#Features">Features</a></strong>
+•
+<strong><a href="#Contributing">Contributing</a></strong>
+•
+<strong><a href="#Contributing">Read More</a></strong>
+•
+<strong><a href="#Contributing">The Team</a></strong>
+</p>
+
+<hr/>
+
 ## What is AthenaJS?
 
 AthenaJS is a component visualizer workshop that allows developers to quickly develop and edit their React 
