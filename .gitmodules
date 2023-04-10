@@ -1,0 +1,3 @@
+[submodule "athena-website-submodule"]
+	path = athena-website-submodule
+	url = https://github.com/ryanmotamen/athena.git
