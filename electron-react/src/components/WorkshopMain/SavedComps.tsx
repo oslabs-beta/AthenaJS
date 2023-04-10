@@ -1,8 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { useUserComp, usePerformance, useMockFetch, useDetails } from '@/hooks/useContextHooks';
-import { DetailsContext } from '../context/DetailsContext';
-import { MockFetchContext } from '../context/MockFetchContext';
-import { PerformanceContext } from '../context/PerformanceContext';
+import { useUserComp, usePerformance, useMockFetch, useDetails } from '../../hooks/useContextHooks';
 const { ipcRenderer } = require('electron');
 import path from 'path';
 import fs from 'fs';
