@@ -49,7 +49,7 @@ If you just want to download the app, click <a href = '#'> here </a>
 
 <hr/>    
 
-##Features
+## Features
 
 <hr/>
 
@@ -57,7 +57,7 @@ If you just want to download the app, click <a href = '#'> here </a>
 
 Using the Athena's workshop, developers can write, design, and create full, complete component features that are ready for use in your own app. The component view area features a complete staging area allowing you to view changes as soon as you add them.
 
-###Upload and Edit Components
+### Upload and Edit Components
 
 If you already have components made that you want to decouple and work on, you can access them from our file explorer  and pull them into Athena's workshop to edit them. Now you can change the component's state, props, functionality in the workshop without manipulating your app to see a specific state. Athena allows you to develop and mock ideas faster streamlining the workflow and production process.
 
