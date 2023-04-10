@@ -26,7 +26,7 @@
 </span>
 <hr/>
 
-## Intro
+## What is AthenaJS?
 
 
 AthenaJS is a component visualizer workshop that allows developers to quickly develop and edit their React 
