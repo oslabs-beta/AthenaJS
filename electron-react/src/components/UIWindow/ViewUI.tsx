@@ -34,7 +34,7 @@ const ViewUI = () => {
 
   //Remove a specific node from the react flow UI (tied to that specific components remove button in UIComps.jsx)
   const removeNode = (component: component): void => {
-    return setNodes(nodes.filter((node) => node.id !== component.name));
+    return setNodes(prevNodes => prevNodes.filter((node) => node.id !== component.name));
   };
   
   //Take a screenshot of the react flow UI div.  
@@ -51,7 +51,6 @@ const ViewUI = () => {
       });
     });
   };
-  
 
   return(
     <>

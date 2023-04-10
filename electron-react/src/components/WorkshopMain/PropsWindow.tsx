@@ -155,7 +155,6 @@ const PropsWindow = () => {
       transition={transitionPage} 
       id = 'props-window-page'
     >
-      <h1>Edit Component</h1>
       <div id = 'props-header'>
         {checkSaveModal &&
           <div id = 'overwrite-modal'>
@@ -201,7 +200,6 @@ const PropsWindow = () => {
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
-                  placeholder= 'insert function definition e.g. () => console.log(&quot;Hello World&quot;)'
                   setOptions={{
                     useWorker: true,
                     enableBasicAutocompletion: true,
