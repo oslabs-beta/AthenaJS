@@ -33,12 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: '../electron-react' # run npm ci in electron-react directory
+        working-directory: './electron-react' # run npm ci in electron-react directory
 
       - name: Build project
         run: npm run build --if-present
-        working-directory: '../electron-react' # run npm run build in electron-react directory
+        working-directory: './electron-react' # run npm run build in electron-react directory
 
       - name: Run tests
         run: npm test
-        working-directory: '../electron-react' # run npm test in electron-react directory
+        working-directory: './electron-react' # run npm test in electron-react directory
