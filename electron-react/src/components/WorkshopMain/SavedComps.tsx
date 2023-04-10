@@ -103,7 +103,6 @@ const SavedComps = () => {
       transition={transition}
       className = 'saved-comp-page'
     >
-      <h1>Component Library</h1><br/>
       <button id = 'save-library' onClick = {saveJson}>Save Library</button>
       <input 
         type = 'text'

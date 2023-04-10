@@ -20,7 +20,6 @@ const UIComps = ({bg, addNode, removeNode}: UICompProps) => {
    
   return(
     <div className = 'saved-comp-page'>
-      <h1>Saved Components</h1>
       <div id = 'flow-info'>
         <input id = 'flow-background-input' onChange = {(e) => setBgColorIn(e.target.value)} value = {bgColorIn}/>
         <button id = 'flow-background-submit' onClick = {() => setBgColor(bgColorIn)}>Change BG Color</button>
