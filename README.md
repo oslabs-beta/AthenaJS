@@ -77,7 +77,6 @@ https://user-images.githubusercontent.com/35904733/230973355-08ee1f98-7428-48ec-
 
 ### Upload and Edit Components
 
-
 https://user-images.githubusercontent.com/35904733/230982140-5f46aa3d-eb19-4bde-be6c-f82d078a858e.mov
 
 <br/>
@@ -86,11 +85,15 @@ https://user-images.githubusercontent.com/35904733/230982140-5f46aa3d-eb19-4bde-
 
 ### Mocking Server
 
+https://user-images.githubusercontent.com/35904733/230982230-daf91647-7ccb-4ff0-b57f-6e0ce4dc4567.mov
+
 <br/>
 
 💠 If your component makes use of an API, AthenaJS includes feck-motch integration to mock the response.  If you are interested in all of the great features available to you with feck-motch, check out the <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'> documentation </a>.  By default, our settings intercept all requests and respond with an object {data: 'mock data'} to get you started quickly.
 
 ### Styling Your Components
+
+https://user-images.githubusercontent.com/35904733/230982240-82f1cc69-ff5b-49c7-aa61-be5cfd357268.mov
 
 <br/>
 
@@ -98,17 +101,23 @@ https://user-images.githubusercontent.com/35904733/230982140-5f46aa3d-eb19-4bde-
 
 ### Compare Component Render Times
 
+https://user-images.githubusercontent.com/35904733/230982261-e5e4f161-35d0-4cfb-a17d-f2e5feda18f6.mov
+
 <br/>
 
 💠 Curious which components are causing or have the potential to cause a bottleneck in your application? Every time you render a new component, the render time is captured using the React Profiler API, the same API that React Dev Tools are built on.  Render times can be added to a bar graph with the click of a button to easily compare render times across different components.
 
 ### Save Components
 
+https://user-images.githubusercontent.com/35904733/230982276-2df23884-b1c8-4d6c-bc5d-93f6ff4173f1.mov
+
 <br/>
 
 💠 Press 'Save Library' to save your component library to your home directory.  Your components will be persisted between sessions, so you can easily pick up from where you left off.  Render any of your components and make changes to them, delete them from your library, or export them as a jsx file to easily integrate the components you develop into your React projects.
 
 ### UI Whiteboard
+
+https://user-images.githubusercontent.com/35904733/230982285-5e3f8933-2ca8-49a4-a995-e42e5acd0fe8.mov
 
 <br/>
 
