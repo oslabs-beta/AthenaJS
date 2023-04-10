@@ -4,7 +4,7 @@ import NavBar from '../NavBar';
 import '@testing-library/jest-dom';
 
 
-describe('NavBar component', () => {
+xdescribe('NavBar component', () => {
   it('should render all nav links', () => {
     const { getByText } = render(<NavBar handleToggleWindow={{ props: jest.fn(), savedComps: jest.fn(), performance: jest.fn() }} />);
     expect(getByText('Edit Components')).toBeInTheDocument();

@@ -1,0 +1,37 @@
+name: Node.js CI
+
+on:
+  push:
+    branches-ignore: 
+      - ''
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: List files in electron-react directory
+        run: ls -la
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: './electron-react' # run npm ci in electron-react directory
+
+      - name: Run tests
+        run: npm test
+        working-directory: './electron-react' # run npm test in electron-react directory
