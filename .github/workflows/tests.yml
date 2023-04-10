@@ -24,8 +24,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-          path: './electron-react' # set the working directory to electron-react
-
+          
       - name: List files in electron-react directory
         run: ls -la
 
