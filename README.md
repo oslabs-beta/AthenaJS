@@ -24,16 +24,15 @@
 
 ## What is AthenaJS?
 
-
 AthenaJS is a component visualizer workshop that allows developers to quickly develop and edit their React 
-components without codebase integration.  
+components in isolation without codebase integration.  
 
 **Easy to use**: AthenaJS is a standalone electron application that allows developers to import their
 own React components or create components from scratch within the application's code editor.
 
-**Dynamic**: Developers can mock fetch request/data, edit the state, props and functions of their components within the application's code editor. They will be able to see those changes reflected within the component visualizer.
+**Dynamic**: Developers can mock fetch request/data, style, and change the functionality of their components within the application's code editors. Changes are reflected in the renderer with the press of a button!
 
-**UI Mode**: After developers have created/edited their react components, they can navigate to the UI Mode section and create a mock UI from their saved component library. 
+**UI Mode**: After developers have created/edited their react components, they can navigate to the UI Mode section and prototype UIs using components from their library.
 
 <hr/>    
 
@@ -49,7 +48,7 @@ If you just want to download the app, click <a href = '#'> here </a>
 
 Interested in what you can do with AthenaJS? Here is a quick summary of all the great features you can start developing with!
 
-Please note AthenaJS only works for functional components, but work is currently being done to add support for class components!
+Please note AthenaJS only works for ***functional components***, but work is currently being done to add support for class components!
 
 ### Developing a Component from Scratch
 
@@ -70,6 +69,10 @@ Please note AthenaJS only works for functional components, but work is currently
 ### Compare Component Render Times
 
 💠 Curious which components are causing or have the potential to cause a bottleneck in your application? Every time you render a new component, the render time is captured using the React Profiler API, the same API that React Dev Tools are built on.  Render times can be added to a bar graph with the click of a button to easily compare render times across different components.
+
+### Save Components
+
+💠 Press 'Save Library' to save your component library to your home directory.  Your components will be persisted between sessions, so you can easily pick up from where you left off.  Render any of your components and make changes to them, delete them from your library, or export them as a jsx file to easily integrate the components you develop into your React projects.
 
 ### UI Whiteboard
 
