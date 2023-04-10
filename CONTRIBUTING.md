@@ -1,7 +1,7 @@
 <p align="center" class="toc">
 <strong><a href="#setup">Setup</a></strong>
 |
-<strong><a href="#File-Structure">File Structure</a></strong>
+<strong><a href="#file-structure">File Structure</a></strong>
 |
 <strong><a href="#iteration-roadmap">Iteration Roadmap</a></strong>
 </p>
@@ -18,19 +18,21 @@ We expect contributors to adhere to our code of conduct. Please read the full te
 ## Not sure where to start?
 
 - You'll most likely need to read up on a few tools and libraries
-  - <a href = 'https://github.com/FormidableLabs/react-live'>React Live</a>
+  - [React Live](https://github.com/FormidableLabs/react-live)
     - Used to render components 
-  - <a href = 'https://reactflow.dev/docs/quickstart/'>React Flow</a>
+  - [React Flow](https://reactflow.dev/docs/quickstart/)
     - Enables the drag and drop UI prototyping tool with custom nodes
-  - <a href = 'https://styled-components.com/docs'>Styled Components</a>
+  - [Styled Components](https://styled-components.com/docs)
     - Styling components within the app is primarily done using the Styled Components Library
-  - <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'>Fetch Mock</a>
+  - [Fetch Mock](https://www.wheresrhys.co.uk/fetch-mock/)
     - Used to set up a mock server
   - Parsing user uploaded files
     - [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree) (Abstract Syntax Tree): 
       - We use Babel for parsing and traversing user uploaded files:  the Babel AST [spec](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md) is a bit different from [ESTree](https://github.com/estree/estree).
       - Check out [the Babel Plugin Handbook](https://github.com/thejameskyle/babel-handbook/blob/master/translations/en/plugin-handbook.md#babel-plugin-handbook), in particular the parser, traverser, and best practices section
       - Check out [AST Explorer](http://astexplorer.net/#/scUfOmVOG5) to learn more about ASTs
+  - testing with [Jest](https://jestjs.io/docs/getting-started)
+    - [Mocking React Context](https://polvara.me/posts/mocking-context-with-react-testing-library)
 
   - Helpful diagrams
     - [Athena App Diagram (Excalidraw)](#)
