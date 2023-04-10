@@ -200,7 +200,6 @@ const PropsWindow = () => {
                   editorProps={{ $blockScrolling: true }}
                   width={styleOptions.width}
                   height={styleOptions.height}
-                  placeholder= 'insert function definition e.g. () => console.log(&quot;Hello World&quot;)'
                   setOptions={{
                     useWorker: true,
                     enableBasicAutocompletion: true,
