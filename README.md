@@ -19,11 +19,16 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)&nbsp;&nbsp;&nbsp;
 [![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)]()&nbsp;&nbsp;&nbsp;
 
+[![Join us on Discord](https://img.shields.io/badge/Join%20us%20on%20Discord-7289DA?logo=discord&logoColor=white)](https://discord.gg/6xkMNXtBYp)
+
+
 </span>
 <hr/>
 
 <p align="center" class="toc">
 <strong><a href="#Features">Features</a></strong>
+•
+<strong><a href="#Questions and Support">Questions</a></strong>
 •
 <strong><a href="#Contributing">Contributing</a></strong>
 •
@@ -92,6 +97,12 @@ Please note AthenaJS only works for ***functional components***, but work is cur
 
 💠 One of the team's favorite uses of this tool is to compare similar components.  Not sure which navbar or button you like best? Add them to the whiteboard and compare them side-by-side!
 
+
+<hr/>
+
+## Questions and Support
+
+If you have any questions or need help with the project, please don't hesitate to ask! You can reach out to us on [Discord](https://discord.gg/6xkMNXtBYp) or [create an issue](https://github.com/oslabs-beta/Athena/issues/new/choose) on this repo.
 
 <hr/>
 
