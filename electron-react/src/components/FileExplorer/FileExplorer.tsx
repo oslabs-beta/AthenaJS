@@ -177,10 +177,13 @@ const FileExplorer: React.FC = () => {
     const nestedJSXVisitor = {
       JSXElement(path: any) {
         isJSX = true;
-
-        // Extract the string representation of the JSX element
-        const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
       },
+    };
+
+    //Define a helper function to slice our data string at the start and end of our path node 
+    const stringSliceAndPush = (array:string[], path:any): void => {
+      const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
+      array.push(parsedStr);
     };
 
     //Use Babel to parse the input codee string into an Abstract Syntax Tree (AST)
@@ -191,8 +194,7 @@ const FileExplorer: React.FC = () => {
       enter(path: any) {
         if(path.isCallExpression()) {
           if(path.node.callee.name === 'useEffect') {
-            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-            componentBodyArray.push(parsedStr);
+            stringSliceAndPush(componentBodyArray, path);
           }
         }
         if (path.isFunctionDeclaration()) {
@@ -200,8 +202,7 @@ const FileExplorer: React.FC = () => {
           path.traverse(nestedJSXVisitor);
           //If the function declaration does not contain JSX, extract its string representation 
           if(isJSX === false) {
-            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-            componentBodyArray.push(parsedStr);
+            stringSliceAndPush(componentBodyArray, path);
           }
           //Reset the isJSX bool flag for the next function declaration 
           isJSX = false;
@@ -214,22 +215,22 @@ const FileExplorer: React.FC = () => {
             
             //If the arrow function does not contain JSX, extract its string representation
             if(isJSX === false) {
-              const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-              componentBodyArray.push(parsedStr);
+              stringSliceAndPush(componentBodyArray, path);
             }
 
             // Reset the isJSX flag for the next arrow function expression
             isJSX = false;
           } else {
             // Parses normal variable declarations
-            const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-            componentBodyArray.push(parsedStr);
+            stringSliceAndPush(componentBodyArray, path);
           }
         }
-        //This conditional checks for JSX content as well as checks if the JSX's parent is a return statement. 
+        // This conditional checks for JSX content as well as che  zcks if the JSX's parent is a return statement. 
         if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
-          const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
-          JSXArray.push(parsedStr);
+          stringSliceAndPush(JSXArray, path);
+        }
+        if (path.isJSXFragment() && path.parentPath.isReturnStatement()) {
+          stringSliceAndPush(JSXArray, path);
         }
       },
     });
