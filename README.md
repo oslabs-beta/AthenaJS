@@ -28,7 +28,7 @@
 <p align="center" class="toc">
 <strong><a href="#Features">Features</a></strong>
 •
-<strong><a href="#Questions and Support">Questions</a></strong>
+<strong><a href="#questions-and-support">Questions</a></strong>
 •
 <strong><a href="#Contributing">Contributing</a></strong>
 •
