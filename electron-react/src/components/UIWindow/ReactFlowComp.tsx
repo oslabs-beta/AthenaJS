@@ -21,18 +21,20 @@ const ReactFlowComp = ({ data: { component, removeNode }, selected }: ReactFlowC
     fontSize: '2rem',
   };
 
-  const handleRemoveNode = (): void => {
+  const handleRemoveNode = (component: component): void => {
     removeNode(component);
   };
 
   return (
     <>
+      <NodeResizer color="#ff0071" isVisible={selected} minWidth={100} minHeight={30} />
       {selected && (
-        <div style={buttonStyle as object} onClick={handleRemoveNode}>
-          <span>&times;</span>
+        <div style={buttonStyle as object} onClick={() => {removeNode(component)
+        console.log(component.name)
+        }}>
+          &times;
         </div>
       )}
-      <NodeResizer color="#ff0071" isVisible={selected} minWidth={100} minHeight={30} />
       <LiveProvider code={`() => {
         ${component.mockServer}
         ${component.body}
