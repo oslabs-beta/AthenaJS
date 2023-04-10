@@ -39,7 +39,7 @@ const SavedComps = () => {
       return setShowComponents([...components])
     }
 
-  }, [search])
+  }, [search, components])
 
   //Save component JSON
   const saveJson = (): void => {
@@ -93,7 +93,7 @@ const SavedComps = () => {
     
   //Delete the selected component
   const handleDelete = (component: componentsData): void => {
-    dispatch({type: 'DELETE_COMPS', payload: component.name});
+    dispatch({type: 'DELETE_COMPS', payload: component});
   };
 
   return(
