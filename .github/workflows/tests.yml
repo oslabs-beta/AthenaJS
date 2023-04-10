@@ -2,7 +2,8 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ '*' ]
+    branches: 
+      - matt/navTests
   pull_request:
     branches: 
       - main
