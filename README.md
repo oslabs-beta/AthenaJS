@@ -51,25 +51,26 @@ If you just want to download the app, click <a href = '#'> here </a>
 
 ## Features
 
-<hr/>
+Interested in what you can do with AthenaJS? Here is a quick summary of all the great features you can start developing with!
 
 ### Developing a Component from Scratch
 
-Using the Athena's workshop, developers can write, design, and create full, complete component features that are ready for use in your own app. The component view area features a complete staging area allowing you to view changes as soon as you add them.
+💠 Using 
 
 ### Upload and Edit Components
 
-If you already have components made that you want to decouple and work on, you can access them from our file explorer  and pull them into Athena's workshop to edit them. Now you can change the component's state, props, functionality in the workshop without manipulating your app to see a specific state. Athena allows you to develop and mock ideas faster streamlining the workflow and production process.
+💠 If you already have components made that you want to decouple and work on, you can access them from our file explorer  and pull them into Athena's workshop to edit them. Now you can change the component's state, props, functionality in the workshop without manipulating your app to see a specific state. Athena allows you to develop and mock ideas faster streamlining the workflow and production process.
 
 ### Mocking Server
 
-If the component has server data dependencies that could affect its state, Athena can mock those as well. Living in a separate editor for ease of access, you can mock server data and have all the data dependencies organized for accelerated testing.
-Compare Component Render Times
+💠 If your component makes use of an API
+
+### Compare Component Render Times
 Curious which components are causing or have the potential to cause a bottleneck in your application? Every time you render a new component, the render time is captured using the React Profiler API, the same API that React Dev Tools are built on.  Render times can be added to a bar graph with the click of a button to easily compare render times across different components.
 
 ### UI Whiteboard
 
-Once you build a component library, you can easily prototype UIs using the drag and drop UI whiteboard.  The whiteboard area can be saved as a screenshot to your downloads folder by pressing the screenshot button on the top right portion of the screen.   This is a great tool for prototyping a user interface and makes it easier to put your components together to create a cohesive UI within your application.
+💠 Once you build a component library, you can easily prototype UIs using the drag and drop UI whiteboard.  The whiteboard area can be saved as a screenshot to your downloads folder by pressing the screenshot button on the top right portion of the screen.   This is a great tool for prototyping a user interface and makes it easier to put your components together to create a cohesive UI within your application.
 One of our favorite uses of this tool is to compare similar components.  Not sure which navbar or button you like best? Add them to the whiteboard and compare them side-by-side!
 
 
@@ -81,7 +82,13 @@ Navigate to the [CONTRIBUTING.md](CONTRIBUTING.md) file to learn how you can con
 
 <hr/>    
 
-## Additional Resources
+## Read More
+
+Check out our <a href = '#'> Medium article </a> to read more!
+
+<hr/>
+
+## The Team
 
 Please check out our team page!
 | Developed By       | Github          | LinkedIn        |
@@ -91,6 +98,8 @@ Please check out our team page!
 | Derrick Oh         | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Igniphis) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/derrick-oh-37a84a182/) |
 | Matthew Fukudome   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mattfookoo) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matthewfukudome/) |
 | Ryan Motamen       | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ryanmotamen) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ryan-motamen/) |
+
+<hr/>
 
 ## How is the repo structured?
 
