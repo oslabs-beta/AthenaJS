@@ -19,10 +19,6 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)&nbsp;&nbsp;&nbsp;
 [![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)]()&nbsp;&nbsp;&nbsp;
 
-<br/>
-
-![Medium](https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white)&nbsp;&nbsp;&nbsp;
-
 </span>
 <hr/>
 
@@ -53,25 +49,33 @@ If you just want to download the app, click <a href = '#'> here </a>
 
 Interested in what you can do with AthenaJS? Here is a quick summary of all the great features you can start developing with!
 
+Please note AthenaJS only works for functional components, but work is currently being done to add support for class components!
+
 ### Developing a Component from Scratch
 
-💠 Using 
+💠 You can develop components from scratch and export them to your React project using our code editors!  The JSX terminal holds the return statement of the component and the body contains everything else (your hooks, functions, etc.).  Press update view to view your changes live in the component renderer.  Save your progress by choosing a name for your component and saving it to the component library.
 
 ### Upload and Edit Components
 
-💠 If you already have components made that you want to decouple and work on, you can access them from our file explorer  and pull them into Athena's workshop to edit them. Now you can change the component's state, props, functionality in the workshop without manipulating your app to see a specific state. Athena allows you to develop and mock ideas faster streamlining the workflow and production process.
+💠 If you already have components built for your project and want to edit them, open the file explorer and import any of your React components! Our parser will inject your code into the terminals so you can get started easily.  Simply define any props your component relies on in the body terminal and update the view to get your component working in the app!
 
 ### Mocking Server
 
-💠 If your component makes use of an API
+💠 If your component makes use of an API, AthenaJS includes feck-motch integration to mock the response.  If you are interested in all of the great features available to you with feck-motch, check out the <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'> documentation </a>.  By default, our settings intercept all requests and respond with an object {data: 'mock data'} to get you started quickly.
+
+### Styling Your Components
+
+💠 AthenaJS includes styled-components integration, check out the <a href = 'https://styled-components.com/docs'> documentation </a> here to get started.  Styled components lets you write actual CSS code to style your components, so you can get started quick and easy! Declare your styled component variable in the body terminal and write CSS or copy over code from your CSS file to quickly style your component! 
 
 ### Compare Component Render Times
-Curious which components are causing or have the potential to cause a bottleneck in your application? Every time you render a new component, the render time is captured using the React Profiler API, the same API that React Dev Tools are built on.  Render times can be added to a bar graph with the click of a button to easily compare render times across different components.
+
+💠 Curious which components are causing or have the potential to cause a bottleneck in your application? Every time you render a new component, the render time is captured using the React Profiler API, the same API that React Dev Tools are built on.  Render times can be added to a bar graph with the click of a button to easily compare render times across different components.
 
 ### UI Whiteboard
 
-💠 Once you build a component library, you can easily prototype UIs using the drag and drop UI whiteboard.  The whiteboard area can be saved as a screenshot to your downloads folder by pressing the screenshot button on the top right portion of the screen.   This is a great tool for prototyping a user interface and makes it easier to put your components together to create a cohesive UI within your application.
-One of our favorite uses of this tool is to compare similar components.  Not sure which navbar or button you like best? Add them to the whiteboard and compare them side-by-side!
+💠 Once you build a component library, you can easily prototype UIs using the drag and drop UI whiteboard.  The whiteboard area can be saved as a screenshot to your downloads folder by pressing the screenshot button on the top right portion of the screen.   
+
+💠 One of the team's favorite uses of this tool is to compare similar components.  Not sure which navbar or button you like best? Add them to the whiteboard and compare them side-by-side!
 
 
 <hr/>
