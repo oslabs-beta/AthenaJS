@@ -3,20 +3,20 @@ name: Node.js CI
 on:
   push:
     branches: 
-      -matt/navTests
+      - matt/navTests
   pull_request:
     branches: 
       - main
       - dev
 
 jobs:
-  test:
+  build:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [16.x]
 
     steps:
       - name: Checkout code
@@ -34,6 +34,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: './electron-react' # run npm ci in electron-react directory
+
+      - name: Build project
+        run: npm run build --if-present
+        working-directory: './electron-react' # run npm run build in electron-react directory
 
       - name: Run tests
         run: npm test
