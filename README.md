@@ -41,19 +41,17 @@ own React components or create components from scratch within the application's 
 
 <hr/>    
 
-## Documentation
+## Documentation & Installation
 
-Check out our documentation on docusaurus for AthenaJS: 
-```sh
-cd ./electron-react/athena-website
-npm install
-npm start
-```
+You can find documentation and download the app on our <a href = '#'> website </a>
+
+If you just want to download the app, click <a href = '#'> here </a>
+
 <hr/>    
 
 ## Contributing
 
-Navigate to the [CONTRIBUTING.md](CONTRIBUTING.md) file to get started with setting up the repo.
+Navigate to the [CONTRIBUTING.md](CONTRIBUTING.md) file to learn how you can contribute to AthenaJS!
 
 <hr/>    
 
