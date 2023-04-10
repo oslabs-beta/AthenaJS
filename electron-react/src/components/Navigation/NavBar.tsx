@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import { NavBarProps, handleToggleWindow } from './NavTypes'
-import { useShowUI } from '@/hooks/useContextHooks';
+import { useShowUI } from '../../hooks/useContextHooks';
 
 
 const NavBar: React.FC<NavBarProps> = ({handleToggleWindow}) => {
