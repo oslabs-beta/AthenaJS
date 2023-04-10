@@ -27,7 +27,7 @@ jobs:
           path: './electron-react' # set the working directory to electron-react
 
       - name: List files in electron-react directory
-        run: ls -la ./electron-react
+        run: ls -la
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
