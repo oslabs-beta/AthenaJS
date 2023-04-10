@@ -1,6 +1,6 @@
 <p align='center'>
   <a href='#'>
-    <img alt = 'AthenaJS Logo' src = './electron-react/src/assets/athena_logo01.png' width = '100%' style='background-color: white' />
+    <img alt = 'AthenaJS Logo' src = './electron-react/src/assets/logo_whitebg.png' width = '100%' style='background-color: white' />
   </a>
 </p>
 
