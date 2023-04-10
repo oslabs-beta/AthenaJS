@@ -155,7 +155,6 @@ const PropsWindow = () => {
       transition={transitionPage} 
       id = 'props-window-page'
     >
-      <h1>Edit Component</h1>
       <div id = 'props-header'>
         {checkSaveModal &&
           <div id = 'overwrite-modal'>
