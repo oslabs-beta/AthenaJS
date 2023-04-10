@@ -1,3 +1,5 @@
+# Contributing
+
 <p align="center" class="toc">
 <strong><a href="#setup">Setup</a></strong>
 |
@@ -5,9 +7,6 @@
 |
 <strong><a href="#iteration-roadmap">Iteration Roadmap</a></strong>
 </p>
-<hr/>
-
-# Contributing
 
 If you're reading this document, we're really excited that you want to contribute to the project!  All work on AthenaJS happens directly on GitHub. If you would like to contribute, please send a pull request to the dev branch.  The following guide has some useful information, so we highly recommend you take a look at it before getting started!
 
