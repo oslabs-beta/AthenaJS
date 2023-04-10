@@ -8,26 +8,26 @@ const Workshop = () => {
     <div id = 'workshop-page'>
       <ViewComponent />
       <Resizable
-      className="navigation-area-resizable"
-      defaultSize={{
-        width: '100%',
-        height: 'auto',
-      }}
-      minHeight={'30vh'} 
-      maxHeight={'70vh'} 
-      enable={{
-        top: true,
-        right: false,
-        bottom: false,
-        left: false,
-        topRight: false,
-        bottomRight: false,
-        bottomLeft: false,
-        topLeft: false,
-      }}
-    >
-      <NavigationContainer />
-    </Resizable>
+        className="navigation-area-resizable"
+        defaultSize={{
+          width: '100%',
+          height: '70vh',
+        }}
+        minHeight={'30vh'} 
+        maxHeight={'70vh'} 
+        enable={{
+          top: true,
+          right: false,
+          bottom: false,
+          left: false,
+          topRight: false,
+          bottomRight: false,
+          bottomLeft: false,
+          topLeft: false,
+        }}
+      >
+        <NavigationContainer />
+      </Resizable>
     </div>
   );
 
