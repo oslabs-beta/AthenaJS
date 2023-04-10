@@ -23,8 +23,6 @@
 <hr/>
 
 <p align="center" class="toc">
-<strong><a href="#Documentation-&-Installation">Documentation & Installation</a></strong>
-•
 <strong><a href="#Features">Features</a></strong>
 •
 <strong><a href="#Contributing">Contributing</a></strong>
