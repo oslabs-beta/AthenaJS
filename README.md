@@ -84,13 +84,13 @@ https://user-images.githubusercontent.com/35904733/230982140-5f46aa3d-eb19-4bde-
 
 💠 If you already have components built for your project and want to edit them, open the file explorer and import any of your React components! Our parser will inject your code into the terminals so you can get started easily.  Simply define any props your component relies on in the body terminal and update the view to get your component working in the app!
 
-### Mocking Server
+### Fetch Mock Integration
 
 https://user-images.githubusercontent.com/35904733/230982230-daf91647-7ccb-4ff0-b57f-6e0ce4dc4567.mov
 
 <br/>
 
-💠 If your component makes use of an API, AthenaJS includes feck-motch integration to mock the response.  If you are interested in all of the great features available to you with feck-motch, check out the <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'> documentation </a>.  By default, our settings intercept all requests and respond with an object {data: 'mock data'} to get you started quickly.
+💠 If your component makes an http request with fetch, AthenaJS includes feck-motch integration to mock the response.  If you are interested in all of the great features available to you with feck-motch, check out the <a href = 'https://www.wheresrhys.co.uk/fetch-mock/'> documentation </a>.  By default, our settings intercept all requests and respond with an object {data: 'mock data'} to get you started quickly.
 
 ### Styling Your Components
 
