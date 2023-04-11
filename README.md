@@ -48,7 +48,7 @@ components in isolation without codebase integration.
 **Easy to use**: AthenaJS is a standalone electron application that allows developers to import their
 own React components or create components from scratch within the application's code editor.
 
-**Dynamic**: Developers can mock fetch request/data, style, and change the functionality of their components within the application's code editors. Changes are reflected in the renderer with the press of a button!
+**Dynamic**: Developers can mock HTTP requests, style, and change the functionality of their components within the application's code editors. Changes are reflected in the renderer with the press of a button!
 
 **UI Mode**: After developers have created/edited their react components, they can navigate to the UI Mode section and prototype UIs using components from their library.
 
