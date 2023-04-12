@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import UIComps from '../UIComps';
 import { UserCompProvider } from '../../context/UserCompContext';
 
-// describe('UIComps component', () => {
+xdescribe('UIComps component', () => {
 //   const mockValue = {
 //     components: [
 //       { name: 'Component 1', body: 'Const var1 = 1', jsx: '<div>Component JSX 1</div>', mockServer: null },
@@ -11,8 +11,8 @@ import { UserCompProvider } from '../../context/UserCompContext';
 //     ],
 //     dispatch: jest.fn(),
 //   };
-
-//   test('renders component names', () => {
+  test.todo('renders component names' 
+//     , () => {
 //     render(
 //       <UserCompProvider>
 //         <UIComps />
@@ -23,9 +23,11 @@ import { UserCompProvider } from '../../context/UserCompContext';
 //     const comp2 = screen.getByText(/Component 2/i);
 //     expect(comp1.textContent).toBe('Component 1');
 //     expect(comp2.textContent).toBe('Component 2');
-//   });
+//   }
+  );
 
-//   test('calls addNode when "Add" button is clicked', () => {
+  test.todo('calls addNode when "Add" button is clicked'
+    // , () => {
 //     const mockAddNode = jest.fn();
 //     render(
 //       <UserCompProvider>
@@ -37,9 +39,11 @@ import { UserCompProvider } from '../../context/UserCompContext';
 //     fireEvent.click(add1Button);
 //     expect(mockAddNode).toHaveBeenCalledTimes(1);
 //     expect(mockAddNode).toHaveBeenCalledWith(mockValue.components[0]);
-//   });
+//   }
+    );
 
-//   test('calls removeNode when "Remove" button is clicked', () => {
+  test.todo('calls removeNode when "Remove" button is clicked'
+    // , () => {
 //     const mockRemoveNode = jest.fn();
 //     render(
 //       <UserCompProvider>
@@ -51,5 +55,6 @@ import { UserCompProvider } from '../../context/UserCompContext';
 //     fireEvent.click(remove2Button);
 //     expect(mockRemoveNode).toHaveBeenCalledTimes(1);
 //     expect(mockRemoveNode).toHaveBeenCalledWith(mockValue.components[1]);
-//   });
-// });
+//   }
+  );
+});

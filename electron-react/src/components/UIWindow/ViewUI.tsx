@@ -47,7 +47,7 @@ const ViewUI = () => {
       const filePath: string = path.join(os.homedir(), 'Downloads', fileName);
       fs.writeFile(filePath, image.replace(/^data:image\/png;base64,/, ''), 'base64', err => {
         if (err) throw err;
-        console.log(`Screenshot saved as ${fileName}`);
+        alert(`Screenshot saved as ${fileName}`);
       });
     });
   };
