@@ -74,7 +74,7 @@ https://user-images.githubusercontent.com/35904733/230973355-08ee1f98-7428-48ec-
 
 <br/>
 
-💠 You can develop components from scratch and export them to your React project using our code editors!  The JSX terminal holds the return statement of the component and the body contains everything else (your hooks, functions, etc.).  Press update view to view your changes live in the component renderer.  Save your progress by choosing a name for your component and saving it to the component library.
+💠 You can develop components from scratch and export them to your React project using our code editors!  The JSX editor holds the return statement of the component and the body contains everything else (your hooks, functions, etc.).  Press update view to view your changes live in the component renderer.  Save your progress by choosing a name for your component and saving it to the component library.
 
 ### Upload and Edit Components
 
@@ -82,7 +82,7 @@ https://user-images.githubusercontent.com/35904733/230982140-5f46aa3d-eb19-4bde-
 
 <br/>
 
-💠 If you already have components built for your project and want to edit them, open the file explorer and import any of your React components! Our parser will inject your code into the terminals so you can get started easily.  Simply define any props your component relies on in the body terminal and update the view to get your component working in the app!
+💠 If you already have components built for your project and want to edit them, open the file explorer and import any of your React components! Our parser will inject your code into the editors so you can get started easily.  Simply define any props your component relies on in the body editor and update the view to get your component working in the app!
 
 ### Fetch Mock Integration
 
@@ -98,7 +98,7 @@ https://user-images.githubusercontent.com/35904733/230982240-82f1cc69-ff5b-49c7-
 
 <br/>
 
-💠 AthenaJS includes styled-components integration, check out the <a href = 'https://styled-components.com/docs'> documentation </a> here to get started.  Styled components lets you write actual CSS code to style your components, so you can get started quick and easy! Declare your styled component variable in the body terminal and write CSS or copy over code from your CSS file to quickly style your component! 
+💠 AthenaJS includes styled-components integration, check out the <a href = 'https://styled-components.com/docs'> documentation </a> here to get started.  Styled components lets you write actual CSS code to style your components, so you can get started quick and easy! Declare your styled component variable in the body editor and write CSS or copy over code from your CSS file to quickly style your component! 
 
 ### Compare Component Render Times
 
