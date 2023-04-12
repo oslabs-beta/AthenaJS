@@ -1,35 +1,35 @@
-import { ipcRenderer } from 'electron';
-import React, { useState, useContext } from 'react';
-import DirectoryComponent from './DirectoryComponent';
-import { Resizable } from 're-resizable';
-import { useDetails } from '@/hooks/useContextHooks';
-import { motion } from 'framer-motion';
-import { FaFolderOpen } from 'react-icons/fa';
+import { ipcRenderer } from "electron";
+import React, { useState, useContext } from "react";
+import DirectoryComponent from "./DirectoryComponent";
+import { Resizable } from "re-resizable";
+import { useDetails } from "@/hooks/useContextHooks";
+import { motion } from "framer-motion";
+import { FaFolderOpen } from "react-icons/fa";
 
-const fs = window.require('fs');
-const pathModule = window.require('path');
+const fs = window.require("fs");
+const pathModule = window.require("path");
 
-import { parse } from '@babel/parser';
-const traverse = require('@babel/traverse').default;
-import type { NodePath } from '@babel/traverse';
-const { Node } = require('@babel/types')
+import { parse } from "@babel/parser";
+const traverse = require("@babel/traverse").default;
+import type { NodePath } from "@babel/traverse";
+const { Node } = require("@babel/types");
 
 const containerVariants = {
   hidden: {
-    x: '-5rem',
+    x: "-5rem",
   },
   visible: {
     x: 0,
     transition: {
-      type: 'spring',
+      type: "spring",
       stiffness: 2000,
       damping: 100,
     },
   },
   exit: {
-    x: '-77%',
+    x: "-77%",
     transition: {
-      type: 'spring',
+      type: "spring",
       stiffness: 700,
       damping: 100,
     },
@@ -38,9 +38,9 @@ const containerVariants = {
 
 // might move to it's own type file
 export interface Folder {
-  name: string; 
+  name: string;
   path: string;
-  directory: boolean, 
+  directory: boolean;
   files: Folder[];
 }
 
@@ -59,18 +59,17 @@ const FileExplorer: React.FC = () => {
   const [explorerVisible, setExplorerVisible] = useState(false);
 
   // sets CSS to transition sidebar to close
-  const sidebarClass = explorerVisible ? 'sidebar' : 'sidebar-closed';
+  const sidebarClass = explorerVisible ? "sidebar" : "sidebar-closed";
   const handleToggle = () => {
     setExplorerVisible(!explorerVisible);
   };
 
   const handleOpenFolder = (): void => {
     // open folder
-    const directory: string[] = ipcRenderer.sendSync('OpenFolder');
-    // console.log("DIRECTORY HERE!!!: ", directory);
+    const directory: string[] = ipcRenderer.sendSync("OpenFolder");
     let directoryPath = directory[0];
     // accounting for windows backslash to normalize the path
-    directoryPath = directoryPath.replace(/\\/g, '/');
+    directoryPath = directoryPath.replace(/\\/g, "/");
     // generate first level of file tree
     const firstLevelFileTree = directoryToFolderMapper(directoryPath);
     // generate full tree
@@ -80,14 +79,13 @@ const FileExplorer: React.FC = () => {
     setUploadedFiles(uploadedFileComponents);
   };
 
-  const directoryToFolderMapper = (directoryPath: string): Folder[]  => {
-    // console.log("DIRECTORY PATH: ", directoryPath);
+  const directoryToFolderMapper = (directoryPath: string): Folder[] => {
     const pathToFilesFolders: string[] = fs.readdirSync(directoryPath); // temp any
     // filter pathToFilesFolders for node modules or git files
     const filesAndFolders = pathToFilesFolders
       //using type inference since we know files in pathToFilesFolders are strings, so all 'filename' args should already be strings
       .filter((filename) => {
-        return filename !== 'node_modules' && filename !== '.git';
+        return filename !== "node_modules" && filename !== ".git";
       })
       // map over each filename, instead returning object that has name, directory, and filename's properties
       // ['src', 'index']
@@ -96,7 +94,6 @@ const FileExplorer: React.FC = () => {
         const subPath = pathModule.join(directoryPath, filename);
         const stats = fs.statSync(subPath);
 
-        // console.log(stats);
         return {
           name: filename,
           path: subPath,
@@ -163,13 +160,12 @@ const FileExplorer: React.FC = () => {
   };
 
   //This function allows us to parse files in order to populate our text areas within PropsWindow.jsx
-  function parseAndTraverseAST (dataString: string): void {
-    
+  function parseAndTraverseAST(dataString: string): void {
     //Initialize two empty arrays to store parsed function declarations and JSX returns
     const componentBodyArray: string[] = [];
     const JSXArray: string[] = [];
 
-    //Initialize a bool flag to track whether or not there is JSX within a function 
+    //Initialize a bool flag to track whether or not there is JSX within a function
     let isJSX = false;
 
     //This object defines a vistor for traversing nested JSX elements with a function declaration
@@ -180,41 +176,45 @@ const FileExplorer: React.FC = () => {
       },
     };
 
-    //Define a helper function to slice our data string at the start and end of our path node 
-    const stringSliceAndPush = (array:string[], path:any): void => {
+    //Define a helper function to slice our data string at the start and end of our path node
+    const stringSliceAndPush = (array: string[], path: any): void => {
       const parsedStr = `${dataString.slice(path.node.start, path.node.end)}`;
       array.push(parsedStr);
     };
 
     //Use Babel to parse the input codee string into an Abstract Syntax Tree (AST)
-    const ast = parse(dataString, { sourceType: 'module', plugins: ['jsx', 'flow'],});
+    const ast = parse(dataString, {
+      sourceType: "module",
+      plugins: ["jsx", "flow"],
+    });
 
     //Traverse the AST using the visitor pattern to extract function declarations and JSX Elements nested within return statements
     traverse(ast, {
       enter(path: any) {
-        if(path.isCallExpression()) {
-          if(path.node.callee.name === 'useEffect') {
+        if (path.isCallExpression()) {
+          if (path.node.callee.name === "useEffect") {
             stringSliceAndPush(componentBodyArray, path);
           }
         }
         if (path.isFunctionDeclaration()) {
           //Traverse any nested JSX elements within the function declaration using the nestedJSXVisitor
           path.traverse(nestedJSXVisitor);
-          //If the function declaration does not contain JSX, extract its string representation 
-          if(isJSX === false) {
+          //If the function declaration does not contain JSX, extract its string representation
+          if (isJSX === false) {
             stringSliceAndPush(componentBodyArray, path);
           }
-          //Reset the isJSX bool flag for the next function declaration 
+          //Reset the isJSX bool flag for the next function declaration
           isJSX = false;
         }
         if (path.isVariableDeclaration()) {
-          if(path.node.declarations[0].init.type === 'ArrowFunctionExpression') {
-
+          if (
+            path.node.declarations[0].init.type === "ArrowFunctionExpression"
+          ) {
             //Traverse any nested JSX elements within the arrow function expression using the nestedJSXVisitor again
             path.traverse(nestedJSXVisitor);
-            
+
             //If the arrow function does not contain JSX, extract its string representation
-            if(isJSX === false) {
+            if (isJSX === false) {
               stringSliceAndPush(componentBodyArray, path);
             }
 
@@ -225,7 +225,7 @@ const FileExplorer: React.FC = () => {
             stringSliceAndPush(componentBodyArray, path);
           }
         }
-        // This conditional checks for JSX content as well as che  zcks if the JSX's parent is a return statement. 
+        // This conditional checks for JSX content as well as che  zcks if the JSX's parent is a return statement.
         if (path.isJSXElement() && path.parentPath.isReturnStatement()) {
           stringSliceAndPush(JSXArray, path);
         }
@@ -234,13 +234,13 @@ const FileExplorer: React.FC = () => {
         }
       },
     });
-    //Concatenate the parsed function declarations into a single string and save it to a state variable 
-    let componentBodyString = '';
+    //Concatenate the parsed function declarations into a single string and save it to a state variable
+    let componentBodyString = "";
 
     // purpose of this function:
-      // previously, variables and functions within useEffectHook would be duplicated in component body window
-      // this function filters all elements that are contained within other elements
-      // with this, all functions or variables within a useEffect hook will only be printed once.
+    // previously, variables and functions within useEffectHook would be duplicated in component body window
+    // this function filters all elements that are contained within other elements
+    // with this, all functions or variables within a useEffect hook will only be printed once.
     function filterDuplicateFunctions(arr: string[]): string[] {
       return arr.filter((el, index) => {
         const otherEls = arr.slice(0, index).concat(arr.slice(index + 1));
@@ -256,42 +256,40 @@ const FileExplorer: React.FC = () => {
         (acc, curr) => acc + "\n" + "\n" + curr
       );
     setTempCompBodyVal(componentBodyString);
-    
-    //Concatenate the parsed JSX elements into a single string and save it to a state variable 
-    const JSXString = JSXArray.reduce((acc, curr) => acc + '\n' + '\n' + curr);
+
+    //Concatenate the parsed JSX elements into a single string and save it to a state variable
+    const JSXString = JSXArray.reduce((acc, curr) => acc + "\n" + "\n" + curr);
     setTempCompJSXVal(JSXString);
   }
 
   const fileParser = (path: string): void => {
     // asynchronously read file here passing in the absolute path.
     // data is a string
-    fs.readFile(path, "utf-8", (err: NodeJS.ErrnoException | null, data: string) => {
-      //declare variable extension which gets the extension of our file i.e. .jsx
-      const extension = pathModule.extname(path).toLowerCase();
-      try {
-        switch(extension) {
-        case '.jsx':
-          parseAndTraverseAST(data);
-          break;
-          
-        case '.js':
-          console.log('JS File content:', data);
-          break;
-        case '.css':
-          console.log('CSS File content:', data);
-          break;
-        default: 
-          console.log('File data:', data);
+    fs.readFile(
+      path,
+      "utf-8",
+      (err: NodeJS.ErrnoException | null, data: string) => {
+        //declare variable extension which gets the extension of our file i.e. .jsx
+        const extension = pathModule.extname(path).toLowerCase();
+        try {
+          // left as switch statement for extension more file cases
+          switch (extension) {
+            case ".jsx":
+              parseAndTraverseAST(data);
+              break;
+            default:
+              console.log("File data:", data);
+          }
+        } catch (err) {
+          //handle errors
+          console.log(
+            "ERROR: error reading file in DirectoryComponent.jsx:",
+            err
+          );
+          return;
         }
-      } catch (err) {
-        //handle errors
-        console.log(
-          "ERROR: error reading file in DirectoryComponent.jsx:",
-          err
-        );
-        return;
       }
-    });
+    );
   };
 
   return (
