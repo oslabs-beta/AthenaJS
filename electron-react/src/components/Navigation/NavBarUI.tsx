@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ShowUIContext } from '../context/ShowUIContext';
 import { motion } from 'framer-motion';
-import { useShowUI } from '@/hooks/useContextHooks';
+import { useShowUI } from '../../hooks/useContextHooks';
 
 
 const NavBarUI: React.FC = () => {
