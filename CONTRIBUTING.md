@@ -79,6 +79,7 @@ Not sure what contribution you want to make?  Here are a few starting points:
     - If you make a pull request with a new component, consider adding an accompanying test file
   2. Adding support for class components
   3. Adding support for components written in TypeScript
+  4. Adding Tailwind CSS support for styling components
 
 ## License
 By contributing to AthenaJS, you agree that your contributions will be licensed under its MIT license.
