@@ -19,7 +19,15 @@ export default defineConfig(({ command }) => {
   return {
     resolve: {
       alias: {
-        '@': path.join(__dirname, 'src')
+        '@': path.join(__dirname, 'src'),
+        'react-dom/client': path.resolve(
+          __dirname,
+          'node_modules/react-dom/profiling.js'
+      ),
+      'scheduler/tracing': path.resolve(
+          __dirname,
+          'node_modules/scheduler/tracing-profiling'
+      ),
       },
     },
     plugins: [
