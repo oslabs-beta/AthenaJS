@@ -56,9 +56,7 @@ own React components or create components from scratch within the application's 
 
 ## Documentation & Installation
 
-You can find documentation and download the app on our <a href = '#'> website </a>
-
-If you just want to download the app, click <a href = '#'> here </a>
+You can find documentation and download the app on our <a href = 'oslabs-beta.github.io/athena-website/'> website </a>
 
 **Mac users**: The application needs to be approved in the "Security and Privacy" tab before it can be run.
 
@@ -165,7 +163,7 @@ Check out our <a href = 'https://medium.com/@dkchang213/da3982d28bf9'> Medium ar
 
 ## How is the repo structured?
 
-The Athena JS repo is managed as a monorepo check out the [CONTRIBUTING.md](CONTRIBUTING.md) for development and checkout for the doc website.
+The Athena JS repo is managed as a monorepo check out the [CONTRIBUTING.md](CONTRIBUTING.md) for development and check <a href = 'oslabs-beta.github.io/athena-website/'> here</a> for the doc website.
 
 <hr/>
 
