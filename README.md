@@ -160,7 +160,8 @@ Check out our <a href = 'https://medium.com/@dkchang213/da3982d28bf9'> Medium ar
 | Derrick Oh         | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Igniphis) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/derrick-oh-37a84a182/) |
 | Matthew Fukudome   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mattfookoo) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matthewfukudome/) |
 | Ryan Motamen       | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ryanmotamen) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ryan-motamen/) |
-
+<br/>
+Special thanks to our friend <a href = 'https://www.eveningmisa.com/'>Michelle</a> for the logo and icon design!
 <hr/>
 
 ## How is the repo structured?
