@@ -60,6 +60,8 @@ You can find documentation and download the app on our <a href = '#'> website </
 
 If you just want to download the app, click <a href = '#'> here </a>
 
+**Mac users**: The application needs to be approved in the "Security and Privacy" tab before it can be run.
+
 <hr/>    
 
 ## Features
