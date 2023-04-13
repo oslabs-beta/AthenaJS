@@ -58,7 +58,7 @@ own React components or create components from scratch within the application's 
 
 You can find documentation and download the app on our <a href = 'https://oslabs-beta.github.io/athena-website/'> website </a>
 
-If you just want to download the app, you can find it under "Releases" ont the right-hand side of GitHub!
+If you just want to download the app, you can find it under "Releases" on the right-hand side of GitHub!
 
 **Mac users**: The application needs to be approved in the "Security and Privacy" tab before it can be run.
 
