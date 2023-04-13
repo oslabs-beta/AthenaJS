@@ -145,7 +145,7 @@ Navigate to the [CONTRIBUTING.md](CONTRIBUTING.md) file to learn how you can con
 
 ## Read More
 
-Check out our <a href = '#'> Medium article </a> to read more!
+Check out our <a href = 'https://medium.com/@dkchang213/da3982d28bf9'> Medium article </a> to read more!
 
 <hr/>
 
