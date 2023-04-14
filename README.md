@@ -56,9 +56,11 @@ own React components or create components from scratch within the application's 
 
 ## Documentation & Installation
 
-You can find documentation and download the app on our <a href = '#'> website </a>
+You can find documentation and download the app on our <a href = 'https://oslabs-beta.github.io/athena-website/'> website </a>
 
-If you just want to download the app, click <a href = '#'> here </a>
+If you just want to download the app, you can find it under "Releases" on the right-hand side of GitHub!
+
+**Mac users**: The application needs to be approved in the "Security and Privacy" tab before it can be run.
 
 <hr/>    
 
@@ -143,7 +145,7 @@ Navigate to the [CONTRIBUTING.md](CONTRIBUTING.md) file to learn how you can con
 
 ## Read More
 
-Check out our <a href = '#'> Medium article </a> to read more!
+Check out our <a href = 'https://medium.com/@dkchang213/da3982d28bf9'> Medium article </a> to read more!
 
 <hr/>
 
@@ -158,12 +160,13 @@ Check out our <a href = '#'> Medium article </a> to read more!
 | Derrick Oh         | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Igniphis) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/derrickjoh/) |
 | Matthew Fukudome   | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mattfookoo) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matthewfukudome/) |
 | Ryan Motamen       | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ryanmotamen) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ryan-motamen/) |
-
+<br/>
+Special thanks to our friend <a href = 'https://www.eveningmisa.com/'>Michelle</a> for the logo and icon design!
 <hr/>
 
 ## How is the repo structured?
 
-The Athena JS repo is managed as a monorepo check out the [CONTRIBUTING.md](CONTRIBUTING.md) for development and checkout for the doc website.
+The Athena JS repo is managed as a monorepo check out the [CONTRIBUTING.md](CONTRIBUTING.md) for development and check <a href = 'https://oslabs-beta.github.io/athena-website/'> here</a> for the doc website.
 
 <hr/>
 
